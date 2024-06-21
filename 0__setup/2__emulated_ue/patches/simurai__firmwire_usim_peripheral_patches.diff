@@ -1,0 +1,835 @@
+diff --git a/firmwire/vendor/shannon/hw/USIMPeripheral.py b/firmwire/vendor/shannon/hw/USIMPeripheral.py
+new file mode 100644
+index 0000000..7c1a11c
+--- /dev/null
++++ b/firmwire/vendor/shannon/hw/USIMPeripheral.py
+@@ -0,0 +1,512 @@
++from . import LoggingPeripheral
++import socket
++import struct
++
++from smartcard.System import readers
++from smartcard.util import toHexString
++
++'''
++Associated IRQs:
++0x34: usim-low-isr
++0x3f: GPIO IRQ -> the SIM_DET pin is hooked up via GPIO
++'''
++
++OFF_DATA_REGISTER = 0
++OFF_CR0 = 0x04
++OFF_CR1 = 0x08
++OFF_IRQ_PENDING = 0x74
++OFF_IRQ_ACK = 0x78
++OFF_ISCIAUXCR = 0x8c
++
++OFF_RXTXSTATE = 0x60
++OFF_TXCOUNT = 0x64
++OFF_RXCOUNT = 0x68
++
++BITMASK_RX_EMPTY = 0x08
++BITMASK_TX_EMPTY = 0x02
++
++'''
++USIM IRQ State Machine:
++
++StateIDX = 0 (DRV_IS_NO_SIM):
++    0x0001 CARDIN_IRQ    --> state ~
++    0x0002 CARDOUT_IRQ   --> state 0
++    0x0004 CARDUP_IRQ    --> state 1
++    0x0008 Deactivate    --> state ~
++    0x2000 RXTIDE        --> state 8
++
++StateIDX = 1 (WAIT_FOR_ATR)
++    0x0002 CARDOUT      --> state 0
++    0x0008 CARDDN       --> state 0
++    0x0020 ATRSTOUT     --> state ~ (USIMDetect=2)
++    0x0040 ATRDTOUT     --> state ~
++    0x0100 CHTOUT       --> state 0
++    0x0200 RXTIDE       --> state ~ or 0
++    0x0400 Overrun      --> state ~
++
++To get to state 2, we need to call UsimSendPPS,
++which is behind case 05 of pal_drv_UsimDrvRequest.
++
++StateIDX = 2 (DRV_IS_PPS)
++    0x0010: TXERR       --> state 8
++    0x0080: BLKTOUT     --> state 3
++    0x0100: CHTOUT      --> state 0
++    0x0200: RXTIDE      --> state ~
++    0x0400: OVERRUN     --> state ~
++    0x4000: TXTIDE      --> state ~
++
++StateIDX = 3 (DRV_IS_WAIT_FOR_CMD)
++    0x0010: TXERR       --> state ~
++    0x0200: RTOUT       --> state ~
++    0x0400: OVERRUN     --> state ~
++    0x2000: RXTIDE      --> state ~ or 8 (when abnormal RX > 10)
++
++To progress the state machine we need to ... (More RE needed)
++
++StateIDX = 4 not present??
++
++StateIDX = 5 (DRV_IS_TX_RX)
++    0x0002: CARDOUT     --> state 0
++    0x0008: CARDDN      --> state 0
++    0x0010: TXERR       --> state ~
++    0x0080: BLKOUT      --> state ~ or 8 (when no Response)
++    0x0100: CHTOUT      --> state 3
++    0x0200: RXTIDE      --> state ~
++    0x0400: OVERRUN     --> state ~
++    0x4000: TXTIDE      --> state ~
++
++To progress the state machine we need to ... (More RE needed)
++
++StateIDX = 6 (DRV_IS_TX)
++    0x0002: CARDOUT     --> state 0
++    0x0008: CARDDN      --> state 0
++    0x0080: BLKOUT      --> state ~ or 8 (when no Response)
++    0x0010: TXERR       --> state ~
++    0x0100: CHTOUT      --> state 3
++    0x0400: OVERRUN     --> state ~
++    0x4000: TXTIDE      --> state ~
++
++To progress the state machine we need to ... (More RE needed)
++
++StateIDX = 7 (DRV_IS_RX)
++    0x0002: CARDOUT     --> state 0
++    0x0008: CARDDN      --> state 0
++    0x0080: BLKOUT      --> state ~ or 8 (when no Response)
++    0x0100: CHTOUT      --> state 3
++    0x0200: RXTIDE      --> state ~ or 8 (on error)
++    0x0400: OVERRUN     --> state ~
++
++Note: This seems to receive multiple bytes at once and checks parity
++
++StateIDX = 8 (DRV_IS_UNKOWN)
++    No Meaningful IRQs
++
++StateIDX = 9 (DRV_IS_IDLE)
++    No Meaningful IRQs
++
++USIMEventHandler States:
++0x00: NULL
++0x01: CARD_ACCEPTED? Detect=1, usimISR=3
++0x02: CARD_REJECTED
++0x03: ???
++0x04: CARD_NOT_FOUND -> Detect=2
++0x05: CARD_REMOVED -> Detect=2
++0x06: RX_DATA -> usimISR=3
++0x07: TX_DATA
++0x08: End of USIM Socket Request ?!
++0x09: ???
++0x0a: ???, usimISR=3
++0x0b: ???
++0x0c: CHTIMEOUT
++0x0d: UICC_RXTIMEOUT
++0x0e: USIM_NORESPONSE
++0x0f: PPS_TIMEOUT
++0x10: UNKOWN_OCCURED
++0x11: NULL_TIMEOUT
++
++'''
++
++class USIMPeripheral(LoggingPeripheral):
++    swsim_cont_iface_ready = 0x0000707E
++
++    @staticmethod
++    def swsim_pack(ctrl, cont_iface, data):
++        return struct.pack("<IIIB", len(data) + 9, cont_iface, 0, ctrl) + data
++
++    @staticmethod
++    def swsim_unpack_hdr(hdr):
++        return struct.unpack_from("<I", hdr)
++
++    @staticmethod
++    def swsim_unpack_data(data):
++        unpacked = tuple()
++        data_buf_len = len(data) - 9
++        if data_buf_len == 0:
++            unpacked = struct.unpack_from("<IIB", data)
++            unpacked += (bytearray(),)
++        else:
++            unpacked = struct.unpack_from(f"<IIB{data_buf_len}s", data)
++        return unpacked
++
++    def swsim_msg_recv(self):
++        res_size_raw = self.swsim_unpack_hdr(self.swsim_sock.recv(4))
++        res_size = res_size_raw[0]
++        self.log.debug("Response: size={}".format(res_size))
++        res_data_raw = self.swsim_sock.recv(res_size)
++        self.log.debug(f"Data raw {res_data_raw} {res_size}.")
++        self.log.info(f"Response: raw=0x{res_data_raw.hex().upper()}")
++        res_data = self.swsim_unpack_data(res_data_raw)
++        res_unpacked_cont = res_data[0]
++        res_unpacked_buflenexp = res_data[1]
++        res_unpacked_ctrl = res_data[2]
++        res_unpacked_data = res_data[3]
++        self.log.info(f"Response: data=(cont={res_unpacked_cont}, buflenexp={res_unpacked_buflenexp}, ctrl={res_unpacked_ctrl}, data=0x{res_unpacked_data.hex().upper()})")
++        self.sim_buf_tx_len_rem = res_unpacked_buflenexp
++        self.sim_buf_rx += res_unpacked_data
++        # Contact state is ignored.
++        if res_unpacked_ctrl == 0xF0:
++            return True
++        else:
++            return False
++
++    def swsim_msg_send(self, ctrl, cont_iface):
++        self.log.debug(f"Sending: 0x{self.swsim_buf_tx.hex().upper()}")
++        self.swsim_sock.send(self.swsim_pack(ctrl, cont_iface, self.swsim_buf_tx))
++        self.sim_buf_tx = bytearray()
++
++    def pcsc_msg_sendrecv(self):
++        self.log.info(f"Sending: raw=0x{self.sim_buf_tx.hex().upper()}")
++        response, sw1, sw2 = self.pcsc_connection.transmit(list(self.sim_buf_tx))
++        response.append(sw1)
++        response.append(sw2)
++        self.sim_buf_rx += bytearray(response)
++        self.log.info(f"Response: raw=0x{self.sim_buf_rx}")
++        # Should return false if sending/receiving failed else true.
++
++    def hw_read(self, offset, size):
++        offset_name = None
++        if offset == OFF_DATA_REGISTER:
++            offset_name = "DATA"
++            value = self.data_register
++            self.shall_read_byte = True
++        elif offset == OFF_CR0:
++            offset_name = "CR0"
++            value = self.cr0
++        elif offset == OFF_IRQ_PENDING:
++            offset_name = "IRQ_Reason"
++            value = self.pending_irqs
++        elif offset == OFF_RXTXSTATE:
++            offset_name = "RX_TX_STATE"
++            value = BITMASK_RX_EMPTY | BITMASK_TX_EMPTY
++        elif offset == OFF_RXCOUNT:
++            offset_name = "RX_COUNT"
++            value = self.rx_count
++        elif offset == OFF_TXCOUNT:
++            offset_name = "TX_COUNT"
++            value = self.tx_count
++
++        if offset_name is None:
++            value = super().hw_read(offset, size)
++        else:
++            self.log_read(value, size, offset_name)
++        return value
++
++    def hw_write(self, offset, size, value):
++        offset_name = None
++        if offset == OFF_DATA_REGISTER:
++            offset_name = "DATA"
++            self.log.info(f"Wrote out {value:02X}")
++            self.data_register = value
++            if self.tx_callback is not None:
++                self.tx_callback(value)
++
++            if self.pcsc_card == None:
++                value_used = False
++                while True:
++                    if self.sim_buf_tx_len_rem == 0:
++                        self.swsim_msg_send(0, self.swsim_cont_iface_ready)
++                        if self.swsim_msg_recv() != True:
++                            raise Exception('swSIM failed to process message.')
++
++                    if self.sim_buf_tx_len_rem > 0:
++                        if not value_used:
++                            self.sim_buf_tx.append(value)
++                            self.sim_buf_tx_len_rem -= 1
++                            value_used = True
++                        else:
++                            # Wait for more calls to hw_write.
++                            self.log.debug("Sending to FW: 0x{}".format(self.sim_buf_rx.hex().upper()))
++                            self.send_bytes(self.sim_buf_rx)
++                            self.sim_buf_rx = bytearray()
++                            break
++            else:
++                # Count byte that was received from modem.
++                self.physim_buf_tx_len_recvd += 1
++                self.sim_buf_tx_len_rem -= 1
++
++                self.log.info("HW write state: value={} idx={} idx_done={} tx_len_recvd={} tx_len_rem={} rx={} tx={}".format(value, self.physim_apdu_idx, self.physim_apdu_idx_done, self.physim_buf_tx_len_recvd, self.sim_buf_tx_len_rem, self.sim_buf_rx.hex().upper(), self.sim_buf_tx.hex().upper()))
++
++                if self.sim_buf_tx_len_rem > 0 and self.physim_buf_tx_len_recvd == 5:
++                    # Write procedure byte and wait for more bytes to come.
++                    self.sim_buf_rx = bytearray([self.sim_buf_tx[1]]) # Procedure is INS
++                    self.log.debug("Sending to FW: 0x{}".format(self.sim_buf_rx.hex().upper()))
++                    self.send_bytes(self.sim_buf_rx)
++                    self.sim_buf_rx = bytearray()
++
++                if self.sim_buf_tx_len_rem <= 0:
++                    # 0th message is the ATR so we grab it from pyscard and don't send anything via PCSC.
++                    if self.physim_apdu_idx > 0 and self.physim_apdu_idx_done < self.physim_apdu_idx:
++                        self.log.info("PCSC CAPDU: 0x{}".format(self.sim_buf_tx.hex().upper()))
++                        self.pcsc_msg_sendrecv()
++                        self.log.info("PCSC RAPDU: 0x{}".format(self.sim_buf_rx.hex().upper()))
++
++                    # There are a few cases for TPDU exchanges, here we check if data is given back immediately after the header in which case we need to prepend the INS as procedure.
++                    if self.physim_buf_tx_len_recvd == 5 and len(self.sim_buf_rx) > 2:
++                        self.log.info(f"Prepending RAPDU with procedure=INS={self.sim_buf_tx[1]}")
++                        self.sim_buf_rx = bytearray([self.sim_buf_tx[1]]) + self.sim_buf_rx
++
++                    self.log.debug("Sending to FW: 0x{}".format(self.sim_buf_rx.hex().upper()))
++                    self.send_bytes(self.sim_buf_rx)
++                    self.sim_buf_rx = bytearray()
++                    self.physim_apdu_idx_done += 1
++                    self.physim_buf_tx_len_recvd = 0
++
++        elif offset == OFF_CR0:
++            offset_name = "CR0"
++            self.cr0 = value
++        elif offset == OFF_CR1:
++            offset_name = "CR1"
++            self.cr1 = value
++            # Deactivate circuit
++            if value == 0x04 and self.isr_state == 0:
++                self.pending_irqs = 0x08 # SIM Deactivate
++                self.machine.inject_irq(0x34, 0x1)
++
++            # Activate circuit
++            if value == 0x20:
++                self.pending_irqs = 0x04 | 0x01 # Card IN | Card UP
++                self.machine.inject_irq(0x34, 0x1)
++
++            if value == 0x00 and self.isr_state == 0x02:
++                self.pending_irqs = 0x080
++                self.machine.inject_irq(0x34, 0x1)
++
++        elif offset == OFF_IRQ_ACK:
++            offset_name = "IRQ_ACK"
++            self.pending_irqs &= ~value
++            # all irqs were served, lower the irq
++            if self.pending_irqs == 0x00:
++                self.machine.inject_irq(0x34, 0)
++
++            self.drive_state_machine(value)
++
++
++        elif offset == OFF_IRQ_PENDING:
++            offset_name = "IRQ_PEND"
++            self.pending_irqs |= value
++            self.machine.inject_irq(0x34, 1)
++
++        # does this ever happen?
++        elif offset == OFF_RXCOUNT:
++            offset_name = "RX_COUNT"
++            self.rx_count = value
++        elif offset == OFF_TXCOUNT:
++            offset_name = "TX_COUNT"
++            self.tx_count = value
++
++        if offset_name is None:
++            super().hw_write(offset, size, value)
++        else:
++            self.log_write(value, size, offset_name)
++        return True
++
++    def write_atr_byte(self):
++        #returns one ATR byte at a time, and re-raises the interrupt
++        self.data_register = self.atr_bytes[self.atr_ptr]
++        self.atr_ptr +=1
++
++        # reinject irq if necessary for next byte
++        if self.atr_ptr < len(self.atr_bytes):
++            self.pending_irqs |= 0x200
++            self.machine.inject_irq(0x34, 1)
++        else:
++            self.isr_state = 0x02
++            # this assumes correct transmitted ATR
++            # -> we go to IS_PPS
++
++    def drive_state_machine(self, acked_irq):
++        # This function is called whenever an interrupt is acknowledged
++        # Based on observing which IRQ was acknowledged, and by keeping
++        # track of the drv_UsimHISRHandler stateidx, we can identify to
++        # which state we want to transition by raising according IRQs.
++
++        if self.isr_state == 0x00:
++            if acked_irq == 0x04:
++                # SIMCARDUP
++                self.isr_state = 0x01
++                # Let's fake the received ATR IRQ
++                self.pending_irqs |= 0x200
++                self.machine.inject_irq(0x34, 1)
++        if self.isr_state == 0x01:
++            if acked_irq == 0x200:
++                # ATR Byte Received
++                self.write_atr_byte()
++        if self.isr_state == 0x02:
++            if acked_irq == 0x80:
++                self.isr_state = 0x03
++        if self.is_sending is True:
++            self.send_byte()
++
++    def register_tx_callback(self, fn):
++        # This takes a function which is called whenever data is transmitted to the SIM card
++        # The prototype is: def rx_byte(b), whereas b is of type
++        self.tx_callback = fn
++
++    def send_byte(self):
++        # This is a bit convoluted, as the function can be called multiple times without a byte being read inbetween
++        if len(self.send_buf) == 0:
++            self.is_sending = False
++        else:
++            self.rx_count = 1
++            if self.shall_read_byte is True:
++                self.data_register = self.send_buf.pop(0)
++                self.shall_read_byte = False
++            self.pending_irqs |= 0x200
++            self.machine.inject_irq(0x34, 1)
++
++    def send_bytes(self, content):
++        # Send bytes from the physical SIM to the firmware
++        self.send_buf = bytearray(content)
++        self.is_sending = True
++        self.shall_read_byte = True
++        self.pending_irqs |= 0x200
++        self.machine.inject_irq(0x34, 1)
++
++    def __init__(self, name, address, size, **kwargs):
++        super().__init__(name, address, size, **kwargs)
++        # 0x84002000
++
++        # This should be a param for the peripheral:
++        self.pcsc_card = "swICC PC/SC IFD Driver v1.2.0 00 00" # When set to a string, firmwire will not listen for cards, instead it will communicate with a PCSC-connected card instead.
++
++        self.data_register = 0x00
++        self.cr0 = 0x00
++        self.cr1 = 0x00
++        self.pending_irqs = 0x00
++        self.isr_state = 0x0
++
++        self.read_handler[0:size] = self.hw_read
++        self.write_handler[0:size] = self.hw_write
++
++        self.atr_ptr = 0
++
++        self.rx_count = 0
++        self.tx_count = 0
++
++        self.tx_callback = None
++        self.is_sending = False
++        self.send_buf = bytearray()
++        self.byte_was_read = False
++
++        self.sim_buf_tx = bytearray() # Contains data received from the modem that should be sent to the card.
++        self.sim_buf_rx = bytearray() # Contains data received from the card that should be sent to the modem.
++
++        self.sim_buf_tx_len_rem = 0 # How many bytes are left to read before transmitting packet to swSIM.
++
++        self.sim_buf_internal_idx_next = 0
++        self.sim_buf_internal = bytearray() # Contains contents of the SIM buffer managed by the modem.
++
++        if self.pcsc_card == None:
++            port = 0x91CC
++            hostname = "0.0.0.0"
++            self.swsim_sock_server = socket.create_server((hostname, port))
++            self.log.info(f"Waiting for a SIM to connect on {hostname:s}:{port:d}.")
++            (self.swsim_sock, _) = self.swsim_sock_server.accept()
++            # Cold reset without PPS.
++            self.swsim_msg_send(4, 0)
++            # The recv here just gets the ATR.
++            if self.swsim_msg_recv() != True:
++                raise Exception('Failed to init swSIM.')
++        else:
++            self.log.info(f"PCSC card name given so will not accept connections from swICC-based cards.")
++            reader_list=readers()
++            self.log.info(f"Readers={reader_list}")
++            self.pcsc_connection = None
++            for reader in reader_list:
++                if reader.name == self.pcsc_card:
++                    self.log.info(f"Found reader {reader}")
++                    self.pcsc_connection = reader.createConnection()
++                    self.pcsc_connection.connect()
++                    self.sim_buf_rx += bytearray([0xFF, 0x10, 0x96, 0x79])
++                    self.sim_buf_tx_len_rem = 4 # Receive the PPS before sending the hardcoded PPS reply
++                    self.log.info("ATR={}".format(self.sim_buf_rx.hex().upper()))
++                    break
++            if self.pcsc_connection == None:
++                raise Exception('PCSC reader not found.')
++            self.physim_apdu_idx = 0 # Counts up for every APDU seen in the SIM buffer. If a new APDU is seen but the remaining TX length is not zero, it indicates that this peripheral did something wrong.
++            self.physim_apdu_idx_done = -1 # Indication of which APDU index has been processed until now. This is needed so that the same APDU doesn't get sent to PCSC more than once.
++            self.physim_buf_tx_len_recvd = 0 # How many bytes have been received.
++
++        # Cache the ATR received from the card.
++        self.atr_bytes = bytearray(self.pcsc_connection.getATR())
++
++class GPIOPeripheral(LoggingPeripheral):
++    ''' The GPIO Peripheral owns IEQ 0x3F
++    0x100: GPIO_MASK?
++    0x200: 0xff-> Signal, 0x00 -> no signal??
++
++    0x300: IRQ_MASK?
++    0x400: IRQ_PENDING / IRQ_ACKNOWLEDGED
++
++    0x10: RF ?
++    '''
++
++
++    def hw_read(self, offset, size):
++
++        if offset == 0x100:
++            value = 0xff
++        elif offset == 0x200:
++            value = self.gpio_ena
++        elif offset == 0x400:
++            value = self.pending_irqs
++
++        else:
++            value = super().hw_read(offset, size)
++        return value
++
++    def hw_write(self, offset, size, value):
++
++        if offset == 0x400:
++            self.pending_irqs &= ~value
++            # all irqs were served, lower the irq
++            if self.pending_irqs == 0x00:
++                self.machine.inject_irq(0x3f, 0)
++                self.log.debug("Lower IRQ")
++        elif offset == 0x300: # IRQ MASK
++            if value & 0x4 and self.sim_inserted is False:
++                self.pending_irqs |= 0x4
++                self.gpio_ena |= 0x4
++                self.machine.inject_irq(0x3f,1)
++                self.log.debug("Raise SIM_DET IRQ")
++
++                self.sim_inserted = True
++
++        return super().hw_write(offset, size, value)
++
++    def __init__(self, name, address, size, **kwargs):
++        super().__init__(name, address, size, **kwargs)
++        # 0x84004000
++
++        self.data_register = 0x00
++        self.cr0 = 0x00
++        self.cr1 = 0x00
++        self.pending_irqs = 0x00
++        self.gpio_ena = 0x00
++        # Setting sim_inserted to False will allow for hot-plug insertion, which is currently not fully supported.
++        self.sim_inserted = True
++
++        self.read_handler[0:size] = self.hw_read
++        self.write_handler[0:size] = self.hw_write
++
++
+diff --git a/firmwire/vendor/shannon/hw/__init__.py b/firmwire/vendor/shannon/hw/__init__.py
+index 83cbf4c..7f5ce8a 100644
+--- a/firmwire/vendor/shannon/hw/__init__.py
++++ b/firmwire/vendor/shannon/hw/__init__.py
+@@ -13,3 +13,4 @@ from .DSPPeripheral import DSPPeripheral, S355DSPBufferPeripheral, MarconiPeriph
+ from .shannon_timer import ShannonTimer, ShannonTCU, ShannonUptimer
+ from .abox import ShannonAbox
+ from .s3xxap import S3xxAPBoot
++from .USIMPeripheral import USIMPeripheral, GPIOPeripheral
+\ No newline at end of file
+diff --git a/firmwire/vendor/shannon/loader.py b/firmwire/vendor/shannon/loader.py
+index 948d665..403bdad 100644
+--- a/firmwire/vendor/shannon/loader.py
++++ b/firmwire/vendor/shannon/loader.py
+@@ -179,7 +179,7 @@ class ShannonLoader(firmwire.loader.Loader):
+         for peripheral in self.modem_soc.peripherals:
+             self.create_soc_peripheral(peripheral)
+ 
+-        self.create_timer(self.modem_soc.TIMER_BASE + 0x000, 0x100, "tim0", 34, 100000)
++        self.create_timer(self.modem_soc.TIMER_BASE + 0x000, 0x100, "tim0", 34, 200000)
+         self.create_timer(self.modem_soc.TIMER_BASE + 0x100, 0x100, "tim1", 35, 6000000)
+         self.create_timer(self.modem_soc.TIMER_BASE + 0x200, 0x100, "tim2", 36, 6000000)
+         self.create_timer(self.modem_soc.TIMER_BASE + 0x300, 0x100, "tim3", 37, 6000000)
+@@ -187,6 +187,7 @@ class ShannonLoader(firmwire.loader.Loader):
+         self.create_timer(self.modem_soc.TIMER_BASE + 0x500, 0x100, "tim5", 39, 6000000)
+ 
+         self.create_peripheral(ShannonTCU, 0x8200F000, 0x100, name="TCU")
++        self.create_peripheral(USIMPeripheral, 0x84002000,0x1000,name="USIM0"),
+ 
+         self.create_peripheral(
+             self.modem_soc.CLK_PERIPHERAL,
+diff --git a/firmwire/vendor/shannon/machine.py b/firmwire/vendor/shannon/machine.py
+index b71a540..e9b98d5 100644
+--- a/firmwire/vendor/shannon/machine.py
++++ b/firmwire/vendor/shannon/machine.py
+@@ -173,6 +173,11 @@ class ShannonMachine(FirmWireEmu, ShannonOSI):
+ 
+         self.set_breakpoint(addr, dump_fn, temporary=once)
+ 
++    def run_for(self, t):
++        self.qemu.cont()
++        sleep(t)
++        self.qemu.stop()
++
+     # Override breakpointing to account for Thumb functions
+     def set_breakpoint(self, address, handler, temporary=False, **kwargs):
+         if address & 1:
+@@ -816,6 +821,63 @@ r12: %08x     cpsr: %08x""" % (
+             dsp_periph.dsp_sync0 = self.symbol_table.lookup("DSP_SYNC_WORD_0").address
+             dsp_periph.dsp_sync1 = self.symbol_table.lookup("DSP_SYNC_WORD_1").address
+ 
++        # The USIM hw implementation needs to inject interrupts.
++        # To be able to do so, we go the hacky route and pass a reference to the machine in here
++        # This should be solved somehow better in the future (e.g., all peripherals get the reference?)
++        usim_periph = self.get_peripheral("USIM0")
++        if usim_periph is not None:
++            usim_periph.machine = self
++
++
++            def fix_acpm_retrieve_events(self):
++                self.qemu.regs.pc = self.qemu.regs.pc+4
++                self.qemu.cont(blocking=False)
++
++            def change_power(self):
++                self.qemu.regs.r0 = 1
++                self.qemu.regs.pc = self.qemu.regs.lr
++                self.qemu.cont(blocking=False)
++
++            self.switch = 0
++            def ret0(self):
++                self.qemu.regs.r0 = self.switch
++                self.switch ^= 1
++                self.qemu.regs.pc = self.qemu.regs.lr
++                self.qemu.cont(blocking=False)
++
++            def print_sim_task_buf(self):
++                def sim_buffer_upload(self):
++                    # If PCSC is used, pass this buffer onto the peripheral directly from here.
++                    if usim_periph.pcsc_card != None:
++                        len = self.qemu.regs.r1
++                        buf_ptr = self.qemu.regs.r0
++                        log.info(f"[SIM0] TX len remaining={usim_periph.sim_buf_tx_len_rem}")
++                        if usim_periph.sim_buf_tx_len_rem != 0:
++                            raise Exception('USIM peripheral did not handle the previous APDU before a new one appeared.')
++                        usim_periph.physim_apdu_idx += 1
++                        usim_periph.sim_buf_tx_len_rem += len
++                        usim_periph.sim_buf_tx[:] = self.qemu.rm(buf_ptr, len, raw=True)
++                        log.info(f"[SIM0] Buffer injected into USIM peripheral data={usim_periph.sim_buf_tx.hex().upper()}" )
++
++                len = self.qemu.regs.r1
++                buf_ptr = self.qemu.regs.r0
++                data = self.qemu.rm(buf_ptr, len, raw=True)
++                log.info(f"[SIM0] Buffer data={data.hex().upper()}" )
++
++                # the tag, as argument number 5, is passed via the stack
++                tag_ptr = self.qemu.rm(self.qemu.regs.sp, 4)
++                tag = self.qemu.rm(tag_ptr, 15, raw=True)
++                if tag == b'[UICC APDU CMD]':
++                    sim_buffer_upload(self)
++
++                self.qemu.cont(blocking=False)
++
++
++            self.set_breakpoint(self.symbol_table.lookup('usim_change_voltage').address, change_power)
++            self.set_breakpoint(self.symbol_table.lookup('usim_pwron').address, change_power)
++            self.set_breakpoint(self.symbol_table.lookup('acpm_event_quirk').address, fix_acpm_retrieve_events)
++            self.set_breakpoint(self.symbol_table.lookup('usim_hexdump').address, print_sim_task_buf)
++
+         disable_list = []
+ 
+         if self.modem_soc.name == "S5000AP":
+@@ -868,8 +930,7 @@ r12: %08x     cpsr: %08x""" % (
+         elif self.modem_soc.name == "S337AP":
+             # This is a hack to prevent a memclr of the SHM region
+             # The clear is really slow because SHM is via remote memory
+-            addr = self.symbol_table.lookup("QUIRK_S337AP_SHM_HACK").address
+-            self.qemu.wm(addr, 4, 0) # 4 zero bytes is effectively a nop (andeq r0, r0, r0)
++            self.qemu.wm(0x4074EDE2, 4, 0)
+ 
+             disable_list += ["UDATA"]  # Rabm timer NULL
+             disable_list += ["SHM"]  # takes a ton of CPU time
+diff --git a/firmwire/vendor/shannon/pattern.py b/firmwire/vendor/shannon/pattern.py
+index c935435..d6b8e63 100644
+--- a/firmwire/vendor/shannon/pattern.py
++++ b/firmwire/vendor/shannon/pattern.py
+@@ -136,4 +136,31 @@ PATTERNS = {
+         "post_lookup": handlers.get_dsp_sync1,
+         "required": False,
+     },
++    # Patterns for SIMurai USIM emulation
++    "usim_hexdump": {
++        "pattern": [
++            "2d e9 ?? 4f ?? ?? ?? b0 ?? 46 93 46 4f f0 00 09 04 a8", #S337AP/G970F
++            "2d e9 ?? 4f ?? ?? ?? b0 ?? 46 00 27 50 21 1c 46 91 46 02 a8" #G950F
++        ]
++    },
++    "acpm_event_quirk": {
++        "pattern": [
++            "00 95 01 22 ?* eb ?? 00 91 1e", #G970F/G950F
++            "00 95 01 22 ?? ?? ?? ?? ?? ?? ?? ?? ?? eb ?? 00", #S377AP
++            "00 95 01 22 ?? ?? ?? ?? ?? ?? ?? eb ?? 00", #G960G
++        ],
++        "offset_end": 0
++    },
++    "usim_pwron": {
++        "pattern": [
++            "70 b5 00 26 00 28 34 46 08 bf ?? ?? ?? ?? 03 d0 01 28 08 bf ?? ?? ?? ?? ?? 4d 68 68",
++            "2d e9 f0 43 5f ea 00 09 85 b0 4f f0 00 00 05 46 4f f0 02 04"
++        ]
++    },
++    "usim_change_voltage": {
++        "pattern": [
++            "2d e9 f0 41 00 27 00 28 3c 46 08 bf ?? ?? ?? ?? 03 d0 01 28 08 bf ?? ?? ?? ?? 00 29 08 bf",
++            "2d e9 f0 47 5f ea 00 0a 84 b0 4f f0 00 00 06 46 4f f0 02 04 8d f8 04 00 08 bf 4c 26 03 d0"
++        ]
++    },
+ }
+diff --git a/firmwire/vendor/shannon/soc/__init__.py b/firmwire/vendor/shannon/soc/__init__.py
+index 057d4e5..eb4c3f9 100644
+--- a/firmwire/vendor/shannon/soc/__init__.py
++++ b/firmwire/vendor/shannon/soc/__init__.py
+@@ -174,6 +174,7 @@ class S337AP(ShannonSOC):
+     peripherals = [
+         SOCPeripheral(MotoUARTPeripheral, 0x84005000, 0x1000, name="boot_uart"),
+         SOCPeripheral(PMICPeripheral, 0x8F910000, 0x1000, name="PMIC"),
++        SOCPeripheral(GPIOPeripheral, 0x82004000,0x1000,name="GPIO"),
+     ]
+     # Quite similar to the S5000AP despite the SoC gap
+     CHIP_ID = 0x03370000
+diff --git a/modkit/shannon/Makefile b/modkit/shannon/Makefile
+index 8c878a5..9ee9837 100644
+--- a/modkit/shannon/Makefile
++++ b/modkit/shannon/Makefile
+@@ -52,14 +52,14 @@ COMMON_DEP := $(addprefix $(BUILD_DIR)/, $(COMMON_SRC:.c=.d))
+ 
+ #######################################
+ 
+-MODS := gsm_mm gsm_sm gsm_cc lte_rrc glink hello_world
++MODS := gsm_mm gsm_sm gsm_cc lte_rrc glink usat
+ 
+ gsm_mm_SRC := fuzzers/gsm_mm.c afl.c
+ gsm_cc_SRC := fuzzers/gsm_cc.c afl.c
+ gsm_sm_SRC := fuzzers/gsm_sm.c afl.c
+ lte_rrc_SRC := fuzzers/lte_rrc.c afl.c
++usat_SRC := fuzzers/usat.c afl.c
+ glink_SRC := glink.c
+-hello_world_SRC := hello_world.c
+ 
+ #######################################
+ 
+diff --git a/modkit/shannon/fuzzers/usat.c b/modkit/shannon/fuzzers/usat.c
+new file mode 100644
+index 0000000..9f2ce1f
+--- /dev/null
++++ b/modkit/shannon/fuzzers/usat.c
+@@ -0,0 +1,121 @@
++// Copyright (c) 2022, Team FirmWire
++// SPDX-License-Identifier: BSD-3-Clause
++#include <shannon.h>
++#include <afl.h>
++
++/*  Practove Commands have the following structure: 
++ *      |------------|
++ * 0x00 |  1f01      |
++ *      |------------|
++ * 0x04 |  size      |
++ *      |------------| <- end of qiem_header
++ * 0x08 |  pl_size   |
++ *      |------------|
++ * 0x0c | proctiv_pl*|
++ *      |------------|
++ *
++ * IMPORTANT: the structure changes with other OPs!
++ *
++ */
++
++
++const char TASK_NAME[] = "AFL_USAT\0";
++
++struct qitem_proactive_cmd {
++  struct qitem_header header;
++  uint32_t pl_size;
++  char * proactive_pl;
++} PACKED;
++
++
++struct qitem_usat_setup {
++  struct qitem_header header;
++  uint32_t word;
++} PACKED;
++
++
++static uint32_t qid_usat;
++static uint32_t qid_usat_sync;
++
++char * usat_state = (char *) 0x43ef4648;
++
++int fuzz_single_setup()
++{
++  qid_usat = queuename2id("USAT");
++  qid_usat_sync = queuename2id("USAT_SYNC");
++
++  while (*usat_state != 2){
++    uart_puts("[+] Waiting for USAT init ... \n");
++    pal_Sleep(5000);
++  }
++
++  // This message will register a client for the USAT task. This client may get messages from proactive cmds
++  struct qitem_usat_setup * init = pal_MemAlloc(4, sizeof(struct qitem_usat_setup), __FILE__, __LINE__);
++
++  init->header.op = 0xbf;
++  init->header.size = 4;
++  init->header.msgGroup = 0x1f40;
++  init->word = 0xbf; // This word determines which mailbox the client task will have
++  pal_MsgSendTo(qid_usat, init, 2);
++
++
++
++  struct qitem_usat_setup * sync = pal_MemAlloc(4, sizeof(struct qitem_usat_setup), __FILE__, __LINE__);
++
++  init->header.op = 0x0;
++  init->header.size = 0;
++  init->header.msgGroup = 0x0;
++  init->word = 0x0; //unused
++  pal_MsgSendTo(qid_usat_sync, sync, 2);
++
++
++
++  return 1;
++}
++void fuzz_single()
++{
++
++    uint32_t input_size;
++    uint16_t size;
++    uart_puts("[+] Allocating Qitem\n");
++    struct qitem_proactive_cmd * item = pal_MemAlloc(4, sizeof(struct qitem_proactive_cmd), __FILE__, __LINE__);
++    if (!item) {
++      uart_puts("ALLOC FAILED");
++      return;
++    }
++    uart_puts("[+] Getting Work\n");
++    char * buf = getWork(&input_size);
++    size = (uint16_t) input_size;
++
++    uart_puts("[+] Received n bytes: ");
++    uart_dump_hex((uint8_t *)buf, size); // Print some for testing
++
++    // Max size before size is forced reduced
++    if (size > 254) {
++    startWork(0, 0xffffffff); // memory range to collect coverage
++    doneWork(0);
++    return;
++    }
++
++    char * proactive_pl = pal_MemAlloc(4, input_size + 2, __FILE__, __LINE__);
++
++    uart_puts("[+] Filling the qitem\n");
++    item->header.msgGroup = 0x1f01;
++    item->header.size = sizeof(struct qitem_proactive_cmd) - sizeof(struct qitem_header);
++
++    memcpy(proactive_pl+2, buf, input_size);
++    proactive_pl[0] = 0xd0;
++    proactive_pl[1] = input_size & 0xff;
++    item->pl_size = input_size + 2;
++    item->proactive_pl = proactive_pl;
++
++    uart_puts("[+] PL_BUF: ");
++    uart_dump_hex((uint8_t *)proactive_pl, size+2); // Print some for testing
++
++
++    uart_puts("[+] FIRE\n");
++    startWork(0, 0xffffffff); // memory range to collect coverage
++    pal_MsgSendTo(qid_usat, item, 2);
++    doneWork(0);
++    uart_puts("[+] WorkDone\n");
++}

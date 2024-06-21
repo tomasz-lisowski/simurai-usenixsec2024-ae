@@ -1,0 +1,52 @@
+FROM simurai/firmwire_base:1.0.0 AS base
+
+ARG simurai__commit=0f4143246b96a70cc8f5a9fe334ec8da9687686d
+
+
+# Clone and build SIMurai components.
+FROM ubuntu:22.04 AS base__simurai
+
+
+# Create directory for compiled simurai files.
+RUN set -eux; \
+    mkdir /opt/setup;
+
+RUN set -eux; \
+    apt-get -qq update; \
+    apt-get -qq --yes dist-upgrade;
+
+ENV SIMURAI__COMMIT=${simurai__commit}
+RUN set -eux; \
+    apt-get -qq --yes --no-install-recommends install pcscd cmake gcc gcc-multilib pkg-config make git ca-certificates libpcsclite-dev libpcsclite1; \
+    cd /opt/setup; \
+    git clone --recurse-submodules https://github.com/tomasz-lisowski/simurai.git; \
+    cd ./simurai; \
+    git reset --hard ${SIMURAI__COMMIT}; \
+    cd ./swsim; \
+    make -j $(nproc) main-static test-static; \
+    cd ../swicc; \
+    make -j $(nproc) main-static test-static; \
+    cd ../swicc__pcsc; \
+    make -j $(nproc) main-dbg; \
+    make install; \
+    cd ..; \
+    apt-get -qq --yes purge pcscd cmake gcc gcc-multilib pkg-config make git ca-certificates libpcsclite-dev libpcsclite1;
+
+FROM base
+
+
+COPY --from=base__simurai /opt/setup/simurai/swsim/build /opt/setup/simurai/swsim/build
+COPY --from=base__simurai /opt/setup/simurai/swsim/data /opt/setup/simurai/swsim/data
+COPY --from=base__simurai /opt/setup/simurai/swicc/build /opt/setup/simurai/swicc/build
+COPY --from=base__simurai /opt/setup/simurai/swicc/test/data /opt/setup/simurai/swicc/test/data
+COPY --from=base__simurai /etc/reader.conf.d /etc/reader.conf.d
+COPY --from=base__simurai /usr/lib/pcsc/drivers/serial /usr/lib/pcsc/drivers/serial
+
+RUN set -eux; \
+    apt-get -qq --yes --no-install-recommends install libasan6 libpcsclite-dev pcsc-tools procps pcscd tmux; \
+    pip3 install pyscard; \
+    ls -la /usr/lib/pcsc/drivers/serial; \
+    ls -la /etc/reader.conf.d;
+
+COPY --chmod=700 ./entrypoint.sh /opt/setup
+ENTRYPOINT ["/opt/setup/entrypoint.sh"]
