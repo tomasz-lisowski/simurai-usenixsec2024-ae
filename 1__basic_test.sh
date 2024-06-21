@@ -9,24 +9,9 @@ if [ `id -u` -ne 0 ]; then
     exit 1;
 fi
 
-platform() {
-    source /etc/os-release;
-    [[ ${ID} = "ubuntu" ]]
-};
+printf "Make sure to run this script after running ./0__install.sh.\\n";
+read -p "Continue...";
 
-printf "0. Check platform is Ubuntu.\\n"
-read -p "Press enter to run step...";
-if ! platform; then
-    printf "%s\\n" "Platform not supported. Need ubuntu."
-    exit 1;
-fi
-printf "Platform is supported.\\n"
-printf "\\n"
+printf "TODO.\\n";
 
-printf "1. Check Docker.\\n"
-read -p "Press enter to run step...";
-sudo docker run hello-world 2>&1 > /dev/null;
-printf "Docker is installed correctly.\\n"
-printf "\\n"
-
-printf "Basic test completed successfully!\\n"
+printf "Basic test completed successfully!\\n";

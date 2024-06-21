@@ -9,24 +9,42 @@ if [ `id -u` -ne 0 ]; then
     exit 1;
 fi
 
-printf "0. Build setup 0.\\n"
-read -p "Press enter to run step...";
-printf "TODO.\\n\\n"
+platform() {
+    source /etc/os-release;
+    [[ ${ID} = "ubuntu" ]];
+};
 
-printf "1. Build setup 1.\\n"
+printf "0. Check platform is Ubuntu.\\n";
+read -p "Press enter to run step...";
+if ! platform; then
+    printf "%s\\n" "Platform not supported. Need ubuntu."
+    exit 1;
+fi
+printf "Platform is supported.\\n\\n";
+
+printf "1. Check Docker.\\n"
+read -p "Press enter to run step...";
+docker run hello-world 2>&1 > /dev/null;
+printf "Docker is installed correctly.\\n\\n";
+
+printf "2. Build setup 0.\\n"
+read -p "Press enter to run step...";
+printf "TODO.\\n\\n";
+
+printf "3. Build setup 1.\\n"
 read -p "Press enter to run step...";
 pushd .;
 cd ./0__setup;
 cd ./1__srsue;
 ./experiment__build;
 popd;
-printf "Done.\\n\\n"
+printf "Done.\\n\\n";
 
-printf "2. Build setup 2.\\n"
+printf "4. Build setup 2.\\n";
 read -p "Press enter to run step...";
 pushd .;
 cd ./0__setup;
 cd ./2__emulated_ue;
 ./experiment__build;
 popd;
-printf "Done.\\n\\n"
+printf "Done.\\n\\n";
