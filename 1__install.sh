@@ -1,33 +1,24 @@
 #!/bin/bash
-source ./util/preamble.sh
-source ./util/check_root.sh
+readonly UTIL=$(dirname "$0")/util;
+source ${UTIL}/preamble.sh;
+source ${UTIL}/check_root.sh;
+source ${UTIL}/check_platform.sh;
+source ${UTIL}/check_docker.sh;
 
-printf "1. Check platform is Ubuntu.\\n";
+printf "%sRUN%s Build setup 1.\\n" ${CRUN} ${CDEF};
 read -p "Press enter to run step...";
-source ./util/check_platform.sh
+pushd .;
+cd ./1__setup;
+cd ./2__srsue;
+./experiment__build.sh;
+popd;
+printf "  %sDONE%s.\\n" ${CPASS} ${CDEF};
 
-printf "2. Check Docker.\\n"
+printf "%sRUN%s Build setup 2.\\n" ${CRUN} ${CDEF};
 read -p "Press enter to run step...";
-source ./util/check_docker.sh
-
-printf "3. Build setup 0.\\n"
-read -p "Press enter to run step...";
-printf "TODO.\\n\\n";
-
-# printf "3. Build setup 1.\\n"
-# read -p "Press enter to run step...";
-# pushd .;
-# cd ./0__setup;
-# cd ./1__srsue;
-# ./experiment__build;
-# popd;
-# printf "Done.\\n\\n";
-
-# printf "4. Build setup 2.\\n";
-# read -p "Press enter to run step...";
-# pushd .;
-# cd ./0__setup;
-# cd ./2__emulated_ue;
-# ./experiment__build;
-# popd;
-# printf "Done.\\n\\n";
+pushd .;
+cd ./1__setup;
+cd ./3__emulated_ue;
+./experiment__build.sh;
+popd;
+printf "  %sDONE%s.\\n" ${CPASS} ${CDEF};

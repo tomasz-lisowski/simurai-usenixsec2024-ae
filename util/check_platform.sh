@@ -3,9 +3,11 @@ platform() {
     source /etc/os-release;
     [[ ${ID} = "ubuntu" ]];
 };
+
+printf "%sCHECK%s Platform == Ubuntu.\\n" ${CCHK} ${CDEF};
 if ! platform; then
-    printf "Platform is not supported. Need Ubuntu.\\n"
+    printf "  %sFAIL%s. Platform is not supported. Need Ubuntu.\\n" ${CFAIL} ${CDEF};
     exit 1;
 else
-    printf "Platform is supported.\\n"
+    printf "  %sPASS%s. Platform is supported.\\n" ${CPASS} ${CDEF};
 fi
