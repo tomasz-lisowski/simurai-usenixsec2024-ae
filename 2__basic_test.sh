@@ -1,5 +1,6 @@
 #!/bin/bash
-readonly UTIL=$(dirname "$0")/util;
+readonly ROOT=$(dirname "$0");
+readonly UTIL=${ROOT}/util;
 source ${UTIL}/preamble.sh;
 source ${UTIL}/check_root.sh
 

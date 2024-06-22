@@ -1,5 +1,6 @@
 #!/bin/bash
-readonly UTIL=$(dirname "$0")/util;
+readonly ROOT=$(dirname "$0");
+readonly UTIL=${ROOT}/util;
 source ${UTIL}/preamble.sh;
 source ${UTIL}/check_root.sh;
 source ${UTIL}/check_platform.sh;
@@ -10,7 +11,7 @@ read -p "Press enter to run step...";
 pushd .;
 cd ./1__setup;
 cd ./2__srsue;
-./experiment__build.sh;
+./1__build.sh;
 popd;
 printf "  %sDONE%s.\\n" ${CPASS} ${CDEF};
 
@@ -19,6 +20,6 @@ read -p "Press enter to run step...";
 pushd .;
 cd ./1__setup;
 cd ./3__emulated_ue;
-./experiment__build.sh;
+./1__build.sh;
 popd;
 printf "  %sDONE%s.\\n" ${CPASS} ${CDEF};
