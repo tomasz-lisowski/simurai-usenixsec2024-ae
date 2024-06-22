@@ -1,16 +1,6 @@
-```
-cp id_ed25519_setup1_2048 ~/.ssh/
-chmod 600 ~/.ssh/id_ed25519_setup1_2048
-```
-
 ## Connection to Host 1
 
-`ssh setup1@65.21.243.117 -p 20242 -i ~/.ssh/id_ed25519_setup1_2048`
-
-
-## Connection to Host 2
-
-`ssh setup1@65.21.243.117 -p 20243 -i ~/.ssh/id_ed25519_setup1_2048`
+`ssh setup1@65.21.243.117 -p 20242 -i simurai_ae.key`
 
 
 ## Connection to UE
@@ -29,7 +19,3 @@ cd scrcpy
 git check out 576e7552a29e30b40205f81f2ff4d461f018313f
 ./install_release.sh
 ```
-
-After install scrcpy, run `./launch_setup.sh`
-
-TODO: simurai and yateBTS
