@@ -17,17 +17,21 @@ if ! docker image inspect simurai/setup_3:1.0.0 > /dev/null 2>&1 ; then
     printf "  %sFAIL%s. SIMurai setup3 not found. Please run '${ROOT}/1__install.sh'.\\n" ${CFAIL} ${CDEF};
     exit 1;
 else
-    printf "  %sPASS%s.\\n" ${CPAS} ${CDEF};
+    printf "  %sPASS%s.\\n" ${CPASS} ${CDEF};
 fi
 
-printf "%s\\n" "3. Check if AFL was already cloned."
+printf "%sCHECK%s Check if AFL was already cloned.\\n" ${CCHK} ${CDEF};
 if [ ! -d "AFLplusplus" ] ; then
-    echo "Cloning AFL++"
-    git clone --branch v4.21c https://github.com/AFLplusplus/AFLplusplus.git
+    printf "  %sFAIL%s. Need to clone AFL++.\\n" ${CFAIL} ${CDEF};
+    printf "  %sRUN%s. Cloning AFL++.\\n" ${CRUN} ${CDEF};
+    git clone --branch v4.21c https://github.com/AFLplusplus/AFLplusplus.git;
+    printf "  %sPASS%s.\\n" ${CPASS} ${CDEF};
+else
+    printf "  %sPASS%s.\\n" ${CPASS} ${CDEF};
 fi
 
-echo "Extracting seed corpus"
-tar -xvf seeds.tar.gz
+printf "%sRUN%s Extract seed corpus.\\n" ${CRUN} ${CDEF};
+tar -xvf seeds.tar.gz;
 
 echo "Setting up fuzzing environment"
 docker run -v "${MODEM}":/firmwire/modem_files \
