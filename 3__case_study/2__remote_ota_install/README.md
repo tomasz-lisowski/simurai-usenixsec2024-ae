@@ -1,3 +1,10 @@
+# Description
+
+These artifacts augment the case study `6.3.2 Rogue Carrier: Over-the-Air SIM Card Update`.
+
+We show that:
+- SIM applets can be remotely installed without interaction
+- we successfully deliver the crashing payload from the applet.
 
 Assets:
 - PCAPs:
@@ -8,6 +15,9 @@ Assets:
   - `enb_mac.pcap`: MAC-layer capture at the eNodeB.
 
 Only the NAS-layer and SIM communication is interesting in this context; the other files are supplied for completeness.
+
+- Video:
+  - `screenrecording.mp4`: Android screen capture covering initial network attach, applet installation, and payload delivery.
 
 # Setup
 

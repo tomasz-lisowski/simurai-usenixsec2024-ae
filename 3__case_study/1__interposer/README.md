@@ -6,7 +6,7 @@ We show that:
 - we use an interposer to manipulate SIM communication, and
 - we successfully deliver the crashing payload from the custom firmware.
 
-Please understand that the firmware of the interposer is proprietary, and as it only serves as an example to explore the threat posed by physical attackers, we do not publish of this particular product.
+Please understand that the firmware of the interposer is proprietary, and as it only serves as an example to explore the threat posed by physical attackers, we do not publish details of this particular product.
 
 ## Assets
 Main asset:
