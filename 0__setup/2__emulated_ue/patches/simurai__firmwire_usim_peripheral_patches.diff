@@ -1,3 +1,36 @@
+diff --git a/firmwire/emulator/snapshot.py b/firmwire/emulator/snapshot.py
+index 56119d0..95cd845 100644
+--- a/firmwire/emulator/snapshot.py
++++ b/firmwire/emulator/snapshot.py
+@@ -11,6 +11,7 @@ import shlex
+ from subprocess import run
+ from datetime import datetime
+ 
++
+ log = logging.getLogger(__name__)
+ 
+ SNAPSHOT_RE = re.compile(r"[-a-zA-Z0-9_]+")
+@@ -135,6 +136,11 @@ class QemuSnapshotManager(object):
+ 
+         log.info("Saving snapshot auxiliary data to %s", snapshot_info_path)
+ 
++        # We need to remove USIMPeripherals as they hold socket objects with unpickable RLocks
++        log.warn("Removing USIMPeripherals from the snapshots")
++        from firmwire.vendor.shannon.hw import USIMPeripheral # Imported here to avoid circular imports during firmwire init
++        peripherals = {k:v for k, v in peripherals.items() if not isinstance(v, USIMPeripheral)}
++
+         snapshot_info = {
+             "version": SNAPSHOT_VERSION,
+             "metadata": metadata,
+@@ -142,6 +148,8 @@ class QemuSnapshotManager(object):
+             "machine_state": machine_state,
+         }
+ 
++
++
+         try:
+             with open(snapshot_info_path, "wb") as fp:
+                 pickle.dump(snapshot_info, fp)
 diff --git a/firmwire/vendor/shannon/hw/USIMPeripheral.py b/firmwire/vendor/shannon/hw/USIMPeripheral.py
 new file mode 100644
 index 0000000..7c1a11c
@@ -708,10 +741,10 @@ index 8c878a5..9ee9837 100644
  
 diff --git a/modkit/shannon/fuzzers/usat.c b/modkit/shannon/fuzzers/usat.c
 new file mode 100644
-index 0000000..9f2ce1f
+index 0000000..58568a8
 --- /dev/null
 +++ b/modkit/shannon/fuzzers/usat.c
-@@ -0,0 +1,121 @@
+@@ -0,0 +1,122 @@
 +// Copyright (c) 2022, Team FirmWire
 +// SPDX-License-Identifier: BSD-3-Clause
 +#include <shannon.h>
@@ -751,7 +784,8 @@ index 0000000..9f2ce1f
 +static uint32_t qid_usat;
 +static uint32_t qid_usat_sync;
 +
-+char * usat_state = (char *) 0x43ef4648;
++// fixme: this needs to be reversed manually
++char * usat_state = (char *) 0x43ffcda0; 
 +
 +int fuzz_single_setup()
 +{
