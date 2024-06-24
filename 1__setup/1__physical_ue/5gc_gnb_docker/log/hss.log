@@ -1,0 +1,42 @@
+Open5GS daemon v2.7.1
+
+06/24 11:14:42.914: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/hss.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:14:42.914: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/hss.log' (../lib/app/ogs-init.c:136)
+06/24 11:14:42.915: [dbi] INFO: MongoDB URI: 'mongodb://localhost/open5gs' (../lib/dbi/ogs-mongoc.c:130)
+06/24 11:14:42.931: [app] INFO: HSS initialize...done (../src/hss/app-init.c:31)
+06/24 11:14:42.932: [diam] INFO: CONNECTED TO 'mme.localdomain' (SCTP,soc#15): (../lib/diameter/common/logger.c:108)
+Open5GS daemon v2.7.1
+
+06/24 11:21:59.790: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/hss.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:21:59.790: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/hss.log' (../lib/app/ogs-init.c:136)
+06/24 11:21:59.791: [dbi] INFO: MongoDB URI: 'mongodb://localhost/open5gs' (../lib/dbi/ogs-mongoc.c:130)
+06/24 11:21:59.802: [app] INFO: HSS initialize...done (../src/hss/app-init.c:31)
+06/24 11:21:59.803: [diam] INFO: CONNECTED TO 'mme.localdomain' (SCTP,soc#15): (../lib/diameter/common/logger.c:108)
+Open5GS daemon v2.7.1
+
+06/24 11:25:29.997: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/hss.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:25:29.997: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/hss.log' (../lib/app/ogs-init.c:136)
+06/24 11:25:29.998: [dbi] INFO: MongoDB URI: 'mongodb://localhost/open5gs' (../lib/dbi/ogs-mongoc.c:130)
+06/24 11:25:30.009: [app] INFO: HSS initialize...done (../src/hss/app-init.c:31)
+06/24 11:25:30.010: [diam] INFO: CONNECTED TO 'mme.localdomain' (SCTP,soc#16): (../lib/diameter/common/logger.c:108)
+Open5GS daemon v2.7.1
+
+06/24 11:37:42.973: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/hss.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:37:42.973: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/hss.log' (../lib/app/ogs-init.c:136)
+06/24 11:37:42.974: [dbi] INFO: MongoDB URI: 'mongodb://localhost/open5gs' (../lib/dbi/ogs-mongoc.c:130)
+06/24 11:37:42.985: [app] INFO: HSS initialize...done (../src/hss/app-init.c:31)
+06/24 11:37:42.986: [diam] INFO: CONNECTED TO 'mme.localdomain' (SCTP,soc#15): (../lib/diameter/common/logger.c:108)
+Open5GS daemon v2.7.1
+
+06/24 11:44:57.573: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/hss.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:44:57.573: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/hss.log' (../lib/app/ogs-init.c:136)
+06/24 11:44:57.574: [dbi] INFO: MongoDB URI: 'mongodb://localhost/open5gs' (../lib/dbi/ogs-mongoc.c:130)
+06/24 11:44:57.584: [app] INFO: HSS initialize...done (../src/hss/app-init.c:31)
+06/24 11:44:57.585: [diam] INFO: CONNECTED TO 'mme.localdomain' (SCTP,soc#15): (../lib/diameter/common/logger.c:108)
+Open5GS daemon v2.7.1
+
+06/24 12:22:09.385: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/hss.yaml' (../lib/app/ogs-init.c:133)
+06/24 12:22:09.385: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/hss.log' (../lib/app/ogs-init.c:136)
+06/24 12:22:09.387: [dbi] INFO: MongoDB URI: 'mongodb://localhost/open5gs' (../lib/dbi/ogs-mongoc.c:130)
+06/24 12:22:09.397: [app] INFO: HSS initialize...done (../src/hss/app-init.c:31)
+06/24 12:22:09.398: [diam] INFO: CONNECTED TO 'mme.localdomain' (SCTP,soc#15): (../lib/diameter/common/logger.c:108)

@@ -1,0 +1,54 @@
+Open5GS daemon v2.7.1
+
+06/24 11:14:42.909: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/sgwu.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:14:42.909: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/sgwu.log' (../lib/app/ogs-init.c:136)
+06/24 11:14:42.933: [pfcp] INFO: pfcp_server() [127.0.0.6]:8805 (../lib/pfcp/path.c:30)
+06/24 11:14:42.933: [gtp] INFO: gtp_server() [127.0.0.6]:2152 (../lib/gtp/path.c:30)
+06/24 11:14:42.933: [app] INFO: SGW-U initialize...done (../src/sgwu/app.c:31)
+06/24 11:14:42.934: [pfcp] INFO: ogs_pfcp_connect() [127.0.0.3]:8805 (../lib/pfcp/path.c:61)
+06/24 11:14:42.935: [sgwu] INFO: PFCP associated [127.0.0.3]:8805 (../src/sgwu/pfcp-sm.c:179)
+Open5GS daemon v2.7.1
+
+06/24 11:21:59.785: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/sgwu.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:21:59.785: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/sgwu.log' (../lib/app/ogs-init.c:136)
+06/24 11:21:59.808: [pfcp] INFO: pfcp_server() [127.0.0.6]:8805 (../lib/pfcp/path.c:30)
+06/24 11:21:59.808: [gtp] INFO: gtp_server() [127.0.0.6]:2152 (../lib/gtp/path.c:30)
+06/24 11:21:59.808: [app] INFO: SGW-U initialize...done (../src/sgwu/app.c:31)
+06/24 11:21:59.810: [pfcp] INFO: ogs_pfcp_connect() [127.0.0.3]:8805 (../lib/pfcp/path.c:61)
+06/24 11:21:59.810: [sgwu] INFO: PFCP associated [127.0.0.3]:8805 (../src/sgwu/pfcp-sm.c:179)
+Open5GS daemon v2.7.1
+
+06/24 11:25:29.991: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/sgwu.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:25:29.991: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/sgwu.log' (../lib/app/ogs-init.c:136)
+06/24 11:25:30.017: [pfcp] INFO: pfcp_server() [127.0.0.6]:8805 (../lib/pfcp/path.c:30)
+06/24 11:25:30.017: [gtp] INFO: gtp_server() [127.0.0.6]:2152 (../lib/gtp/path.c:30)
+06/24 11:25:30.017: [app] INFO: SGW-U initialize...done (../src/sgwu/app.c:31)
+06/24 11:25:32.518: [pfcp] INFO: ogs_pfcp_connect() [127.0.0.3]:8805 (../lib/pfcp/path.c:61)
+06/24 11:25:32.518: [sgwu] INFO: PFCP associated [127.0.0.3]:8805 (../src/sgwu/pfcp-sm.c:179)
+Open5GS daemon v2.7.1
+
+06/24 11:37:42.967: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/sgwu.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:37:42.967: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/sgwu.log' (../lib/app/ogs-init.c:136)
+06/24 11:37:42.991: [pfcp] INFO: pfcp_server() [127.0.0.6]:8805 (../lib/pfcp/path.c:30)
+06/24 11:37:42.991: [gtp] INFO: gtp_server() [127.0.0.6]:2152 (../lib/gtp/path.c:30)
+06/24 11:37:42.991: [app] INFO: SGW-U initialize...done (../src/sgwu/app.c:31)
+06/24 11:37:42.993: [pfcp] INFO: ogs_pfcp_connect() [127.0.0.3]:8805 (../lib/pfcp/path.c:61)
+06/24 11:37:42.994: [sgwu] INFO: PFCP associated [127.0.0.3]:8805 (../src/sgwu/pfcp-sm.c:179)
+Open5GS daemon v2.7.1
+
+06/24 11:44:57.568: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/sgwu.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:44:57.568: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/sgwu.log' (../lib/app/ogs-init.c:136)
+06/24 11:44:57.592: [pfcp] INFO: pfcp_server() [127.0.0.6]:8805 (../lib/pfcp/path.c:30)
+06/24 11:44:57.592: [gtp] INFO: gtp_server() [127.0.0.6]:2152 (../lib/gtp/path.c:30)
+06/24 11:44:57.592: [app] INFO: SGW-U initialize...done (../src/sgwu/app.c:31)
+06/24 11:44:57.594: [pfcp] INFO: ogs_pfcp_connect() [127.0.0.3]:8805 (../lib/pfcp/path.c:61)
+06/24 11:44:57.594: [sgwu] INFO: PFCP associated [127.0.0.3]:8805 (../src/sgwu/pfcp-sm.c:179)
+Open5GS daemon v2.7.1
+
+06/24 12:22:09.380: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/sgwu.yaml' (../lib/app/ogs-init.c:133)
+06/24 12:22:09.380: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/sgwu.log' (../lib/app/ogs-init.c:136)
+06/24 12:22:09.404: [pfcp] INFO: pfcp_server() [127.0.0.6]:8805 (../lib/pfcp/path.c:30)
+06/24 12:22:09.404: [gtp] INFO: gtp_server() [127.0.0.6]:2152 (../lib/gtp/path.c:30)
+06/24 12:22:09.404: [app] INFO: SGW-U initialize...done (../src/sgwu/app.c:31)
+06/24 12:22:09.406: [pfcp] INFO: ogs_pfcp_connect() [127.0.0.3]:8805 (../lib/pfcp/path.c:61)
+06/24 12:22:09.406: [sgwu] INFO: PFCP associated [127.0.0.3]:8805 (../src/sgwu/pfcp-sm.c:179)

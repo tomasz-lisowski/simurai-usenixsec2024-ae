@@ -1,0 +1,184 @@
+Open5GS daemon v2.7.1
+
+06/24 11:14:42.912: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/mme.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:14:42.912: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/mme.log' (../lib/app/ogs-init.c:136)
+06/24 11:14:42.914: [metrics] INFO: metrics_server() [http://127.0.0.2]:9090 (../lib/metrics/prometheus/context.c:299)
+06/24 11:14:42.930: [gtp] INFO: gtp_server() [10.53.1.2]:2123 (../lib/gtp/path.c:30)
+06/24 11:14:42.930: [gtp] INFO: gtp_connect() [127.0.0.3]:2123 (../lib/gtp/path.c:60)
+06/24 11:14:42.930: [mme] INFO: s1ap_server() [10.53.1.2]:36412 (../src/mme/s1ap-sctp.c:62)
+06/24 11:14:42.930: [sctp] INFO: MME initialize...done (../src/mme/app-init.c:33)
+06/24 11:14:42.932: [diam] INFO: CONNECTED TO 'hss.localdomain' (SCTP,soc#8): (../lib/diameter/common/logger.c:108)
+Open5GS daemon v2.7.1
+
+06/24 11:21:59.788: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/mme.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:21:59.788: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/mme.log' (../lib/app/ogs-init.c:136)
+06/24 11:21:59.790: [metrics] INFO: metrics_server() [http://127.0.0.2]:9090 (../lib/metrics/prometheus/context.c:299)
+06/24 11:21:59.801: [gtp] INFO: gtp_server() [10.53.1.2]:2123 (../lib/gtp/path.c:30)
+06/24 11:21:59.801: [gtp] INFO: gtp_connect() [127.0.0.3]:2123 (../lib/gtp/path.c:60)
+06/24 11:21:59.801: [mme] INFO: s1ap_server() [10.53.1.2]:36412 (../src/mme/s1ap-sctp.c:62)
+06/24 11:21:59.801: [sctp] INFO: MME initialize...done (../src/mme/app-init.c:33)
+06/24 11:21:59.803: [diam] INFO: CONNECTED TO 'hss.localdomain' (SCTP,soc#8): (../lib/diameter/common/logger.c:108)
+Open5GS daemon v2.7.1
+
+06/24 11:25:29.996: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/mme.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:25:29.996: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/mme.log' (../lib/app/ogs-init.c:136)
+06/24 11:25:29.998: [metrics] INFO: metrics_server() [http://127.0.0.2]:9090 (../lib/metrics/prometheus/context.c:299)
+06/24 11:25:30.009: [gtp] INFO: gtp_server() [10.53.1.2]:2123 (../lib/gtp/path.c:30)
+06/24 11:25:30.009: [gtp] INFO: gtp_connect() [127.0.0.3]:2123 (../lib/gtp/path.c:60)
+06/24 11:25:30.009: [mme] INFO: s1ap_server() [10.53.1.2]:36412 (../src/mme/s1ap-sctp.c:62)
+06/24 11:25:30.009: [sctp] INFO: MME initialize...done (../src/mme/app-init.c:33)
+06/24 11:25:30.009: [diam] INFO: CONNECTED TO 'hss.localdomain' (SCTP,soc#9): (../lib/diameter/common/logger.c:108)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:116: DROPPED 'Received while peer state machine was in state STATE_OPEN.'
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:      'Capabilities-Exchange-Answer'
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:        Version: 0x01
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:        Length: 340
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:        Flags: 0x00 (----)
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:        Command Code: 257
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:        ApplicationId: 0
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:        Hop-by-Hop Identifier: 0x1C4590E9
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:        End-to-End Identifier: 0x7A99C5E8
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         {internal data}: src:hss.localdomain(15) rwb:(nil) rt:2 cb:(nil),(nil)((nil)) qry:0x769b84000cd0 asso:0 sess:(nil)
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Result-Code'(268) l=12 f=-M val='ELECTION_LOST' (4003 (0xfa3))
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Error-Message'(281) l=59 f=-- val="Please answer my CER instead, you won the election."
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Origin-Host'(264) l=23 f=-M val="hss.localdomain"
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Origin-Realm'(296) l=19 f=-M val="localdomain"
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Origin-State-Id'(278) l=12 f=-M val=1719228329 (0x667957a9)
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Host-IP-Address'(257) l=14 f=-M val=127.0.0.8
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Vendor-Id'(266) l=12 f=-M val=0 (0x0)
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Product-Name'(269) l=20 f=-- val="freediameter"
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Firmware-Revision'(267) l=12 f=-- val=10500 (0x2904)
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Vendor-Specific-Application-Id'(260) l=32 f=-M val=(grouped)
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:            AVP: 'Auth-Application-Id'(258) l=12 f=-M val=16777216 (0x1000000)
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:            AVP: 'Vendor-Id'(266) l=12 f=-M val=10415 (0x28af)
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Vendor-Specific-Application-Id'(260) l=32 f=-M val=(grouped)
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:            AVP: 'Auth-Application-Id'(258) l=12 f=-M val=16777251 (0x1000023)
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:            AVP: 'Vendor-Id'(266) l=12 f=-M val=10415 (0x28af)
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Vendor-Specific-Application-Id'(260) l=32 f=-M val=(grouped)
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:            AVP: 'Auth-Application-Id'(258) l=12 f=-M val=16777265 (0x1000031)
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:            AVP: 'Vendor-Id'(266) l=12 f=-M val=10415 (0x28af)
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Supported-Vendor-Id'(265) l=12 f=-M val=5535 (0x159f)
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Supported-Vendor-Id'(265) l=12 f=-M val=10415 (0x28af)
+ ((null):0)
+06/24 11:25:30.010: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Supported-Vendor-Id'(265) l=12 f=-M val=13019 (0x32db)
+ ((null):0)
+Open5GS daemon v2.7.1
+
+06/24 11:37:42.972: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/mme.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:37:42.972: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/mme.log' (../lib/app/ogs-init.c:136)
+06/24 11:37:42.975: [metrics] INFO: metrics_server() [http://127.0.0.2]:9090 (../lib/metrics/prometheus/context.c:299)
+06/24 11:37:42.985: [gtp] INFO: gtp_server() [10.53.1.2]:2123 (../lib/gtp/path.c:30)
+06/24 11:37:42.985: [gtp] INFO: gtp_connect() [127.0.0.3]:2123 (../lib/gtp/path.c:60)
+06/24 11:37:42.985: [mme] INFO: s1ap_server() [10.53.1.2]:36412 (../src/mme/s1ap-sctp.c:62)
+06/24 11:37:42.985: [sctp] INFO: MME initialize...done (../src/mme/app-init.c:33)
+06/24 11:37:42.986: [diam] INFO: CONNECTED TO 'hss.localdomain' (SCTP,soc#8): (../lib/diameter/common/logger.c:108)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:116: DROPPED 'Received while peer state machine was in state STATE_OPEN.'
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:      'Capabilities-Exchange-Answer'
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:        Version: 0x01
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:        Length: 340
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:        Flags: 0x00 (----)
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:        Command Code: 257
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:        ApplicationId: 0
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:        Hop-by-Hop Identifier: 0x57C4783B
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:        End-to-End Identifier: 0xA861A8F5
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         {internal data}: src:hss.localdomain(15) rwb:(nil) rt:2 cb:(nil),(nil)((nil)) qry:0x73db50000cd0 asso:0 sess:(nil)
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Result-Code'(268) l=12 f=-M val='ELECTION_LOST' (4003 (0xfa3))
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Error-Message'(281) l=59 f=-- val="Please answer my CER instead, you won the election."
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Origin-Host'(264) l=23 f=-M val="hss.localdomain"
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Origin-Realm'(296) l=19 f=-M val="localdomain"
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Origin-State-Id'(278) l=12 f=-M val=1719229062 (0x66795a86)
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Host-IP-Address'(257) l=14 f=-M val=127.0.0.8
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Vendor-Id'(266) l=12 f=-M val=0 (0x0)
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Product-Name'(269) l=20 f=-- val="freediameter"
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Firmware-Revision'(267) l=12 f=-- val=10500 (0x2904)
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Vendor-Specific-Application-Id'(260) l=32 f=-M val=(grouped)
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:            AVP: 'Auth-Application-Id'(258) l=12 f=-M val=16777216 (0x1000000)
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:            AVP: 'Vendor-Id'(266) l=12 f=-M val=10415 (0x28af)
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Vendor-Specific-Application-Id'(260) l=32 f=-M val=(grouped)
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:            AVP: 'Auth-Application-Id'(258) l=12 f=-M val=16777251 (0x1000023)
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:            AVP: 'Vendor-Id'(266) l=12 f=-M val=10415 (0x28af)
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Vendor-Specific-Application-Id'(260) l=32 f=-M val=(grouped)
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:            AVP: 'Auth-Application-Id'(258) l=12 f=-M val=16777265 (0x1000031)
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:            AVP: 'Vendor-Id'(266) l=12 f=-M val=10415 (0x28af)
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Supported-Vendor-Id'(265) l=12 f=-M val=5535 (0x159f)
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Supported-Vendor-Id'(265) l=12 f=-M val=10415 (0x28af)
+ ((null):0)
+06/24 11:37:42.986: [diam] ERROR: pid:PSM/hss.localdomain in md_hook_cb_tree@dbg_msg_dumps.c:117:         AVP: 'Supported-Vendor-Id'(265) l=12 f=-M val=13019 (0x32db)
+ ((null):0)
+Open5GS daemon v2.7.1
+
+06/24 11:44:57.570: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/mme.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:44:57.570: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/mme.log' (../lib/app/ogs-init.c:136)
+06/24 11:44:57.573: [metrics] INFO: metrics_server() [http://127.0.0.2]:9090 (../lib/metrics/prometheus/context.c:299)
+06/24 11:44:57.583: [gtp] INFO: gtp_server() [10.53.1.2]:2123 (../lib/gtp/path.c:30)
+06/24 11:44:57.583: [gtp] INFO: gtp_connect() [127.0.0.3]:2123 (../lib/gtp/path.c:60)
+06/24 11:44:57.583: [mme] INFO: s1ap_server() [10.53.1.2]:36412 (../src/mme/s1ap-sctp.c:62)
+06/24 11:44:57.583: [sctp] INFO: MME initialize...done (../src/mme/app-init.c:33)
+06/24 11:44:57.585: [diam] INFO: CONNECTED TO 'hss.localdomain' (SCTP,soc#8): (../lib/diameter/common/logger.c:108)
+Open5GS daemon v2.7.1
+
+06/24 12:22:09.382: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/mme.yaml' (../lib/app/ogs-init.c:133)
+06/24 12:22:09.383: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/mme.log' (../lib/app/ogs-init.c:136)
+06/24 12:22:09.384: [metrics] INFO: metrics_server() [http://127.0.0.2]:9090 (../lib/metrics/prometheus/context.c:299)
+06/24 12:22:09.394: [gtp] INFO: gtp_server() [10.53.1.2]:2123 (../lib/gtp/path.c:30)
+06/24 12:22:09.395: [gtp] INFO: gtp_connect() [127.0.0.3]:2123 (../lib/gtp/path.c:60)
+06/24 12:22:09.395: [mme] INFO: s1ap_server() [10.53.1.2]:36412 (../src/mme/s1ap-sctp.c:62)
+06/24 12:22:09.395: [sctp] INFO: MME initialize...done (../src/mme/app-init.c:33)
+06/24 12:22:09.398: [diam] INFO: CONNECTED TO 'hss.localdomain' (SCTP,soc#8): (../lib/diameter/common/logger.c:108)

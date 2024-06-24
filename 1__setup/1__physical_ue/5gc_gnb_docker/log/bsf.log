@@ -1,0 +1,63 @@
+Open5GS daemon v2.7.1
+
+06/24 11:14:42.911: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/bsf.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:14:42.911: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/bsf.log' (../lib/app/ogs-init.c:136)
+06/24 11:14:42.912: [sbi] INFO: NF Service [nbsf-management] (../lib/sbi/context.c:1841)
+06/24 11:14:42.913: [sbi] INFO: nghttp2_server() [http://127.0.0.15]:7777 (../lib/sbi/nghttp2-server.c:414)
+06/24 11:14:42.913: [app] INFO: BSF initialize...done (../src/bsf/app.c:31)
+06/24 11:14:42.914: [sbi] INFO: [f4c8ffa0-321a-41ef-93ea-5333ea1a569c] NF registered [Heartbeat:10s] (../lib/sbi/nf-sm.c:221)
+06/24 11:14:42.915: [sbi] INFO: [f4c96134-321a-41ef-8a54-bb03ef1de036] Subscription created until 2024-06-25T11:14:42.915157+00:00 [duration:86400,validity:86399.999212,patch:43199.999606] (../lib/sbi/nnrf-handler.c:813)
+Open5GS daemon v2.7.1
+
+06/24 11:21:59.787: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/bsf.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:21:59.787: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/bsf.log' (../lib/app/ogs-init.c:136)
+06/24 11:21:59.788: [sbi] INFO: NF Service [nbsf-management] (../lib/sbi/context.c:1841)
+06/24 11:21:59.788: [sbi] INFO: nghttp2_server() [http://127.0.0.15]:7777 (../lib/sbi/nghttp2-server.c:414)
+06/24 11:21:59.788: [app] INFO: BSF initialize...done (../src/bsf/app.c:31)
+06/24 11:21:59.790: [sbi] INFO: [f92ef508-321b-41ef-a04f-9ff383d55c4b] NF registered [Heartbeat:10s] (../lib/sbi/nf-sm.c:221)
+06/24 11:21:59.791: [sbi] INFO: [f92f5af2-321b-41ef-8b79-659cc24ec018] Subscription created until 2024-06-25T11:21:59.791081+00:00 [duration:86400,validity:86399.999101,patch:43199.999550] (../lib/sbi/nnrf-handler.c:813)
+Open5GS daemon v2.7.1
+
+06/24 11:25:29.994: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/bsf.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:25:29.994: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/bsf.log' (../lib/app/ogs-init.c:136)
+06/24 11:25:29.996: [sbi] INFO: NF Service [nbsf-management] (../lib/sbi/context.c:1841)
+06/24 11:25:29.996: [sbi] INFO: nghttp2_server() [http://127.0.0.15]:7777 (../lib/sbi/nghttp2-server.c:414)
+06/24 11:25:29.996: [app] INFO: BSF initialize...done (../src/bsf/app.c:31)
+06/24 11:25:29.996: [sbi] WARNING: [7] Failed to connect to 127.0.0.22 port 7777 after 0 ms: Connection refused (../lib/sbi/client.c:698)
+06/24 11:25:29.996: [sbi] WARNING: ogs_sbi_client_handler() failed [-1] (../lib/sbi/path.c:62)
+06/24 11:25:41.000: [sbi] WARNING: [767a16e6-321c-41ef-a45d-0d396e5cc6f7] Retry registration with NRF (../lib/sbi/nf-sm.c:182)
+06/24 11:25:41.001: [sbi] INFO: [767a16e6-321c-41ef-a45d-0d396e5cc6f7] NF registered [Heartbeat:10s] (../lib/sbi/nf-sm.c:221)
+06/24 11:25:41.001: [sbi] INFO: [7d09628c-321c-41ef-b38e-d7c5748ea019] Subscription created until 2024-06-25T11:25:41.001492+00:00 [duration:86400,validity:86399.999822,patch:43199.999911] (../lib/sbi/nnrf-handler.c:813)
+Open5GS daemon v2.7.1
+
+06/24 11:37:42.970: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/bsf.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:37:42.970: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/bsf.log' (../lib/app/ogs-init.c:136)
+06/24 11:37:42.972: [sbi] INFO: NF Service [nbsf-management] (../lib/sbi/context.c:1841)
+06/24 11:37:42.972: [sbi] INFO: nghttp2_server() [http://127.0.0.15]:7777 (../lib/sbi/nghttp2-server.c:414)
+06/24 11:37:42.972: [app] INFO: BSF initialize...done (../src/bsf/app.c:31)
+06/24 11:37:42.972: [sbi] WARNING: [7] Failed to connect to 127.0.0.22 port 7777 after 0 ms: Connection refused (../lib/sbi/client.c:698)
+06/24 11:37:42.972: [sbi] WARNING: ogs_sbi_client_handler() failed [-1] (../lib/sbi/path.c:62)
+06/24 11:37:53.977: [sbi] WARNING: [2b5d5cca-321e-41ef-9ab5-8722b98abd04] Retry registration with NRF (../lib/sbi/nf-sm.c:182)
+06/24 11:37:53.978: [sbi] INFO: [2b5d5cca-321e-41ef-9ab5-8722b98abd04] NF registered [Heartbeat:10s] (../lib/sbi/nf-sm.c:221)
+06/24 11:37:53.979: [sbi] INFO: [31ecd84a-321e-41ef-b751-43939f63bf96] Subscription created until 2024-06-25T11:37:53.978791+00:00 [duration:86400,validity:86399.999721,patch:43199.999860] (../lib/sbi/nnrf-handler.c:813)
+Open5GS daemon v2.7.1
+
+06/24 11:44:57.570: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/bsf.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:44:57.570: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/bsf.log' (../lib/app/ogs-init.c:136)
+06/24 11:44:57.571: [sbi] INFO: NF Service [nbsf-management] (../lib/sbi/context.c:1841)
+06/24 11:44:57.571: [sbi] INFO: nghttp2_server() [http://127.0.0.15]:7777 (../lib/sbi/nghttp2-server.c:414)
+06/24 11:44:57.571: [app] INFO: BSF initialize...done (../src/bsf/app.c:31)
+06/24 11:44:57.571: [sbi] WARNING: [7] Failed to connect to 127.0.0.22 port 7777 after 0 ms: Connection refused (../lib/sbi/client.c:698)
+06/24 11:44:57.571: [sbi] WARNING: ogs_sbi_client_handler() failed [-1] (../lib/sbi/path.c:62)
+06/24 11:45:08.581: [sbi] WARNING: [2e67f190-321f-41ef-b98a-e1cc26d6b414] Retry registration with NRF (../lib/sbi/nf-sm.c:182)
+06/24 11:45:08.582: [sbi] INFO: [2e67f190-321f-41ef-b98a-e1cc26d6b414] NF registered [Heartbeat:10s] (../lib/sbi/nf-sm.c:221)
+06/24 11:45:08.582: [sbi] INFO: [34f82200-321f-41ef-a6bf-5ddb58e284a6] Subscription created until 2024-06-25T11:45:08.582663+00:00 [duration:86400,validity:86399.999823,patch:43199.999911] (../lib/sbi/nnrf-handler.c:813)
+Open5GS daemon v2.7.1
+
+06/24 12:22:09.382: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/bsf.yaml' (../lib/app/ogs-init.c:133)
+06/24 12:22:09.382: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/bsf.log' (../lib/app/ogs-init.c:136)
+06/24 12:22:09.383: [sbi] INFO: NF Service [nbsf-management] (../lib/sbi/context.c:1841)
+06/24 12:22:09.383: [sbi] INFO: nghttp2_server() [http://127.0.0.15]:7777 (../lib/sbi/nghttp2-server.c:414)
+06/24 12:22:09.383: [app] INFO: BSF initialize...done (../src/bsf/app.c:31)
+06/24 12:22:09.385: [sbi] INFO: [60ab7672-3224-41ef-81d1-6bdd48fc5b0c] NF registered [Heartbeat:10s] (../lib/sbi/nf-sm.c:221)
+06/24 12:22:09.386: [sbi] INFO: [60abc5f0-3224-41ef-8aee-31c2320fc559] Subscription created until 2024-06-25T12:22:09.385627+00:00 [duration:86400,validity:86399.999009,patch:43199.999504] (../lib/sbi/nnrf-handler.c:813)

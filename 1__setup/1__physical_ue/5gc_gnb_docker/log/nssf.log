@@ -1,0 +1,54 @@
+Open5GS daemon v2.7.1
+
+06/24 11:14:42.911: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/nssf.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:14:42.911: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/nssf.log' (../lib/app/ogs-init.c:136)
+06/24 11:14:42.913: [sbi] INFO: NF Service [nnssf-nsselection] (../lib/sbi/context.c:1841)
+06/24 11:14:42.913: [sbi] INFO: nghttp2_server() [http://127.0.0.14]:7777 (../lib/sbi/nghttp2-server.c:414)
+06/24 11:14:42.913: [app] INFO: NSSF initialize...done (../src/nssf/app.c:31)
+06/24 11:14:42.914: [sbi] INFO: [f4c910da-321a-41ef-b043-fdfd039b340f] NF registered [Heartbeat:10s] (../lib/sbi/nf-sm.c:221)
+06/24 11:14:42.916: [sbi] INFO: [f4c96b02-321a-41ef-8a54-bb03ef1de036] Subscription created until 2024-06-25T11:14:42.915408+00:00 [duration:86400,validity:86399.999181,patch:43199.999590] (../lib/sbi/nnrf-handler.c:813)
+Open5GS daemon v2.7.1
+
+06/24 11:21:59.787: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/nssf.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:21:59.787: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/nssf.log' (../lib/app/ogs-init.c:136)
+06/24 11:21:59.788: [sbi] INFO: NF Service [nnssf-nsselection] (../lib/sbi/context.c:1841)
+06/24 11:21:59.788: [sbi] INFO: nghttp2_server() [http://127.0.0.14]:7777 (../lib/sbi/nghttp2-server.c:414)
+06/24 11:21:59.789: [app] INFO: NSSF initialize...done (../src/nssf/app.c:31)
+06/24 11:21:59.790: [sbi] INFO: [f92eff58-321b-41ef-8fb1-2d028acfd280] NF registered [Heartbeat:10s] (../lib/sbi/nf-sm.c:221)
+06/24 11:21:59.791: [sbi] INFO: [f92f50a2-321b-41ef-8b79-659cc24ec018] Subscription created until 2024-06-25T11:21:59.790816+00:00 [duration:86400,validity:86399.999007,patch:43199.999503] (../lib/sbi/nnrf-handler.c:813)
+Open5GS daemon v2.7.1
+
+06/24 11:25:29.996: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/nssf.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:25:29.996: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/nssf.log' (../lib/app/ogs-init.c:136)
+06/24 11:25:29.998: [sbi] INFO: NF Service [nnssf-nsselection] (../lib/sbi/context.c:1841)
+06/24 11:25:29.998: [sbi] INFO: nghttp2_server() [http://127.0.0.14]:7777 (../lib/sbi/nghttp2-server.c:414)
+06/24 11:25:29.998: [app] INFO: NSSF initialize...done (../src/nssf/app.c:31)
+06/24 11:25:29.999: [sbi] INFO: [767a6588-321c-41ef-8805-616632bc3aa5] NF registered [Heartbeat:10s] (../lib/sbi/nf-sm.c:221)
+06/24 11:25:29.999: [sbi] INFO: [767a9b98-321c-41ef-b38e-d7c5748ea019] Subscription created until 2024-06-25T11:25:29.999455+00:00 [duration:86400,validity:86399.999858,patch:43199.999929] (../lib/sbi/nnrf-handler.c:813)
+Open5GS daemon v2.7.1
+
+06/24 11:37:42.971: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/nssf.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:37:42.971: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/nssf.log' (../lib/app/ogs-init.c:136)
+06/24 11:37:42.973: [sbi] INFO: NF Service [nnssf-nsselection] (../lib/sbi/context.c:1841)
+06/24 11:37:42.973: [sbi] INFO: nghttp2_server() [http://127.0.0.14]:7777 (../lib/sbi/nghttp2-server.c:414)
+06/24 11:37:42.973: [app] INFO: NSSF initialize...done (../src/nssf/app.c:31)
+06/24 11:37:42.975: [sbi] INFO: [2b5d8056-321e-41ef-a6d0-731fe7a8c1e2] NF registered [Heartbeat:10s] (../lib/sbi/nf-sm.c:221)
+06/24 11:37:42.975: [sbi] INFO: [2b5ddb32-321e-41ef-b751-43939f63bf96] Subscription created until 2024-06-25T11:37:42.975367+00:00 [duration:86400,validity:86399.999763,patch:43199.999881] (../lib/sbi/nnrf-handler.c:813)
+Open5GS daemon v2.7.1
+
+06/24 11:44:57.570: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/nssf.yaml' (../lib/app/ogs-init.c:133)
+06/24 11:44:57.570: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/nssf.log' (../lib/app/ogs-init.c:136)
+06/24 11:44:57.571: [sbi] INFO: NF Service [nnssf-nsselection] (../lib/sbi/context.c:1841)
+06/24 11:44:57.572: [sbi] INFO: nghttp2_server() [http://127.0.0.14]:7777 (../lib/sbi/nghttp2-server.c:414)
+06/24 11:44:57.572: [app] INFO: NSSF initialize...done (../src/nssf/app.c:31)
+06/24 11:44:57.573: [sbi] INFO: [2e680298-321f-41ef-a2f9-57e5580533e8] NF registered [Heartbeat:10s] (../lib/sbi/nf-sm.c:221)
+06/24 11:44:57.574: [sbi] INFO: [2e684744-321f-41ef-a6bf-5ddb58e284a6] Subscription created until 2024-06-25T11:44:57.573564+00:00 [duration:86400,validity:86399.999526,patch:43199.999763] (../lib/sbi/nnrf-handler.c:813)
+Open5GS daemon v2.7.1
+
+06/24 12:22:09.383: [app] INFO: Configuration: '/open5gs/install/etc/open5gs/nssf.yaml' (../lib/app/ogs-init.c:133)
+06/24 12:22:09.383: [app] INFO: File Logging: '/open5gs/install/var/log/open5gs/nssf.log' (../lib/app/ogs-init.c:136)
+06/24 12:22:09.384: [sbi] INFO: NF Service [nnssf-nsselection] (../lib/sbi/context.c:1841)
+06/24 12:22:09.384: [sbi] INFO: nghttp2_server() [http://127.0.0.14]:7777 (../lib/sbi/nghttp2-server.c:414)
+06/24 12:22:09.384: [app] INFO: NSSF initialize...done (../src/nssf/app.c:31)
+06/24 12:22:09.385: [sbi] INFO: [60ab8ebe-3224-41ef-a64f-5f2dcb00cf86] NF registered [Heartbeat:10s] (../lib/sbi/nf-sm.c:221)
+06/24 12:22:09.386: [sbi] INFO: [60abe65c-3224-41ef-8aee-31c2320fc559] Subscription created until 2024-06-25T12:22:09.386456+00:00 [duration:86400,validity:86399.999518,patch:43199.999759] (../lib/sbi/nnrf-handler.c:813)

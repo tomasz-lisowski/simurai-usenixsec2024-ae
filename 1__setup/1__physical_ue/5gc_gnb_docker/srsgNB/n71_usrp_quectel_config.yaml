@@ -1,0 +1,57 @@
+# This config comes from https://github.com/spritelab/5GSniffer/issues/5 and their screen shot on the page
+
+amf:
+  addr: 127.0.1.100                  # The address or hostname of the AMF.
+  bind_addr: 127.0.0.1             # A local IP that the gNB binds to for traffic from the AMF.
+
+ru_sdr:
+  device_driver: uhd                # The RF driver name.
+  device_args: type=b200,num_recv_frames=64,num_send_frames=64
+  srate: 23.04                      # RF sample rate might need to be adjusted according to selected bandwidth.
+  tx_gain: 75                       # Transmit gain of the RF might need to adjusted to the given situation.
+  rx_gain: 40                       # Receive gain of the RF might need to adjusted to the given situation.
+  otw_format: sc12
+  clock: default
+
+cell_cfg:
+  dl_arfcn: 125500                                              # ARFCN of the downlink carrier (center frequency).
+  band: 71                                                      # The NR band.
+  channel_bandwidth_MHz: 10                                     # Bandwith in MHz. Number of PRBs will be automatically derived.
+  common_scs: 15                                                # Subcarrier spacing in kHz used for data.
+  plmn: "00101"                     # PLMN broadcasted by the gNB.
+  tac: 7                            # Tracking area code (needs to match the core configuration).
+  pdcch:
+    common:
+      ss0_index: 0                  # controlResourceSetZero
+      coreset0_index: 9            # searchSpaceZero
+      # ss1_n_candidates: {0, 0, 1, 0, 0}
+    dedicated:
+      ss2_type: ue_dedicated              # Search Space type, in PDCCH-Config with searchSpaceType = ue-Specific
+      ss2_n_candidates: [0, 0, 4, 0, 0]   # PDCCH candidates per aggregation level for SearchSpace#2
+      dci_format_0_1_and_1_1: false       # Set fall-back DCI format
+  # prach:
+  #   prach_config_index: 1           # Sets PRACH config to match what is expected by srsUE
+
+cu_cp:
+  inactivity_timer: 7200            # Sets the UE/PDU Session/DRB inactivity timer to 7200 seconds. Supported: [1 - 7200].
+  security:
+    integrity: not_needed                    # Optional TEXT (not_needed). Sets the default integrity protection indication for DRBs.
+    confidentiality: required                # Optional TEXT (required). Sets the default integrity confidentiality indication for DRBs.
+    nea_pref_list: nea0,nea2,nea1            # Optional TEXT (nea0,nea2,nea1). Ordered preference list for the selection of encryption algorithm (NEA). Supported: [nea0,nea2,nea1,nea3].
+    nia_pref_list: nia2,nia1                 # Optional TEXT (nia2,nia1). Ordered preference list for the selection of encryption algorithm (NIA). Supported: [nia2,nia1,nia3].  
+
+log:
+  filename: /tmp/gnb.log            # Path of the log file.
+  all_level: info                   # Logging level applied to all layers.
+  broadcast_enabled: true              # Optional BOOLEAN (false). Enables logging in the PHY and MAC layer of broadcast messages and all PRACH opportunities. Supported: [false, true].
+  fapi_level: debug                   # Optional TEXT (warning). Sets FAPI log level.
+  hex_max_size: 1000
+  mac_level: debug
+  phy_level: debug
+
+pcap:
+  mac_enable: true                 # Set to true to enable MAC-layer PCAPs.
+  mac_filename: /tmp/gnb_mac.pcap   # Path where the MAC PCAP is stored.
+  
+  ngap_enable: true                # Set to true to enable NGAP PCAPs.
+  ngap_filename: /tmp/gnb_ngap.pcap # Path where the NGAP PCAP is stored.
