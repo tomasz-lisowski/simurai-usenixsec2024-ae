@@ -68,14 +68,14 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: ./log
+      device: /tmp
       o: bind
 
   gnb-storage:
     driver: local
     driver_opts:
       type: none
-      device: ./log
+      device: /tmp
       o: bind
 
 networks:
