@@ -2,13 +2,15 @@
 readonly ROOT=$(realpath $(dirname "$0")/../..);
 readonly UTIL=${ROOT}/util;
 source ${UTIL}/preamble.sh;
+source ${UTIL}/check_root.sh;
+
 readonly HERE=${ROOT}/2__experiment/2__fuzzing;
 
 pushd .;
 cd ${HERE};
 
 rm -r ${HERE}/seeds;
-rm -r ${HERE}/AFLplusplus;
+sudo rm -fr ${HERE}/AFLplusplus;
 
 popd;
 
