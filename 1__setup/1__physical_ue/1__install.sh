@@ -12,17 +12,16 @@ cd ${HERE};
 check "If SIMurai can be downloaded.";
 simuraiDownload ""${HERE}"/simurai";
 if ! checkResult "$?" "SIMurai was downloaded." "Failed to download SIMurai."; then
-    exit 0;
+    exit 1;
 fi
-
-if ${NETWORK__LOCAL}; then
-    check "If pcscd is present.";
-    which pcscd;
-    if ! checkResult "$?" "'pcscd' is present." "'pcscd' is not present."; then
-        read -p "'pcscd' package will be installed now, but it will not be uninstalled by the uninstall script... ";
-        apt-get -qq --yes --no-install-recommends install pcscd;
-    fi
+pushd .;
+check "If SIMurai can be built.";
+cd ""${HERE}"/simurai";
+(./docker.sh);
+if ! checkResult "$?" "SIMurai was built." "Failed to build SIMurai."; then
+    exit 1;
 fi
+popd;
 
 pushd .;
 check "Create docker image with precompiled binaries, libraries, and configs.";
@@ -163,10 +162,10 @@ ldconfig;
 
 if ${NETWORK__LOCAL}; then
     check "If dependencies need to be installed.";
-    which make && which pkgconf && which pcscd && pkg-config --cflags-only-I libpcsclite;
+    dpkg -s make &&  dpkg -s pkgconf &&  dpkg -s pcscd && dpkg -s libpcsclite1 && dpkg -s libpcsclite-dev && dpkg -s adb &&  dpkg -s tmux &&  dpkg -s procps &&  dpkg -s libtalloc2 && dpkg -s libsctp1 && dpkg -s liburing2;
     if ! checkResult "$?" "Dependencies are present." "Dependencies are not present."; then
-        read -p "'make', 'pkgconf', 'pcscd', 'libpcsclite1', 'libpcsclite-dev', and 'adb' packages will be installed now, but it will not be uninstalled by the uninstall script... ";
-        apt-get -qq --yes --no-install-recommends install make pkgconf pcscd libpcsclite1 libpcsclite-dev adb;
+        read -p "'make pkgconf pcscd libpcsclite1 libpcsclite-dev adb tmux procps libtalloc2 libsctp1 liburing2' packages will be installed now, but it will not be uninstalled by the uninstall script... ";
+        apt-get -qq --yes --no-install-recommends install make pkgconf pcscd libpcsclite1 libpcsclite-dev adb tmux procps libtalloc2 libsctp1 liburing2;
         ldconfig;
     fi
 

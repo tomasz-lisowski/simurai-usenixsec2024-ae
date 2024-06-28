@@ -1,8 +1,8 @@
 #!/bin/bash
-readonly ROOT=$(realpath $(dirname "$0")/../..);
-readonly UTIL=${ROOT}/util;
+readonly ROOT="$(realpath $(dirname "$0")/../..)";
+readonly UTIL=""${ROOT}"/util";
 source ${UTIL}/preamble.sh;
-readonly HERE=${ROOT}/1__setup/1__physical_ue;
+readonly HERE=""${ROOT}"/1__setup/1__physical_ue";
 
 readonly NETWORK__LOCAL="${1:?Arg1 is missing: network remote (1) local (0).}";
 
@@ -39,14 +39,14 @@ if checkResult "$?" "Result exists. Can proceed with uninstallation." "Precompil
     esac
 
     if ${NETWORK__LOCAL}; then
-        fileUninstall "./result/bladerf";
-        fileUninstall "./result/yate";
-        fileUninstall "./result/libosmocore";
-        fileUninstall "./result/simtrace2";
+        fileUninstall ""${HERE}"/result/bladerf";
+        fileUninstall ""${HERE}"/result/yate";
+        fileUninstall ""${HERE}"/result/libosmocore";
+        fileUninstall ""${HERE}"/result/simtrace2";
     fi
-    fileUninstall "./result/scrcpy";
+    fileUninstall ""${HERE}"/result/scrcpy";
 
-    rm -r ./result;
+    rm -r ""${HERE}"/result";
 fi
 
 if ${NETWORK__LOCAL}; then
@@ -62,6 +62,7 @@ fi
 
 rm ""${HERE}"/docker/docker.log";
 rm -r ""${HERE}"/simurai";
+rm -r ""${HERE}"/log";
 
 popd;
 exit 0;

@@ -1,5 +1,6 @@
 # Docker output.
 docker.log
 
+log/
 result/
 simurai/
