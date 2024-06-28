@@ -1,0 +1,11 @@
+@@ -112,7 +112,10 @@
+         return status;
+     }
+
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Warray-bounds"
+     memcpy(&termios_new, &termios_backup, sizeof(termios_new));
++#pragma GCC diagnostic pop
+
+     termios_new.c_cc[VMIN] = 1;
+     termios_new.c_cc[VTIME] = 0;

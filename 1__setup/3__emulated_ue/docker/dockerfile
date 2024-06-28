@@ -1,0 +1,29 @@
+FROM simurai/s3__firmwire:1.0.0 AS base
+
+# Clone and build SIMurai components.
+FROM tomasz-lisowski/swicc-pcsc:1.0.0 AS base__pcsc
+COPY ./simurai/swicc-pcsc /opt/swicc-pcsc
+RUN set -eux; \
+    cd /opt/swicc-pcsc; \
+    make install;
+
+
+FROM base
+
+COPY --from=base__pcsc /etc/reader.conf.d /etc/reader.conf.d
+COPY --from=base__pcsc /usr/lib/pcsc/drivers/serial /usr/lib/pcsc/drivers/serial
+
+COPY ./simurai/swicc /opt/setup/simurai/swicc
+COPY ./simurai/swsim /opt/setup/simurai/swsim
+
+RUN set -eux; \
+    apt-get -qq update; \
+    apt-get -qq --yes dist-upgrade;
+
+RUN set -eux; \
+    apt-get -qq --yes --no-install-recommends install libasan6 libpcsclite-dev pcsc-tools procps pcscd tmux gcc-9-plugin-dev; \
+    ldconfig; \
+    pip3 install pyscard;
+
+COPY --chmod=700 ./entrypoint.sh /opt/setup
+ENTRYPOINT ["/opt/setup/entrypoint.sh"]

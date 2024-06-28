@@ -1,0 +1,116 @@
+FROM ubuntu:22.04 AS base
+
+ARG libzmq__commit=c2fae81460d9d39a896da7b3f72484d23a172fa7
+ARG libzmq__sha256=18543edd761ba234c7d9b7162dee95d70349769eef466d9f30cacc78e81c88d3
+
+ARG czmq__commit=e6f0a0fe080dbece6fe012a1ea99b19d855a1066
+ARG czmq__sha256=02094c6d97e8ff68a500cdadef77fd7550cc4896d0b12ca043917040bbf6a9c5
+
+ARG srsran__commit=ec29b0c1ff79cebcbe66caa6d6b90778261c42b8
+ARG srsran__sha256=fe2e41feba800c4e098a108f69d0c31cab6b3a6828abadf8fbb06c9b300f4625
+
+RUN set -eux; \
+    apt-get -qq update; \
+    apt-get -qq --yes dist-upgrade;
+
+# Create directory for all compiled files.
+RUN set -eux; \
+    mkdir /opt/setup;
+
+# Clone and build ZeroMQ.
+FROM base AS base__zmq
+ENV LIBZMQ__COMMIT=${libzmq__commit}
+ENV LIBZMQ__SHA256=${libzmq__sha256}
+ENV LIBZMQ__DEP="pkg-config ca-certificates make build-essential wget libtool autoconf automake"
+RUN set -eux; \
+    apt-get -qq --yes --no-install-recommends install ${LIBZMQ__DEP}; \
+    cd /opt/setup; \
+    wget -O libzmq.tar.gz https://github.com/zeromq/libzmq/archive/${LIBZMQ__COMMIT}.tar.gz; \
+    sha256sum libzmq.tar.gz; \
+    echo "${LIBZMQ__SHA256} libzmq.tar.gz" | sha256sum --check --status; \
+    mkdir libzmq; \
+    tar -xzf libzmq.tar.gz --strip-components=1 -C ./libzmq; \
+    cd ./libzmq; \
+    ./autogen.sh; \
+    ./configure; \
+    make -j $(nproc); \
+    make install; \
+    ldconfig; \
+    apt-get -qq --yes purge ${LIBZMQ__DEP};
+
+# Clone and build ZeroMQ C bindings.
+FROM base__zmq AS base__czmq
+ENV CZMQ__COMMIT=${czmq__commit}
+ENV CZMQ__SHA256=${czmq__sha256}
+ENV CZMQ__DEP="pkg-config ca-certificates make build-essential wget libtool autoconf automake"
+RUN set -eux; \
+    apt-get -qq --yes --no-install-recommends install ${CZMQ__DEP}; \
+    cd /opt/setup; \
+    wget -O czmq.tar.gz https://github.com/zeromq/czmq/archive/${CZMQ__COMMIT}.tar.gz; \
+    sha256sum czmq.tar.gz; \
+    echo "${CZMQ__SHA256} czmq.tar.gz" | sha256sum --check --status; \
+    mkdir czmq; \
+    tar -xzf czmq.tar.gz --strip-components=1 -C ./czmq; \
+    cd ./czmq; \
+    ./autogen.sh; \
+    ./configure; \
+    make -j $(nproc); \
+    make install; \
+    ldconfig; \
+    apt-get -qq --yes purge ${CZMQ__DEP};
+
+
+# Clone and build srsRAN.
+FROM base__zmq AS base__srsran
+ENV SRSRAN__COMMIT=${srsran__commit}
+ENV SRSRAN__SHA256=${srsran__sha256}
+ENV SRSRAN__DEP="pkg-config ca-certificates make build-essential wget cmake libfftw3-dev libmbedtls-dev libboost-program-options-dev libconfig++-dev libsctp-dev libpcsclite-dev pcscd pcsc-tools"
+RUN set -eux; \
+    apt-get -qq --yes --no-install-recommends install ${SRSRAN__DEP}; \
+    cd /opt/setup; \
+    wget -O srsran.tar.gz https://github.com/srsran/srsRAN_4G/archive/${SRSRAN__COMMIT}.tar.gz; \
+    sha256sum srsran.tar.gz; \
+    echo "${SRSRAN__SHA256} srsran.tar.gz" | sha256sum --check --status; \
+    mkdir srsran; \
+    tar -xzf srsran.tar.gz --strip-components=1 -C ./srsran; \
+    cd ./srsran; \
+    mkdir build; \
+    cd ./build; \
+    cmake ../ -DENABLE_GUI=OFF -DENABLE_RF_PLUGINS=OFF -DENABLE_UHD=OFF -DENABLE_BLADERF=OFF -DENABLE_SOAPYSDR=OFF -DENABLE_SKIQ=OFF -DENABLE_TIMEPROF=OFF; \
+    make -j $(nproc); \
+    apt-get -qq --yes purge ${SRSRAN__DEP};
+
+
+# Clone and build SIMurai components.
+FROM tomasz-lisowski/swicc-pcsc:1.0.0 AS base__pcsc
+COPY ./simurai/swicc-pcsc /opt/swicc-pcsc
+RUN set -eux; \
+    cd /opt/swicc-pcsc; \
+    make install;
+
+
+FROM base
+
+COPY --from=base__zmq /usr/local/lib /usr/local/lib
+COPY --from=base__zmq /usr/local/include /usr/local/include
+
+COPY --from=base__czmq /usr/local/lib /usr/local/lib
+COPY --from=base__czmq /usr/local/include /usr/local/include
+COPY --from=base__czmq /usr/local/bin /usr/local/bin
+COPY --from=base__czmq /usr/local/share /usr/local/share
+
+COPY --from=base__srsran /opt/setup/srsran/build /opt/setup/srsran
+
+COPY --from=base__pcsc /etc/reader.conf.d /etc/reader.conf.d
+COPY --from=base__pcsc /usr/lib/pcsc/drivers/serial /usr/lib/pcsc/drivers/serial
+
+COPY ./simurai/swicc /opt/setup/simurai/swicc
+COPY ./simurai/swsim /opt/setup/simurai/swsim
+
+COPY srsran__config /root/.config/srsran
+
+RUN set -eux; \
+    apt-get -qq --yes --no-install-recommends install pcsc-tools procps pcscd tmux libboost-program-options1.74.0 libmbedtls14 libsctp1 iproute2 libasan6 libconfig++9v5 libfftw3-bin;
+
+COPY --chmod=700 ./entrypoint.sh ./opt/setup
+ENTRYPOINT ["/opt/setup/entrypoint.sh"]

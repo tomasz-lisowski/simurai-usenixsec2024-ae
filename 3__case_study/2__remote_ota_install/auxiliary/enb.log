@@ -1,0 +1,24 @@
+2024-06-17T12:51:52.033168 [ENB    ] [I] Using binary ./build/srsenb/src/srsenb with arguments: ./srsenb/enb.conf 
+2024-06-17T12:51:52.070788 [ENB    ] [I] Built in Release mode using commit ec29b0c1f on branch master.
+2024-06-17T12:51:52.124997 [COMN   ] [D] [    0] Opened SCTP socket=9
+2024-06-17T12:51:52.125002 [COMN   ] [D] [    0] Setting RTO_INFO options on SCTP socket. Association 0, Initial RTO 3000, Minimum RTO 1000, Maximum RTO 6000
+2024-06-17T12:51:52.125005 [COMN   ] [D] [    0] Setting SCTP_INITMSG options on SCTP socket. Max attempts 3, Max init attempts timeout 5000
+2024-06-17T12:51:52.125005 [COMN   ] [D] [    0] Successfully bound to address 127.0.1.1:2152
+2024-06-17T12:51:52.125012 [COMN   ] [D] [    0] Successfully bound to address 127.0.1.1:0
+2024-06-17T12:51:52.125017 [COMN   ] [D] [    0] RxSockets: socket fd=8 has been registered.
+2024-06-17T12:51:52.127161 [COMN   ] [D] [    0] RxSockets: socket fd=9 has been registered.
+2024-06-17T12:54:36.658340 [COMN   ] [D] [    0] RxSockets: Socket fd=9 has been successfully removed
+2024-06-17T12:54:36.658353 [COMN   ] [D] [    0] RxSockets: Socket fd=9 has been successfully removed
+2024-06-17T12:54:36.658378 [COMN   ] [D] [    0] Socket=9 was closed.
+2024-06-17T12:54:36.658433 [COMN   ] [D] [    0] Opened SCTP socket=9
+2024-06-17T12:54:36.658441 [COMN   ] [D] [    0] Setting RTO_INFO options on SCTP socket. Association 0, Initial RTO 3000, Minimum RTO 1000, Maximum RTO 6000
+2024-06-17T12:54:36.658444 [COMN   ] [D] [    0] Setting SCTP_INITMSG options on SCTP socket. Max attempts 3, Max init attempts timeout 5000
+2024-06-17T12:54:36.658457 [COMN   ] [D] [    0] Successfully bound to address 127.0.1.1:0
+2024-06-17T12:54:36.658515 [COMN   ] [I] [    0] Failed to establish socket connection to 127.0.1.100
+2024-06-17T12:54:36.658627 [COMN   ] [W] [    0] RxSockets: The socket fd=9 to be removed does not exist
+2024-06-17T12:54:36.658635 [COMN   ] [D] [    0] Socket=9 was closed.
+2024-06-17T12:54:37.459004 [COMN   ] [D] [    0] RxSockets: Closing rx socket handler thread
+2024-06-17T12:54:37.462436 [COMN   ] [D] [    0] RxSockets: closed.
+2024-06-17T12:54:37.462440 [COMN   ] [D] [    0] Socket=-1 could not be closed.
+2024-06-17T12:54:37.476583 [COMN   ] [D] [    0] Socket=-1 could not be closed.
+2024-06-17T12:54:37.478837 [COMN   ] [D] [    0] Socket=-1 could not be closed.

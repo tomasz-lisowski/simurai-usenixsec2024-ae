@@ -1,0 +1,282 @@
+(.venv) eval@eval:~$ ./simtrace2/host/src/simtrace2-sniff --usb-address 36
+simtrace2-sniff - Phone-SIM card communication sniffer
+(C) 2010-2017 by Harald Welte <laforge@gnumonks.org>
+(C) 2018 by Kevin Redon <kredon@sysmocom.de>
+
+Using USB device 1d50:60e3 Addr=36, Path=1-3.2, Cfg=1, Intf=0, Alt=0: 255/1/0 (SIMtrace Sniffer)
+Entering main loop
+Card state change: reset de-asserted
+ATR: 3b 9f 96 80 1f 87 80 31 e0 73 fe 21 1b 67 4a 4c 75 30 34 05 4b a9
+Card state change: reset asserted
+Card state change: reset de-asserted
+ATR: 3b 9f 96 80 1f 87 80 31 e0 73 fe 21 1b 67 4a 4c 75 30 34 05 4b a9
+PPS: ff 10 94 7b
+PPS: ff 10 94 7b
+Fi/Di switched to 512/8
+TPDU: 00 a4 00 04 02 3f 00 61 2f
+TPDU: 00 c0 00 00 2f 62 2d 82 02 78 21 83 02 3f 00 a5 09 80 01 71 83 04 00 01 88 1c 8a 01 05 8c 04 26 1a 00 00 c6 0f 90 01 70 83 01 01 83 01 81 83 01 0a 83 01 0b 90 00
+TPDU: 00 a4 00 0c 02 2f e2 90 00
+TPDU: 00 b0 00 00 0a 98 88 12 01 00 00 40 84 98 f7 90 00
+TPDU: 00 a4 00 04 02 2f 05 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 2f 05 a5 06 d0 01 30 d2 01 0f 8a 01 05 8b 03 2f 06 05 80 02 00 0a 88 01 28 90 00
+TPDU: 00 b0 00 00 0a ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 a4 00 04 02 2f 00 61 24
+TPDU: 00 c0 00 00 24 62 22 82 05 42 21 00 2b 08 83 02 2f 00 a5 06 d0 01 20 d2 01 0b 8a 01 05 8b 03 2f 06 04 80 02 01 58 88 01 f0 90 00
+TPDU: 00 b2 01 04 2b 61 29 4f 10 a0 00 00 00 87 10 02 ff ff ff ff 89 07 09 00 00 50 05 55 53 69 6d 31 73 0e a0 0c 80 01 17 81 02 5f 60 82 03 45 41 50 90 00
+TPDU: 00 b2 02 04 2b 61 19 4f 10 a0 00 00 00 87 10 04 ff ff ff ff 89 07 09 00 00 50 05 49 53 69 6d 31 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 03 04 2b ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 04 04 2b ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 05 04 2b ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 06 04 2b ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 07 04 2b ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 08 04 2b ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 a4 04 04 10 a0 00 00 00 87 10 02 ff ff ff ff 89 07 09 00 00 61 3a
+TPDU: 00 c0 00 00 3a 62 38 82 02 78 21 84 10 a0 00 00 00 87 10 02 ff ff ff ff 89 07 09 00 00 a5 09 80 01 71 83 04 00 01 88 1c 8a 01 05 8c 01 00 c6 0f 90 01 70 83 01 01 83 01 81 83 01 0a 83 01 0b 90 00
+TPDU: 00 a4 00 04 02 6f b7 61 24
+TPDU: 00 c0 00 00 24 62 22 82 05 42 21 00 10 05 83 02 6f b7 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 06 80 02 00 50 88 01 08 90 00
+TPDU: 00 b2 01 04 10 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 90 00
+TPDU: 00 b2 02 04 10 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 90 00
+TPDU: 00 b2 03 04 10 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 90 00
+TPDU: 00 b2 04 04 10 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 90 00
+TPDU: 00 b2 05 04 10 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 90 00
+TPDU: 00 a4 00 04 02 6f 05 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 05 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 02 80 02 00 0a 88 01 10 90 00
+TPDU: 00 b0 00 00 0a ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 2c 00 01 00 63 ca
+TPDU: 00 20 00 01 00 63 c3
+TPDU: 00 2c 00 81 00 63 ca
+TPDU: 00 20 00 81 00 63 c3
+TPDU: 00 a4 00 04 02 6f 07 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 07 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 09 88 01 38 90 00
+TPDU: 00 b0 00 00 09 08 09 10 10 00 00 40 84 98 90 00
+TPDU: 00 a4 00 04 02 6f 38 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 38 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 14 88 01 20 90 00
+TPDU: 00 a4 00 04 02 6f 06 61 24
+TPDU: 00 c0 00 00 24 62 22 82 05 42 21 00 6e 0c 83 02 6f 06 a5 06 d0 01 20 d2 01 03 8a 01 05 8b 03 6f 06 06 80 02 05 28 88 01 b8 90 00
+TPDU: 00 a4 00 04 02 6f 38 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 38 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 14 88 01 20 90 00
+TPDU: 00 a4 00 04 02 6f 56 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 56 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 07 80 02 00 09 88 01 28 90 00
+TPDU: 00 b0 00 00 09 00 00 00 00 00 00 00 00 00 90 00
+TPDU: 00 a4 00 04 02 6f 07 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 07 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 09 88 01 38 90 00
+TPDU: 00 b0 00 00 09 08 09 10 10 00 00 40 84 98 90 00
+TPDU: 00 a4 00 04 02 6f 78 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 78 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 02 88 01 30 90 00
+TPDU: 00 b0 00 00 02 02 00 90 00
+TPDU: 00 a4 00 04 02 6f 31 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 31 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 01 88 01 90 90 00
+TPDU: 00 b0 00 00 01 05 90 00
+TPDU: 00 a4 00 04 02 6f 62 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 62 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 3c 88 01 98 90 00
+TPDU: 00 b0 00 00 3c ff ff ff 00 00 ff ff ff 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 00 90 00
+TPDU: 00 a4 00 04 02 6f 61 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 61 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 3c 88 01 88 90 00
+TPDU: 00 b0 00 00 3c ff ff ff 00 00 ff ff ff 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 00 90 00
+TPDU: 00 a4 00 04 02 6f 7e 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 7e a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 04 80 02 00 0b 88 01 58 90 00
+TPDU: 00 b0 00 00 0b 42 bd ee 27 00 f1 10 00 01 ff 00 90 00
+TPDU: 00 a4 00 04 02 6f 73 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 73 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 04 80 02 00 0e 88 01 60 90 00
+TPDU: 00 b0 00 00 0e ff ff ff ff ff ff ff ff ff 00 ff fe ff 02 90 00
+TPDU: 00 a4 00 04 02 6f 08 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 08 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 04 80 02 00 21 88 01 40 90 00
+TPDU: 00 b0 00 00 21 07 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 a4 00 04 02 6f 09 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 09 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 04 80 02 00 21 88 01 48 90 00
+TPDU: 00 b0 00 00 21 07 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 a4 00 04 02 6f 7b 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 7b a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 04 80 02 00 0c 88 01 68 90 00
+Card state change: data transfer timeout
+Card state change: reset asserted
+Card state change: reset de-asserted
+ATR: 3b 9f 96 80 1f 87 80 31 e0 73 fe 21 1b 67 4a 4c 75 30 34 05 4b a9
+Card state change: reset asserted
+Card state change: reset de-asserted
+ATR: 3b 9f 96 80 1f 87 80 31 e0 73 fe 21 1b 67 4a 4c 75 30 34 05 4b a9
+PPS: ff 10 94 7b
+PPS: ff 10 94 7b
+Fi/Di switched to 512/8
+TPDU: 00 a4 00 04 02 3f 00 61 2f
+TPDU: 00 c0 00 00 2f 62 2d 82 02 78 21 83 02 3f 00 a5 09 80 01 71 83 04 00 01 88 1c 8a 01 05 8c 04 26 1a 00 00 c6 0f 90 01 70 83 01 01 83 01 81 83 01 0a 83 01 0b 90 00
+TPDU: 00 a4 04 0c 10 a0 00 00 00 87 10 02 ff ff ff ff 89 07 09 00 00 90 00
+TPDU: 80 f2 01 0c 00 90 00
+TPDU: 00 2c 00 01 00 63 ca
+TPDU: 00 20 00 01 00 63 c3
+TPDU: 00 2c 00 81 00 63 ca
+TPDU: 00 20 00 81 00 63 c3
+TPDU: 00 a4 00 0c 02 3f 00 90 00
+TPDU: 00 a4 00 0c 02 7f ff 90 00
+TPDU: 00 a4 00 04 02 6f 7b 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 7b a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 04 80 02 00 0c 88 01 68 90 00
+TPDU: 00 b0 00 00 0c 62 f2 20 62 f2 10 62 f2 30 ff ff ff 90 00
+TPDU: 00 a4 00 04 02 6f 5b 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 5b a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 04 80 02 00 06 88 01 78 90 00
+TPDU: 00 b0 00 00 06 ff ff ff ff ff ff 90 00
+TPDU: 00 a4 00 04 02 6f 5c 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 5c a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 03 88 01 80 90 00
+TPDU: 00 b0 00 00 03 ff ff ff 90 00
+TPDU: 00 a4 00 0c 02 5f 3b 90 00
+TPDU: 00 a4 00 04 02 4f 20 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 4f 20 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 04 80 02 00 09 88 01 08 90 00
+TPDU: 00 b0 00 00 09 00 00 00 00 00 00 00 00 07 90 00
+TPDU: 00 a4 00 04 02 4f 52 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 4f 52 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 04 80 02 00 09 88 01 10 90 00
+TPDU: 00 b0 00 00 09 ff ff ff ff ff ff ff ff 07 90 00
+TPDU: 00 a4 00 04 02 4f 63 61 20
+TPDU: 00 c0 00 00 20 62 1e 82 02 41 21 83 02 4f 63 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 04 80 02 00 10 88 00 90 00
+TPDU: 00 b0 00 00 10 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 a4 00 0c 02 7f ff 90 00
+TPDU: 00 a4 00 04 02 6f c4 61 20
+TPDU: 00 c0 00 00 20 62 1e 82 02 41 21 83 02 6f c4 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 04 80 02 00 40 88 00 90 00
+TPDU: 00 b0 00 00 40 a0 20 80 02 12 6d 81 1a 12 44 12 45 12 46 12 47 12 48 12 49 12 6e 12 6f 12 70 12 71 12 72 12 73 12 74 a1 04 80 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 90 00
+TPDU: 00 a4 00 04 02 6f e3 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f e3 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 04 80 02 00 12 88 01 f0 90 00
+TPDU: 00 b0 00 00 12 0b f6 00 f1 10 00 01 1a 42 bd ee 27 00 f1 10 00 07 00 90 00
+TPDU: 00 a4 00 04 02 6f e4 61 24
+TPDU: 00 c0 00 00 24 62 22 82 05 42 21 00 36 01 83 02 6f e4 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 04 80 02 00 36 88 01 c0 90 00
+TPDU: 00 b2 01 04 36 a0 34 80 01 07 81 20 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 82 04 00 00 00 00 83 04 00 00 00 00 84 01 ff 90 00
+TPDU: 00 a4 00 04 02 6f ad 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f ad a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 06 80 02 00 04 88 01 18 90 00
+TPDU: 00 b0 00 00 04 00 00 00 02 90 00
+TPDU: 00 a4 00 0c 02 3f 00 90 00
+TPDU: 00 a4 00 0c 02 7f 10 90 00
+TPDU: 00 a4 00 0c 02 5f 3a 90 00
+TPDU: 00 a4 00 04 02 4f 30 61 23
+TPDU: 00 c0 00 00 23 62 21 82 05 42 21 00 45 01 83 02 4f 30 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 07 80 02 00 45 88 00 90 00
+TPDU: 00 b2 01 04 45 a8 1e c0 03 4f 3a 01 c1 03 4f 32 02 c3 03 4f 54 14 c5 03 4f 09 04 c6 03 4f 52 12 c9 03 4f 21 09 a9 0a c4 03 4f 11 08 ca 03 4f 50 0d aa 14 c2 03 4f 4a 03 c7 03 4f 4b 06 c8 03 4f 53 13 cb 03 4f 4f 16 ff ff ff 90 00
+TPDU: 00 a4 00 0c 02 3f 00 90 00
+TPDU: 00 a4 00 0c 02 7f ff 90 00
+TPDU: 00 a4 00 04 02 6f 43 61 20
+TPDU: 00 c0 00 00 20 62 1e 82 02 41 21 83 02 6f 43 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 04 80 02 00 02 88 00 90 00
+TPDU: 00 b0 00 00 02 ff fe 90 00
+TPDU: 00 a4 00 04 02 6f 3e 61 20
+TPDU: 00 c0 00 00 20 62 1e 82 02 41 21 83 02 6f 3e a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 0a 88 00 90 00
+TPDU: 00 b0 00 00 0a ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 a4 00 04 02 6f 3f 61 20
+TPDU: 00 c0 00 00 20 62 1e 82 02 41 21 83 02 6f 3f a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 0a 88 00 90 00
+TPDU: 00 b0 00 00 0a ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 a4 00 04 02 6f 46 61 20
+TPDU: 00 c0 00 00 20 62 1e 82 02 41 21 83 02 6f 46 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 06 80 02 00 11 88 00 90 00
+TPDU: 00 b0 00 00 11 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 a4 00 04 02 6f d9 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f d9 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 0c 88 01 e8 90 00
+TPDU: 00 b0 00 00 0c 09 f1 07 ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 80 f2 01 0c 00 90 00
+TPDU: 00 a4 00 04 02 6f 41 61 20
+TPDU: 00 c0 00 00 20 62 1e 82 02 41 21 83 02 6f 41 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 04 80 02 00 05 88 00 90 00
+TPDU: 00 a4 00 04 02 6f 42 61 23
+TPDU: 00 c0 00 00 23 62 21 82 05 42 21 00 34 02 83 02 6f 42 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 04 80 02 00 68 88 00 90 00
+TPDU: 00 b2 01 04 34 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff e1 ff ff ff ff ff ff ff ff ff ff ff ff 06 81 53 84 09 00 67 ff ff ff ff ff 00 00 00 90 00
+TPDU: 00 a4 00 04 02 6f b7 61 24
+TPDU: 00 c0 00 00 24 62 22 82 05 42 21 00 10 05 83 02 6f b7 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 06 80 02 00 50 88 01 08 90 00
+TPDU: 00 b2 01 04 10 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 90 00
+TPDU: 00 b2 02 04 10 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 90 00
+TPDU: 00 b2 03 04 10 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 90 00
+TPDU: 00 b2 04 04 10 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 90 00
+TPDU: 00 b2 05 04 10 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 90 00
+TPDU: 00 a4 00 04 02 6f 15 6a 82
+TPDU: 00 a4 00 04 02 6f c6 61 24
+TPDU: 00 c0 00 00 24 62 22 82 05 42 21 00 08 01 83 02 6f c6 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 06 80 02 00 08 88 01 d0 90 00
+TPDU: 00 a4 00 04 02 6f c6 61 24
+TPDU: 00 c0 00 00 24 62 22 82 05 42 21 00 08 01 83 02 6f c6 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 06 80 02 00 08 88 01 d0 90 00
+TPDU: 00 a2 01 04 08 00 00 00 00 00 00 00 00 6a 83
+TPDU: 00 a4 00 04 02 6f c5 61 24
+TPDU: 00 c0 00 00 24 62 22 82 05 42 21 00 18 0a 83 02 6f c5 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 06 80 02 00 f0 88 01 c8 90 00
+TPDU: 00 b2 01 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 02 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 03 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 04 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 05 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 06 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 07 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 08 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 09 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 0a 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 a4 00 04 02 6f c6 61 24
+TPDU: 00 c0 00 00 24 62 22 82 05 42 21 00 08 01 83 02 6f c6 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 06 80 02 00 08 88 01 d0 90 00
+TPDU: 00 a2 01 04 08 ff ff ff ff ff ff ff ff 61 01
+TPDU: 00 c0 00 00 01 01 90 00
+TPDU: 00 70 00 00 01 01 90 00
+TPDU: 01 a4 04 00 09 a0 00 00 01 51 44 41 43 00 6a 82
+TPDU: 81 f2 02 0c 00 90 00
+TPDU: 00 70 80 01 00 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f 3e 61 20
+TPDU: 00 c0 00 00 20 62 1e 82 02 41 21 83 02 6f 3e a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 0a 88 00 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f 3f 61 20
+TPDU: 00 c0 00 00 20 62 1e 82 02 41 21 83 02 6f 3f a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 0a 88 00 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f 46 61 20
+TPDU: 00 c0 00 00 20 62 1e 82 02 41 21 83 02 6f 46 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 06 80 02 00 11 88 00 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f ad 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f ad a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 06 80 02 00 04 88 01 18 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f 40 61 23
+TPDU: 00 c0 00 00 23 62 21 82 05 42 21 00 22 06 83 02 6f 40 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 cc 88 00 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f 11 6a 82
+TPDU: 00 a4 08 04 04 7f ff 6f 13 6a 82
+TPDU: 00 a4 08 04 04 7f ff 6f c5 61 24
+TPDU: 00 c0 00 00 24 62 22 82 05 42 21 00 18 0a 83 02 6f c5 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 06 80 02 00 f0 88 01 c8 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f 38 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 38 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 14 88 01 20 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f 16 6a 82
+TPDU: 00 a4 08 04 04 7f ff 6f 15 6a 82
+TPDU: 00 a4 08 04 04 7f ff 6f 61 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 61 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 3c 88 01 88 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f 62 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 62 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 3c 88 01 98 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f d9 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f d9 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 0c 88 01 e8 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f 7b 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 7b a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 04 80 02 00 0c 88 01 68 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f 05 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 6f 05 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 02 80 02 00 0a 88 01 10 90 00
+TPDU: 00 a4 08 04 02 2f 05 61 21
+TPDU: 00 c0 00 00 21 62 1f 82 02 41 21 83 02 2f 05 a5 06 d0 01 30 d2 01 0f 8a 01 05 8b 03 2f 06 05 80 02 00 0a 88 01 28 90 00
+TPDU: 00 70 00 00 01 01 90 00
+TPDU: 01 a4 04 00 09 a0 00 00 01 51 41 43 4c 00 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f 40 61 23
+TPDU: 00 c0 00 00 23 62 21 82 05 42 21 00 22 06 83 02 6f 40 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 cc 88 00 90 00
+TPDU: 00 b2 01 04 22 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f 17 6a 82
+TPDU: 00 a4 08 04 04 7f ff 6f c5 61 24
+TPDU: 00 c0 00 00 24 62 22 82 05 42 21 00 18 0a 83 02 6f c5 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 06 80 02 00 f0 88 01 c8 90 00
+TPDU: 00 b2 01 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f 14 6a 82
+TPDU: 00 b2 02 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 81 f2 02 0c 00 6d 00
+TPDU: 00 70 80 01 00 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f 18 6a 82
+TPDU: 00 b2 03 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 04 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 05 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 06 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 07 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 08 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 09 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 0a 04 18 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f b7 61 24
+TPDU: 00 c0 00 00 24 62 22 82 05 42 21 00 10 05 83 02 6f b7 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 06 80 02 00 50 88 01 08 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f c6 61 24
+TPDU: 00 c0 00 00 24 62 22 82 05 42 21 00 08 01 83 02 6f c6 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 06 80 02 00 08 88 01 d0 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f b7 61 24
+TPDU: 00 c0 00 00 24 62 22 82 05 42 21 00 10 05 83 02 6f b7 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 06 80 02 00 50 88 01 08 90 00
+TPDU: 00 b2 01 04 10 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f c6 61 24
+TPDU: 00 c0 00 00 24 62 22 82 05 42 21 00 08 01 83 02 6f c6 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 06 80 02 00 08 88 01 d0 90 00
+TPDU: 00 b2 01 04 08 ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 a4 08 04 04 7f ff 6f b7 61 24
+TPDU: 00 c0 00 00 24 62 22 82 05 42 21 00 10 05 83 02 6f b7 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 06 80 02 00 50 88 01 08 90 00
+TPDU: 00 b2 02 04 10 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 90 00
+TPDU: 00 b2 03 04 10 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 90 00
+TPDU: 00 b2 04 04 10 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 90 00
+TPDU: 00 b2 05 04 10 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 00 90 00
+TPDU: 00 a4 00 04 02 6f 15 6a 82
+TPDU: 00 a4 00 04 02 6f 40 61 23
+TPDU: 00 c0 00 00 23 62 21 82 05 42 21 00 22 06 83 02 6f 40 a5 06 d0 01 20 d2 01 0f 8a 01 05 8b 03 6f 06 03 80 02 00 cc 88 00 90 00
+TPDU: 00 b2 01 04 22 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 02 04 22 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 03 04 22 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 04 04 22 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 05 04 22 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 b2 06 04 22 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff 90 00
+TPDU: 00 a4 00 04 02 6f 15 6a 82
+TPDU (incomplete): 00 a4 00 04 02

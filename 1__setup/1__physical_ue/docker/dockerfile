@@ -1,0 +1,223 @@
+FROM ubuntu:22.04 AS base
+
+ARG scrcpy__commit=576e7552a29e30b40205f81f2ff4d461f018313f
+ARG scrcpy__sha256=67e21e4fec1c3e04ebf11ce73a38bfd53ab3ae1be466f6f36fd5764b1899543b
+
+ARG bladerf__commit=3a411c87c2416dc68030d5823d73ebf3f797a145
+ARG bladerf__sha256=3d2bc867eae594a5c8b9c31776076e05b9752d7efd876704aa7bfb642e47927d
+ARG bladerf__no_os__commit=0bba46e6f6f75785a65d425ece37d0a04daf6157
+ARG bladerf__no_os__sha256=b77a86780e82ff592dd3cbcbf916d6f421f5cb7b523b800255483b1992aea88d
+
+ARG libosmocore__commit=e0c63ec8c7233971636c43f00149104b35b3abae
+ARG libosmocore__sha256=ce46bb3308230e49f327ef7766e9f99723478a3ed38bcee6dbc661ae12965dbc
+
+ARG simtrace2__commit=d405133672a1c2d05829284e58837aee886bc80c
+ARG simtrace2__sha256=e0884dcf387d96b21523e2026482cbacd27c0c392549dbe30551f4aa093ddc38
+
+RUN set -eux; \
+    apt-get -qq update; \
+    apt-get -qq --yes dist-upgrade;
+
+# Create directory for all compiled files.
+RUN set -eux; \
+    mkdir /opt/out;
+
+# Clone and build scrcpy.
+FROM base AS base__scrcpy
+ENV SCRCPY__COMMIT=${scrcpy__commit}
+ENV SCRCPY__SHA256=${scrcpy__sha256}
+ENV SCRCPY_SERVER__SHA256=93c272b7438605c055e127f7444064ed78fa9ca49f81156777fd201e79ce7ba3
+ENV SCRCPY__DEP="ca-certificates wget gcc pkg-config meson ninja-build libsdl2-dev libavcodec-dev libavdevice-dev libavformat-dev libavutil-dev libswresample-dev libusb-1.0-0-dev"
+RUN set -eux; \
+    apt-get -qq --yes --no-install-recommends install ${SCRCPY__DEP}; \
+    cd /opt/out; \
+    wget -O scrcpy-server https://github.com/Genymobile/scrcpy/releases/download/v2.4/scrcpy-server-v2.4; \
+    sha256sum scrcpy-server; \
+    echo "${SCRCPY_SERVER__SHA256}  scrcpy-server" | sha256sum --check --status; \
+    wget -O scrcpy.tar.gz https://github.com/Genymobile/scrcpy/archive/${SCRCPY__COMMIT}.tar.gz; \
+    sha256sum scrcpy.tar.gz; \
+    echo "${SCRCPY__SHA256} scrcpy.tar.gz" | sha256sum --check --status; \
+    mkdir scrcpy; \
+    tar -xzf scrcpy.tar.gz --strip-components=1 -C ./scrcpy; \
+    rm /opt/out/scrcpy.tar.gz; \
+    cd ./scrcpy; \
+    rm -rf ./build; \
+    meson setup ./build --buildtype=release --strip -Db_lto=true -Dprebuilt_server=../scrcpy-server; \
+    cd ./build; \
+    ninja; \
+    ninja install; \
+    apt-get -qq --yes purge ${SCRCPY__DEP};
+
+
+FROM base AS base__bladerf
+ENV BLADERF__COMMIT=${bladerf__commit}
+ENV BLADERF__SHA256=${bladerf__sha256}
+ENV BLADERF__NO_OS__COMMIT=${bladerf__no_os__commit}
+ENV BLADERF__NO_OS__SHA256=${bladerf__no_os__sha256}
+ENV BLADERF__DEP="ca-certificates wget make cmake g++ patch libusb-1.0-0 libusb-1.0-0-dev"
+COPY lib_bladerf_test__array_bounds.patch /opt/out
+# Compile bladeRF tools/libs
+RUN set -eux; \
+    apt-get -qq --yes --no-install-recommends install ${BLADERF__DEP}; \
+    cd /opt/out; \
+    wget -O bladerf.tar.gz https://github.com/Nuand/bladeRF/archive/${BLADERF__COMMIT}.tar.gz; \
+    sha256sum bladerf.tar.gz; \
+    echo "${BLADERF__SHA256} bladerf.tar.gz" | sha256sum --check --status; \
+    mkdir /opt/out/bladerf; \
+    tar -xzf bladerf.tar.gz --strip-components=1 -C /opt/out/bladerf; \
+    rm /opt/out/bladerf.tar.gz; \
+    # Pull submodule manually.
+    wget -O no_os.tar.gz https://github.com/analogdevicesinc/no-OS/archive/${BLADERF__NO_OS__COMMIT}.tar.gz; \
+    sha256sum no_os.tar.gz; \
+    echo "${BLADERF__NO_OS__SHA256} no_os.tar.gz" | sha256sum --check --status; \
+    rm -rf /opt/out/bladerf/thirdparty/analogdevicesinc/no-OS; \
+    mkdir /opt/out/bladerf/thirdparty/analogdevicesinc/no-OS; \
+    tar -xzf no_os.tar.gz --strip-components=1 -C /opt/out/bladerf/thirdparty/analogdevicesinc/no-OS; \
+    rm /opt/out/no_os.tar.gz; \
+    # Apply patch otherwise the libbladerf_test library will not compile.
+    cd /opt/out/bladerf/host/libraries/libbladeRF_test/test_repeater/src; \
+    patch -u ./repeater.c -i /opt/out/lib_bladerf_test__array_bounds.patch; \
+    rm /opt/out/lib_bladerf_test__array_bounds.patch; \
+    # Build.
+    mkdir /opt/out/bladerf/host/build; \
+    cd /opt/out/bladerf/host/build; \
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DINSTALL_UDEV_RULES=OFF -DENABLE_BACKEND_LIBUSB=TRUE ../; \
+    make -j$(nproc); \
+    make install; \
+    ldconfig; \
+    apt-get -qq --yes purge ${BLADERF__DEP};
+
+
+FROM base__bladerf AS base__yate
+ARG YATE__SHA256=31fc9314a9b1a533202aadab5b5e01980b17b39167e2226637f9cea06b5c80a5
+ENV YATE__DEP="ca-certificates wget php5.6 apache2 g++ autoconf make cmake"
+# Pull yate and yateBTS
+RUN set -eux; \
+    apt-get -qq --yes --no-install-recommends install ${YATE__DEP}; \
+    cd /opt/out; \
+    wget -O yate.tar.gz "https://nuand.com/downloads/yate-rc-2.tar.gz"; \
+    sha256sum yate.tar.gz; \
+    echo "${YATE__SHA256} yate.tar.gz" | sha256sum --check --status; \
+    mkdir ./yate; \
+    tar -xzf yate.tar.gz -C /opt/out/yate; \
+    rm /opt/out/yate.tar.gz; \
+    cd /opt/out/yate/yate; \
+    ./autogen.sh; \
+    ./configure --prefix=/usr/local; \
+    make -j$(nproc); \
+    make install-noapi; \
+    ldconfig; \
+    cd /opt/out/yate/yatebts; \
+    ./autogen.sh; \
+    ./configure --prefix=/usr/local; \
+    make -j$(nproc); \
+    make install; \
+    ldconfig; \
+    rm -rf /usr/local/share/yate/nipc_web/ansql/.git; \
+    apt-get -qq --yes purge ${YATE__DEP};
+
+
+FROM base AS base__libosmocore
+ENV LIBOSMOCORE__COMMIT=${libosmocore__commit}
+ENV LIBOSMOCORE__SHA256=${libosmocore__sha256}
+ENV LIBOSMOCORE__DEP="wget ca-certificates build-essential libtool libtalloc-dev libsctp-dev shtool autoconf automake git-core pkg-config make gcc gnutls-dev python3-minimal libusb-1.0.0-dev libmnl-dev libpcsclite-dev liburing-dev"
+RUN set -eux; \
+    apt-get -qq --yes --no-install-recommends install ${LIBOSMOCORE__DEP}; \
+    cd /opt/out; \
+    wget -O libosmocore.tar.gz https://github.com/osmocom/libosmocore/archive/${LIBOSMOCORE__COMMIT}.tar.gz; \
+    sha256sum libosmocore.tar.gz; \
+    echo "${LIBOSMOCORE__SHA256} libosmocore.tar.gz" | sha256sum --check --status; \
+    mkdir ./libosmocore; \
+    tar -xzf libosmocore.tar.gz --strip-components=1 -C /opt/out/libosmocore; \
+    rm /opt/out/libosmocore.tar.gz; \
+    cd /opt/out/libosmocore; \
+    autoreconf -i; \
+    ./configure; \
+    make -j$(nproc); \
+    make install; \
+    ldconfig; \
+    apt-get -qq --yes purge ${LIBOSMOCORE__DEP};
+
+
+FROM base__libosmocore AS base__simtrace2
+ENV SIMTRACE2__COMMIT=${simtrace2__commit}
+ENV SIMTRACE2__SHA256=${simtrace2__sha256}
+ENV SIMTRACE2__DEP="wget ca-certificates build-essential pkg-config autoconf libpcsclite-dev libusb-1.0-0-dev automake libtool libtalloc-dev libmnl-dev libsctp-dev liburing-dev"
+RUN set -eux; \
+    apt-get -qq --yes --no-install-recommends install ${SIMTRACE2__DEP}; \
+    sed -i 's/UNKNOWN/1.4.0/g' /usr/local/lib/pkgconfig/*.pc; \
+    cd /opt/out; \
+    wget -O simtrace2.tar.gz https://github.com/osmocom/simtrace2/archive/${SIMTRACE2__COMMIT}.tar.gz; \
+    sha256sum simtrace2.tar.gz; \
+    echo "${SIMTRACE2__SHA256} simtrace2.tar.gz" | sha256sum --check --status; \
+    mkdir ./simtrace2; \
+    tar -xzf simtrace2.tar.gz --strip-components=1 -C /opt/out/simtrace2; \
+    rm /opt/out/simtrace2.tar.gz; \
+    cd /opt/out/simtrace2/host; \
+    autoreconf -fi; \
+    ./configure; \
+    make -j$(nproc); \
+    make install; \
+    apt-get -qq --yes purge ${SIMTRACE2__DEP};
+
+
+FROM base
+
+COPY --from=base__bladerf /usr/local/lib/libbladeRF.so.2 /opt/out/bladerf/usr/local/lib/libbladeRF.so.2
+COPY --from=base__bladerf /usr/local/lib/libbladeRF.so /opt/out/bladerf/usr/local/lib/libbladeRF.so
+COPY --from=base__bladerf /usr/local/bin/bladeRF-cli /opt/out/bladerf/usr/local/bin/bladeRF-cli
+COPY --from=base__bladerf /usr/local/bin/bladeRF-fsk /opt/out/bladerf/usr/local/bin/bladeRF-fsk
+
+COPY --from=base__scrcpy /usr/local/bin/scrcpy /opt/out/scrcpy/usr/local/bin/scrcpy
+COPY --from=base__scrcpy /usr/local/share/scrcpy/scrcpy-server /opt/out/scrcpy/usr/local/bin/scrcpy-server
+
+COPY --from=base__yate /usr/local/lib/libyate.so.6.2.1 /opt/out/yate/usr/local/lib/libyate.so.6.2.1
+COPY --from=base__yate /usr/local/lib/libyate.so /opt/out/yate/usr/local/lib/libyate.so
+COPY --from=base__yate /usr/local/lib/libyateasn.so.6.2.1 /opt/out/yate/usr/local/lib/libyateasn.so.6.2.1
+COPY --from=base__yate /usr/local/lib/libyateasn.so /opt/out/yate/usr/local/lib/libyateasn.so
+COPY --from=base__yate /usr/local/lib/libyatejabber.so.6.2.1 /opt/out/yate/usr/local/lib/libyatejabber.so.6.2.1
+COPY --from=base__yate /usr/local/lib/libyatejabber.so /opt/out/yate/usr/local/lib/libyatejabber.so
+COPY --from=base__yate /usr/local/lib/libyatemgcp.so.6.2.1 /opt/out/yate/usr/local/lib/libyatemgcp.so.6.2.1
+COPY --from=base__yate /usr/local/lib/libyatemgcp.so /opt/out/yate/usr/local/lib/libyatemgcp.so
+COPY --from=base__yate /usr/local/lib/libyateradio.so.6.2.1 /opt/out/yate/usr/local/lib/libyateradio.so.6.2.1
+COPY --from=base__yate /usr/local/lib/libyateradio.so /opt/out/yate/usr/local/lib/libyateradio.so
+COPY --from=base__yate /usr/local/lib/libyatescript.so.6.2.1 /opt/out/yate/usr/local/lib/libyatescript.so.6.2.1
+COPY --from=base__yate /usr/local/lib/libyatescript.so /opt/out/yate/usr/local/lib/libyatescript.so
+COPY --from=base__yate /usr/local/lib/libyatesig.so.6.2.1 /opt/out/yate/usr/local/lib/libyatesig.so.6.2.1
+COPY --from=base__yate /usr/local/lib/libyatesig.so /opt/out/yate/usr/local/lib/libyatesig.so
+COPY --from=base__yate /usr/local/lib/yate /opt/out/yate/usr/local/lib/yate
+COPY --from=base__yate /usr/local/bin/yate /opt/out/yate/usr/local/bin/yate
+COPY --from=base__yate /usr/local/bin/yate-config /opt/out/yate/usr/local/bin/yate-config
+COPY --from=base__yate /usr/local/etc/yate /opt/out/yate/usr/local/etc/yate
+COPY --from=base__yate /usr/local/share/yate /opt/out/yate/usr/local/share/yate
+
+COPY --from=base__simtrace2 /usr/local/lib/libosmocodec.so /opt/out/libosmocore/usr/local/lib/libosmocodec.so
+COPY --from=base__simtrace2 /usr/local/lib/libosmocodec.so.4.0.0 /opt/out/libosmocore/usr/local/lib/libosmocodec.so.4.0.0
+COPY --from=base__simtrace2 /usr/local/lib/libosmocoding.so /opt/out/libosmocore/usr/local/lib/libosmocoding.so
+COPY --from=base__simtrace2 /usr/local/lib/libosmocoding.so.0.3.0 /opt/out/libosmocore/usr/local/lib/libosmocoding.so.0.3.0
+COPY --from=base__simtrace2 /usr/local/lib/libosmocore.so /opt/out/libosmocore/usr/local/lib/libosmocore.so
+COPY --from=base__simtrace2 /usr/local/lib/libosmocore.so.21.0.0 /opt/out/libosmocore/usr/local/lib/libosmocore.so.21.0.0
+COPY --from=base__simtrace2 /usr/local/lib/libosmoctrl.so /opt/out/libosmocore/usr/local/lib/libosmoctrl.so
+COPY --from=base__simtrace2 /usr/local/lib/libosmoctrl.so.0.8.1 /opt/out/libosmocore/usr/local/lib/libosmoctrl.so.0.8.1
+COPY --from=base__simtrace2 /usr/local/lib/libosmogb.so /opt/out/libosmocore/usr/local/lib/libosmogb.so
+COPY --from=base__simtrace2 /usr/local/lib/libosmogb.so.14.2.0 /opt/out/libosmocore/usr/local/lib/libosmogb.so.14.2.0
+COPY --from=base__simtrace2 /usr/local/lib/libosmogsm.so /opt/out/libosmocore/usr/local/lib/libosmogsm.so
+COPY --from=base__simtrace2 /usr/local/lib/libosmogsm.so.20.0.0 /opt/out/libosmocore/usr/local/lib/libosmogsm.so.20.0.0
+COPY --from=base__simtrace2 /usr/local/lib/libosmoisdn.so /opt/out/libosmocore/usr/local/lib/libosmoisdn.so
+COPY --from=base__simtrace2 /usr/local/lib/libosmoisdn.so.0.1.0 /opt/out/libosmocore/usr/local/lib/libosmoisdn.so.0.1.0
+COPY --from=base__simtrace2 /usr/local/lib/libosmosim.so /opt/out/libosmocore/usr/local/lib/libosmosim.so
+COPY --from=base__simtrace2 /usr/local/lib/libosmosim.so.2.1.2 /opt/out/libosmocore/usr/local/lib/libosmosim.so.2.1.2
+COPY --from=base__simtrace2 /usr/local/lib/libosmousb.so /opt/out/libosmocore/usr/local/lib/libosmousb.so
+COPY --from=base__simtrace2 /usr/local/lib/libosmousb.so.0.0.1 /opt/out/libosmocore/usr/local/lib/libosmousb.so.0.0.1
+COPY --from=base__simtrace2 /usr/local/lib/libosmovty.so /opt/out/libosmocore/usr/local/lib/libosmovty.so
+COPY --from=base__simtrace2 /usr/local/lib/libosmovty.so.13.0.0 /opt/out/libosmocore/usr/local/lib/libosmovty.so.13.0.0
+COPY --from=base__simtrace2 /usr/local/lib/libosmo-simtrace2.a /opt/out/simtrace2/usr/local/lib/libosmo-simtrace2.a
+COPY --from=base__simtrace2 /usr/local/lib/libosmo-simtrace2.so /opt/out/simtrace2/usr/local/lib/libosmo-simtrace2.so
+COPY --from=base__simtrace2 /usr/local/lib/libosmo-simtrace2.so.1.0.0 /opt/out/simtrace2/usr/local/lib/libosmo-simtrace2.so.1.0.0
+COPY --from=base__simtrace2 /usr/local/bin/simtrace2-cardem-pcsc /opt/out/simtrace2/usr/local/bin/simtrace2-cardem-pcsc
+COPY --from=base__simtrace2 /usr/local/bin/simtrace2-list /opt/out/simtrace2/usr/local/bin/simtrace2-list
+COPY --from=base__simtrace2 /usr/local/bin/simtrace2-sniff /opt/out/simtrace2/usr/local/bin/simtrace2-sniff
+COPY --from=base__simtrace2 /usr/local/bin/simtrace2-tool /opt/out/simtrace2/usr/local/bin/simtrace2-tool
+
+COPY --chmod=700 ./entrypoint.sh ./opt
+ENTRYPOINT ["/opt/entrypoint.sh"]

@@ -1,0 +1,580 @@
+
+
+Built in Release mode using commit 2738a65a on branch binary_sms.
+
+---  Software Radio Systems EPC log ---
+
+12:51:49.828332 [HSS ] [I] Opened DB file: /home/eval/srsRAN_4G_SMS/srsepc/user_db.csv
+12:51:49.828406 [HSS ] [I] HSS Initialized. DB file /home/eval/srsRAN_4G_SMS/srsepc/user_db.csv, MCC: 61441, MNC: 65281
+12:51:49.855907 [S1AP] [I] S1-MME Initializing
+12:51:49.856015 [S1AP] [I] S1AP Initialized
+12:51:49.856021 [MME GTPC] [I] Initializing MME S11 interface.
+12:51:49.856032 [MME GTPC] [I] MME S11 Initialized
+12:51:49.856041 [MME GTPC] [I] MME GTP-C Initialized
+12:51:49.856046 [S1AP] [I] MME Initialized. MCC: 0xf001, MNC: 0xff01
+12:51:49.856059 [GTPU] [I] TUN file descriptor = 7
+12:51:49.856372 [GTPU] [I] Initialized SGi interface
+12:51:49.856400 [GTPU] [I] S1-U socket = 8
+12:51:49.856407 [GTPU] [I] S1-U IP = 127.0.1.100, Port = 2152 
+12:51:49.856412 [GTPU] [I] Initialized S1-U interface
+12:51:49.856416 [GTPU] [I] SPGW GTP-U Initialized.
+12:51:49.856431 [SPGW GTPC] [I] Initializing SPGW S11 interface.
+12:51:49.856711 [SPGW GTPC] [I] SPGW S11 Initialized.
+12:51:49.856742 [SPGW] [I] SP-GW Initialized.
+12:51:49.857500 [GTPU] [W] IPv6 not supported yet.
+12:51:52.129613 [S1AP] [I] Received S1AP msg. Size: 49
+12:51:52.130296 [S1AP] [I] Received initiating PDU
+12:51:52.130311 [S1AP] [I] Received S1 Setup Request.
+12:51:52.130329 [S1AP] [I] S1 Setup Request - eNB Name: srsenb01, eNB id: 0x19b
+12:51:52.130338 [S1AP] [I] S1 Setup Request - MCC:001, MNC:01, PLMN: 61712
+12:51:52.130349 [S1AP] [I] S1 Setup Request - TAC 7, B-PLMN 0
+12:51:52.130364 [S1AP] [I] Adding new eNB context. eNB ID 411
+12:51:52.131132 [S1AP] [I] Sending S1 Setup Response
+12:51:54.290765 [GTPU] [W] IPv6 not supported yet.
+12:52:02.995774 [GTPU] [W] IPv6 not supported yet.
+12:52:12.940902 [S1AP] [I] Received S1AP msg. Size: 174
+12:52:12.940944 [S1AP] [I] Received initiating PDU
+12:52:12.940950 [S1AP] [I] Received Initial UE Message.
+12:52:12.940961 [S1AP] [I] Initial UE message: LIBLTE_MME_MSG_TYPE_ATTACH_REQUEST
+12:52:12.940978 [S1AP] [I] Received Initial UE message -- Attach Request
+12:52:12.941024 [NAS ] [I] Attach request -- M-TMSI: 0x8e7f727
+12:52:12.941045 [NAS ] [I] Attach request -- eNB-UE S1AP Id: 1
+12:52:12.941072 [NAS ] [I] Attach request -- Attach type: 2
+12:52:12.941084 [NAS ] [I] Attach Request -- UE Network Capabilities EEA: 11110000
+12:52:12.941102 [NAS ] [I] Attach Request -- UE Network Capabilities EIA: 11110000
+12:52:12.941114 [NAS ] [I] Attach Request -- MS Network Capabilities Present: true
+12:52:12.941127 [NAS ] [I] PDN Connectivity Request -- EPS Bearer Identity requested: 0
+12:52:12.941141 [NAS ] [I] PDN Connectivity Request -- Procedure Transaction Id: 1
+12:52:12.941159 [NAS ] [I] PDN Connectivity Request -- ESM Information Transfer requested: true
+12:52:12.941775 [NAS ] [I] Packing Identity Request
+12:52:12.941781 [NAS ] [I] ZMQ channel started.
+12:52:12.960781 [S1AP] [I] Received S1AP msg. Size: 63
+12:52:12.960878 [S1AP] [I] Received initiating PDU
+12:52:12.960887 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:12.960941 [NAS ] [W] Integrity check failure. Algorithm=EIA1
+12:52:12.960945 [NAS ] [W] UL Local: count=0, MAC=[de 3d fa 1f], Received: UL count=8, MAC=[da 89 00 95]
+12:52:12.960950 [S1AP] [W] Invalid MAC message. Even if security header indicates integrity protection (Maybe: Identity Response or Authentication Response)
+12:52:12.960954 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY, mac_vaild: no, msg_encrypted: no
+12:52:12.960957 [S1AP] [I] UL NAS: Received Identity Response
+12:52:12.960970 [NAS ] [I] ID response -- IMSI: 001010000044889
+12:52:12.960982 [HSS ] [I] Found User 001010000044889
+12:52:12.961033 [NAS ] [I] Packing Authentication Request
+12:52:12.961132 [NAS ] [I] Downlink NAS: Sent Authentication Request
+12:52:13.020734 [S1AP] [I] Received S1AP msg. Size: 63
+12:52:13.020790 [S1AP] [I] Received initiating PDU
+12:52:13.020796 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:13.020906 [NAS ] [W] Integrity check failure. Algorithm=EIA1
+12:52:13.020917 [NAS ] [W] UL Local: count=1, MAC=[b1 ff 0c 25], Received: UL count=9, MAC=[a9 76 ad a0]
+12:52:13.020938 [S1AP] [W] Invalid MAC message. Even if security header indicates integrity protection (Maybe: Identity Response or Authentication Response)
+12:52:13.020945 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY, mac_vaild: no, msg_encrypted: no
+12:52:13.020950 [S1AP] [I] UL NAS: Received Authentication Response
+12:52:13.020967 [NAS ] [I] Authentication Response -- IMSI 001010000044889
+12:52:13.020973 [NAS ] [I] Authentication response -- RES
+             0000: 3a 10 b6 89 41 1a 86 82 
+12:52:13.020995 [NAS ] [I] Authentication response -- XRES
+             0000: 3a 10 b6 89 41 1a 86 82 
+12:52:13.021006 [NAS ] [I] UE Authentication Accepted.
+12:52:13.021011 [NAS ] [I] Packing Security Mode Command
+12:52:13.021025 [NAS ] [I] Key NAS Encryption (k_nas_enc)
+             0000: d7 a7 63 89 b3 2a cd ce f8 9f 56 9c b6 c5 a3 b9 
+             0010: 92 d1 58 9e 32 1d a8 8f 42 a8 14 31 b3 03 d2 6a 
+12:52:13.021112 [NAS ] [I] Key NAS Integrity (k_nas_int)
+             0000: 99 a8 7f f1 b8 8a 60 6c 9e d6 80 0a 1f b6 fe 93 
+             0010: cb 8a 08 d0 1d bb dd 0c 7a 46 0f 85 f6 3b a2 8c 
+12:52:13.021132 [NAS ] [I] Generating KeNB with UL NAS COUNT: 0
+12:52:13.021158 [NAS ] [I] Key eNodeB (k_enb)
+             0000: 31 a8 d7 2b 1e c9 f6 cb dd e5 b7 95 67 15 70 4e 
+             0010: 96 ab e9 5c 5b c1 3e 77 6a 79 84 f3 66 51 d5 ff 
+12:52:13.040605 [S1AP] [I] Received S1AP msg. Size: 54
+12:52:13.040654 [S1AP] [I] Received initiating PDU
+12:52:13.040663 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:13.040807 [NAS ] [I] Integrity check ok. Local: count=0, Received: count=0
+12:52:13.040817 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED_WITH_NEW_EPS_SECURITY_CONTEXT, mac_vaild: yes, msg_encrypted: yes
+12:52:13.040824 [S1AP] [I] UL NAS: Received Security Mode Complete
+12:52:13.040837 [NAS ] [I] Security Mode Command Complete -- IMSI: 001010000044889
+12:52:13.040850 [NAS ] [I] Sending ESM information request
+12:52:13.040856 [NAS ] [I] Packing ESM Information request
+12:52:13.060645 [S1AP] [I] Received S1AP msg. Size: 100
+12:52:13.060711 [S1AP] [I] Received initiating PDU
+12:52:13.060719 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:13.060837 [NAS ] [I] Integrity check ok. Local: count=1, Received: count=1
+12:52:13.060848 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:13.060853 [S1AP] [I] UL NAS: Received ESM Information Response
+12:52:13.060879 [NAS ] [I] ESM Info: EPS bearer id 0
+12:52:13.060886 [NAS ] [I] ESM Info: APN phone
+12:52:13.060893 [NAS ] [I] ESM Info: 6 Protocol Configuration Options
+12:52:13.060903 [HSS ] [I] Found User 001010000044889
+12:52:13.060928 [MME GTPC] [I] Sending Create Session Request.
+12:52:13.060937 [MME GTPC] [I] Next MME control TEID: 2
+12:52:13.060941 [MME GTPC] [I] Allocated MME control TEID: 1
+12:52:13.060986 [SPGW GTPC] [I] SPGW Received Create Session Request
+12:52:13.060999 [SPGW GTPC] [I] Creating new GTP-C context
+12:52:13.061022 [SPGW GTPC] [I] SPGW: get_new_ue_ipv4 pool ip addr 172.16.0.2
+12:52:13.061049 [SPGW GTPC] [I] Sending Create Session Response
+12:52:13.061100 [MME GTPC] [I] Received Create Session Response
+12:52:13.061114 [MME GTPC] [I] MME GTPC Ctrl TEID 1, IMSI 1010000044889
+12:52:13.061129 [MME GTPC] [I] Create Session Response -- SPGW control TEID 1
+12:52:13.061143 [MME GTPC] [I] Create Session Response -- SPGW S1-U Address: 127.0.1.100
+12:52:13.061206 [S1AP] [I] Preparing to send Initial Context Setup request
+12:52:13.061215 [S1AP] [I] Initial Context Setup Request -- Key eNB (k_enb)
+             0000: 31 a8 d7 2b 1e c9 f6 cb dd e5 b7 95 67 15 70 4e 
+             0010: 96 ab e9 5c 5b c1 3e 77 6a 79 84 f3 66 51 d5 ff 
+12:52:13.061254 [S1AP] [I] Adding attach accept to Initial Context Setup Request
+12:52:13.061260 [NAS ] [I] Packing Attach Accept
+12:52:13.061285 [NAS ] [I] Attach Accept -- MCC 0xf001, MNC 0xff01
+12:52:13.061377 [NAS ] [I] Packed Attach Accept
+12:52:13.061531 [S1AP] [I] Sent Initial Context Setup Request. E-RAB id 5 
+12:52:13.061541 [S1AP] [I] Initial Context -- S1-U TEID 0x1. IP 127.0.1.100 
+12:52:13.109868 [S1AP] [I] Received S1AP msg. Size: 687
+12:52:13.109942 [S1AP] [I] Received initiating PDU
+12:52:13.109952 [S1AP] [E] Unhandled S1AP intiating message: UECapabilityInfoIndication
+12:52:13.314817 [S1AP] [I] Received S1AP msg. Size: 38
+12:52:13.314865 [S1AP] [I] Received Succeseful Outcome PDU
+12:52:13.314873 [S1AP] [I] Received Initial Context Setup Response.
+12:52:13.314887 [S1AP] [I] E-RAB Context Setup. E-RAB id 5
+12:52:13.314895 [S1AP] [I] E-RAB Context -- eNB TEID 0x1, eNB Address 127.0.1.1
+12:52:13.314913 [S1AP] [I] Received S1AP msg. Size: 59
+12:52:13.314935 [S1AP] [I] Received initiating PDU
+12:52:13.314942 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:13.315056 [NAS ] [I] Integrity check ok. Local: count=2, Received: count=2
+12:52:13.315067 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:13.315077 [S1AP] [I] UL NAS: Received Attach Complete
+12:52:13.315099 [MME GTPC] [I] Sending GTP-C Modify bearer request
+12:52:13.315106 [MME GTPC] [I] GTP-C Modify bearer request -- S-GW Control TEID 1
+12:52:13.315113 [MME GTPC] [I] GTP-C Modify bearer request -- S1-U TEID 0x1, IP 127.0.1.1
+12:52:13.315132 [NAS ] [I] Packing EMM Information
+12:52:13.315170 [SPGW GTPC] [I] Received Modified Bearer Request
+12:52:13.315203 [SPGW GTPC] [I] Setting Up GTP-U tunnel. Tunnel info: 
+12:52:13.315210 [SPGW GTPC] [I] IMSI: 001010000044889, UE IP: 172.16.0.2 
+12:52:13.315216 [SPGW GTPC] [I] S-GW Rx Ctrl TEID 0x1, MME Rx Ctrl TEID 0x1
+12:52:13.315223 [SPGW GTPC] [I] S-GW Rx Ctrl IP (NA), MME Rx Ctrl IP (NA)
+12:52:13.315230 [SPGW GTPC] [I] S-GW Rx User TEID 0x1, S-GW Rx User IP 127.0.1.100
+12:52:13.315237 [SPGW GTPC] [I] eNB Rx User TEID 0x1, eNB Rx User IP 127.0.1.1
+12:52:13.315244 [GTPU] [I] Modifying GTP-U Tunnel.
+12:52:13.315250 [GTPU] [I] UE IP 172.16.0.2
+12:52:13.315344 [GTPU] [I] Downlink eNB addr 127.0.1.1, U-TEID 0x1
+12:52:13.315352 [GTPU] [I] Uplink C-TEID: 0x1
+12:52:13.315274 [NAS ] [I] Packed UE EMM information
+12:52:13.315496 [NAS ] [I] Sending EMM Information
+12:52:13.315539 [S1AP] [I] Activated EPS Bearer: Bearer id 5
+12:52:20.915760 [GTPU] [W] IPv6 not supported yet.
+12:52:26.760707 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:26.760829 [S1AP] [I] Received initiating PDU
+12:52:26.760837 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:26.760930 [NAS ] [I] Integrity check ok. Local: count=3, Received: count=3
+12:52:26.760937 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:26.760940 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:26.760957 [NAS ] [E] Error decoding received SMS
+12:52:26.962831 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:26.962879 [S1AP] [I] Received initiating PDU
+12:52:26.962900 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:26.963031 [NAS ] [I] Integrity check ok. Local: count=4, Received: count=4
+12:52:26.963042 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:26.963048 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:27.360705 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:27.360778 [S1AP] [I] Received initiating PDU
+12:52:27.360789 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:27.360932 [NAS ] [I] Integrity check ok. Local: count=5, Received: count=5
+12:52:27.360943 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:27.360953 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:27.360977 [NAS ] [E] Error decoding received SMS
+12:52:27.562875 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:27.562948 [S1AP] [I] Received initiating PDU
+12:52:27.562960 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:27.563118 [NAS ] [I] Integrity check ok. Local: count=6, Received: count=6
+12:52:27.563131 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:27.563141 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:28.040666 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:28.040777 [S1AP] [I] Received initiating PDU
+12:52:28.040786 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:28.040869 [NAS ] [I] Integrity check ok. Local: count=7, Received: count=7
+12:52:28.040876 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:28.040879 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:28.040912 [NAS ] [E] Error decoding received SMS
+12:52:28.242818 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:28.242867 [S1AP] [I] Received initiating PDU
+12:52:28.242876 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:28.243021 [NAS ] [I] Integrity check ok. Local: count=8, Received: count=8
+12:52:28.243033 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:28.243042 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:28.780666 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:28.780793 [S1AP] [I] Received initiating PDU
+12:52:28.780809 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:28.780938 [NAS ] [I] Integrity check ok. Local: count=9, Received: count=9
+12:52:28.780947 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:28.780954 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:28.780974 [NAS ] [E] Error decoding received SMS
+12:52:28.986791 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:28.986849 [S1AP] [I] Received initiating PDU
+12:52:28.986857 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:28.986942 [NAS ] [I] Integrity check ok. Local: count=10, Received: count=10
+12:52:28.986948 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:28.986952 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:29.620843 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:29.620887 [S1AP] [I] Received initiating PDU
+12:52:29.620895 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:29.621034 [NAS ] [I] Integrity check ok. Local: count=11, Received: count=11
+12:52:29.621046 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:29.621057 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:29.621077 [NAS ] [E] Error decoding received SMS
+12:52:29.826819 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:29.826869 [S1AP] [I] Received initiating PDU
+12:52:29.826877 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:29.827008 [NAS ] [I] Integrity check ok. Local: count=12, Received: count=12
+12:52:29.827033 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:29.827041 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:30.500811 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:30.500866 [S1AP] [I] Received initiating PDU
+12:52:30.500873 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:30.500956 [NAS ] [I] Integrity check ok. Local: count=13, Received: count=13
+12:52:30.500962 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:30.500976 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:30.500993 [NAS ] [E] Error decoding received SMS
+12:52:30.706828 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:30.706877 [S1AP] [I] Received initiating PDU
+12:52:30.706886 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:30.706965 [NAS ] [I] Integrity check ok. Local: count=14, Received: count=14
+12:52:30.706972 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:30.706976 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:31.320806 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:31.320883 [S1AP] [I] Received initiating PDU
+12:52:31.320895 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:31.321041 [NAS ] [I] Integrity check ok. Local: count=15, Received: count=15
+12:52:31.321050 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:31.321057 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:31.321075 [NAS ] [E] Error decoding received SMS
+12:52:31.522792 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:31.522837 [S1AP] [I] Received initiating PDU
+12:52:31.522845 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:31.522973 [NAS ] [I] Integrity check ok. Local: count=16, Received: count=16
+12:52:31.522983 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:31.522989 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:32.140689 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:32.140759 [S1AP] [I] Received initiating PDU
+12:52:32.140767 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:32.140871 [NAS ] [I] Integrity check ok. Local: count=17, Received: count=17
+12:52:32.140890 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:32.140903 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:32.140921 [NAS ] [E] Error decoding received SMS
+12:52:32.346793 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:32.346877 [S1AP] [I] Received initiating PDU
+12:52:32.346884 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:32.346987 [NAS ] [I] Integrity check ok. Local: count=18, Received: count=18
+12:52:32.347013 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:32.347018 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:32.980754 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:32.980832 [S1AP] [I] Received initiating PDU
+12:52:32.980839 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:32.980932 [NAS ] [I] Integrity check ok. Local: count=19, Received: count=19
+12:52:32.980944 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:32.980978 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:32.980995 [NAS ] [E] Error decoding received SMS
+12:52:33.186786 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:33.186841 [S1AP] [I] Received initiating PDU
+12:52:33.186850 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:33.186956 [NAS ] [I] Integrity check ok. Local: count=20, Received: count=20
+12:52:33.186965 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:33.186971 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:33.820720 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:33.820768 [S1AP] [I] Received initiating PDU
+12:52:33.820773 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:33.820830 [NAS ] [I] Integrity check ok. Local: count=21, Received: count=21
+12:52:33.820851 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:33.820859 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:33.820894 [NAS ] [E] Error decoding received SMS
+12:52:34.026821 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:34.026869 [S1AP] [I] Received initiating PDU
+12:52:34.026876 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:34.026996 [NAS ] [I] Integrity check ok. Local: count=22, Received: count=22
+12:52:34.027009 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:34.027014 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:34.720818 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:34.720862 [S1AP] [I] Received initiating PDU
+12:52:34.720868 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:34.720986 [NAS ] [I] Integrity check ok. Local: count=23, Received: count=23
+12:52:34.720995 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:34.721008 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:34.721054 [NAS ] [E] Error decoding received SMS
+12:52:34.922783 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:34.922825 [S1AP] [I] Received initiating PDU
+12:52:34.922839 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:34.922968 [NAS ] [I] Integrity check ok. Local: count=24, Received: count=24
+12:52:34.922976 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:34.922981 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:35.560657 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:35.560758 [S1AP] [I] Received initiating PDU
+12:52:35.560767 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:35.560868 [NAS ] [I] Integrity check ok. Local: count=25, Received: count=25
+12:52:35.560878 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:35.560883 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:35.560905 [NAS ] [E] Error decoding received SMS
+12:52:35.780778 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:35.780871 [S1AP] [I] Received initiating PDU
+12:52:35.780879 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:35.780944 [NAS ] [I] Integrity check ok. Local: count=26, Received: count=26
+12:52:35.780949 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:35.780952 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:36.340736 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:36.340813 [S1AP] [I] Received initiating PDU
+12:52:36.340832 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:36.340957 [NAS ] [I] Integrity check ok. Local: count=27, Received: count=27
+12:52:36.340966 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:36.340971 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:36.340987 [NAS ] [E] Error decoding received SMS
+12:52:36.580638 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:36.580681 [S1AP] [I] Received initiating PDU
+12:52:36.580766 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:36.580858 [NAS ] [I] Integrity check ok. Local: count=28, Received: count=28
+12:52:36.580865 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:36.580880 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:37.100730 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:37.100781 [S1AP] [I] Received initiating PDU
+12:52:37.100789 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:37.100927 [NAS ] [I] Integrity check ok. Local: count=29, Received: count=29
+12:52:37.100937 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:37.100942 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:37.100961 [NAS ] [E] Error decoding received SMS
+12:52:37.306804 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:37.306852 [S1AP] [I] Received initiating PDU
+12:52:37.306860 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:37.306960 [NAS ] [I] Integrity check ok. Local: count=30, Received: count=30
+12:52:37.306970 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:37.306977 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:37.860617 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:37.860703 [S1AP] [I] Received initiating PDU
+12:52:37.860715 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:37.860795 [NAS ] [I] Integrity check ok. Local: count=31, Received: count=31
+12:52:37.860802 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:37.860805 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:37.860847 [NAS ] [E] Error decoding received SMS
+12:52:38.066803 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:38.066855 [S1AP] [I] Received initiating PDU
+12:52:38.066861 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:38.066965 [NAS ] [I] Integrity check ok. Local: count=32, Received: count=32
+12:52:38.066975 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:38.066980 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:38.680721 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:38.680800 [S1AP] [I] Received initiating PDU
+12:52:38.680811 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:38.680926 [NAS ] [I] Integrity check ok. Local: count=33, Received: count=33
+12:52:38.680934 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:38.680940 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:38.680954 [NAS ] [E] Error decoding received SMS
+12:52:38.882829 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:38.882869 [S1AP] [I] Received initiating PDU
+12:52:38.882874 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:38.882934 [NAS ] [I] Integrity check ok. Local: count=34, Received: count=34
+12:52:38.882948 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:38.882976 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:39.580632 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:39.580720 [S1AP] [I] Received initiating PDU
+12:52:39.580736 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:39.580839 [NAS ] [I] Integrity check ok. Local: count=35, Received: count=35
+12:52:39.580846 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:39.580851 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:39.580896 [NAS ] [E] Error decoding received SMS
+12:52:39.786809 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:39.786852 [S1AP] [I] Received initiating PDU
+12:52:39.786859 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:39.786960 [NAS ] [I] Integrity check ok. Local: count=36, Received: count=36
+12:52:39.786968 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:39.786975 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:40.460823 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:40.460865 [S1AP] [I] Received initiating PDU
+12:52:40.460871 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:40.460983 [NAS ] [I] Integrity check ok. Local: count=37, Received: count=37
+12:52:40.460994 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:40.461011 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:40.461028 [NAS ] [E] Error decoding received SMS
+12:52:40.666780 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:40.666834 [S1AP] [I] Received initiating PDU
+12:52:40.666841 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:40.666947 [NAS ] [I] Integrity check ok. Local: count=38, Received: count=38
+12:52:40.666955 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:40.666960 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:41.320682 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:41.320766 [S1AP] [I] Received initiating PDU
+12:52:41.320775 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:41.320896 [NAS ] [I] Integrity check ok. Local: count=39, Received: count=39
+12:52:41.320906 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:41.320913 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:41.320934 [NAS ] [E] Error decoding received SMS
+12:52:41.522834 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:41.522877 [S1AP] [I] Received initiating PDU
+12:52:41.522885 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:41.523020 [NAS ] [I] Integrity check ok. Local: count=40, Received: count=40
+12:52:41.523030 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:41.523061 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:42.080802 [S1AP] [I] Received S1AP msg. Size: 57
+12:52:42.080853 [S1AP] [I] Received initiating PDU
+12:52:42.080861 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:42.080969 [NAS ] [I] Integrity check ok. Local: count=41, Received: count=41
+12:52:42.080979 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:42.080985 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:42.081020 [NAS ] [E] Error decoding received SMS
+12:52:42.500737 [S1AP] [I] Received S1AP msg. Size: 87
+12:52:42.500834 [S1AP] [I] Received initiating PDU
+12:52:42.500842 [S1AP] [I] Received Uplink NAS Transport Message.
+12:52:42.500960 [NAS ] [I] Integrity check ok. Local: count=42, Received: count=42
+12:52:42.500969 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:52:42.500975 [S1AP] [I] UL NAS: Received Uplink NAS Transport
+12:52:43.140686 [S1AP] [I] Received S1AP msg. Size: 25
+12:52:43.140739 [S1AP] [I] Received initiating PDU
+12:52:43.140750 [S1AP] [I] Received UE Context Release Request Message.
+12:52:43.140772 [S1AP] [I] Received UE Context Release Request. MME-UE S1AP Id: 1
+12:52:43.140790 [S1AP] [I] There are active E-RABs, send release access bearers request
+12:52:43.140798 [MME GTPC] [I] Sending GTP-C Release Access Bearers Request
+12:52:43.140802 [MME GTPC] [I] GTP-C Release Access Berarers Request -- S-GW Control TEID 1
+12:52:43.140922 [S1AP] [I] UE is ECM IDLE.
+12:52:43.141047 [S1AP] [I] Received S1AP msg. Size: 19
+12:52:43.141067 [S1AP] [I] Received Succeseful Outcome PDU
+12:52:43.141073 [S1AP] [I] Received UE Context Release Complete
+12:52:43.141080 [S1AP] [I] Received UE Context Release Complete. MME-UE S1AP Id: 1
+12:52:43.141094 [S1AP] [I] UE is not ECM connected. No need to release S1-U. MME UE S1AP Id 1
+12:52:43.141102 [S1AP] [E] Cannot release UE ECM context, UE not found. MME-UE S1AP Id: 0
+12:52:43.141107 [S1AP] [I] UE Context Release Completed.
+12:52:58.290767 [GTPU] [W] IPv6 not supported yet.
+12:54:07.922765 [GTPU] [W] IPv6 not supported yet.
+12:54:24.140712 [S1AP] [I] Received S1AP msg. Size: 167
+12:54:24.140805 [S1AP] [I] Received initiating PDU
+12:54:24.140816 [S1AP] [I] Received Initial UE Message.
+12:54:24.140851 [S1AP] [I] Initial UE message: LIBLTE_MME_MSG_TYPE_ATTACH_REQUEST
+12:54:24.140869 [S1AP] [I] Received Initial UE message -- Attach Request
+12:54:24.140901 [NAS ] [I] Attach request -- M-TMSI: 0x3f3d6831
+12:54:24.140917 [NAS ] [I] Attach request -- eNB-UE S1AP Id: 2
+12:54:24.140932 [NAS ] [I] Attach request -- Attach type: 2
+12:54:24.140945 [NAS ] [I] Attach Request -- UE Network Capabilities EEA: 11110000
+12:54:24.140957 [NAS ] [I] Attach Request -- UE Network Capabilities EIA: 11110000
+12:54:24.140971 [NAS ] [I] Attach Request -- MS Network Capabilities Present: true
+12:54:24.140984 [NAS ] [I] PDN Connectivity Request -- EPS Bearer Identity requested: 0
+12:54:24.140997 [NAS ] [I] PDN Connectivity Request -- Procedure Transaction Id: 1
+12:54:24.141022 [NAS ] [I] PDN Connectivity Request -- ESM Information Transfer requested: true
+12:54:24.141028 [NAS ] [I] Attach Request -- Found previously attached UE.
+12:54:24.141188 [NAS ] [W] Integrity check failure. Algorithm=EIA1
+12:54:24.141199 [NAS ] [W] UL Local: count=43, MAC=[5a 14 d7 c4], Received: UL count=0, MAC=[41 72 0b f6]
+12:54:24.141204 [NAS ] [E] Received GUTI-Attach Request from attached user.
+12:54:24.141217 [MME GTPC] [I] Sending GTP-C Delete Session Request request. IMSI 1010000044889
+12:54:24.141226 [MME GTPC] [I] GTP-C Delete Session Request -- S-GW Control TEID 1
+12:54:24.141279 [HSS ] [I] Found User 001010000044889
+12:54:24.141310 [NAS ] [I] Packing Authentication Request
+12:54:24.141351 [GTPU] [E] Could not find GTP-U Tunnel to delete.
+12:54:24.141698 [NAS ] [I] Downlink NAS: Sent Authentication Request
+12:54:24.220698 [S1AP] [I] Received S1AP msg. Size: 57
+12:54:24.220770 [S1AP] [I] Received initiating PDU
+12:54:24.220783 [S1AP] [I] Received Uplink NAS Transport Message.
+12:54:24.220791 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_PLAIN_NAS, mac_vaild: no, msg_encrypted: no
+12:54:24.220821 [S1AP] [I] UL NAS: Received Authentication Response
+12:54:24.220873 [NAS ] [I] Authentication Response -- IMSI 001010000044889
+12:54:24.220884 [NAS ] [I] Authentication response -- RES
+             0000: 07 90 28 de 95 fb 8b c6 
+12:54:24.220906 [NAS ] [I] Authentication response -- XRES
+             0000: 07 90 28 de 95 fb 8b c6 
+12:54:24.220929 [NAS ] [I] UE Authentication Accepted.
+12:54:24.220940 [NAS ] [I] Packing Security Mode Command
+12:54:24.220975 [NAS ] [I] Key NAS Encryption (k_nas_enc)
+             0000: 34 dd 8f 54 d0 66 0c 8a 12 2e 4d 91 5b 2b 73 ef 
+             0010: a9 c4 1f bc 06 47 74 cd e7 51 6a d1 55 6a e2 5d 
+12:54:24.221000 [NAS ] [I] Key NAS Integrity (k_nas_int)
+             0000: 31 80 ce 97 69 f7 da 3b 09 af 50 c5 6f c2 17 d6 
+             0010: 4a 07 ff a1 75 77 d1 21 db b0 47 25 b4 d6 66 a9 
+12:54:24.221024 [NAS ] [I] Generating KeNB with UL NAS COUNT: 0
+12:54:24.221039 [NAS ] [I] Key eNodeB (k_enb)
+             0000: 83 b0 18 ca c8 21 86 83 aa c9 57 f9 b7 ad 3f 42 
+             0010: 43 05 99 16 f1 e4 32 c1 df 02 d4 27 25 c2 82 41 
+12:54:24.240582 [S1AP] [I] Received S1AP msg. Size: 54
+12:54:24.240629 [S1AP] [I] Received initiating PDU
+12:54:24.240668 [S1AP] [I] Received Uplink NAS Transport Message.
+12:54:24.240835 [NAS ] [I] Integrity check ok. Local: count=0, Received: count=0
+12:54:24.240855 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED_WITH_NEW_EPS_SECURITY_CONTEXT, mac_vaild: yes, msg_encrypted: yes
+12:54:24.240862 [S1AP] [I] UL NAS: Received Security Mode Complete
+12:54:24.240879 [NAS ] [I] Security Mode Command Complete -- IMSI: 001010000044889
+12:54:24.240912 [NAS ] [I] Sending ESM information request
+12:54:24.240922 [NAS ] [I] Packing ESM Information request
+12:54:24.260523 [S1AP] [I] Received S1AP msg. Size: 100
+12:54:24.260619 [S1AP] [I] Received initiating PDU
+12:54:24.260631 [S1AP] [I] Received Uplink NAS Transport Message.
+12:54:24.260805 [NAS ] [I] Integrity check ok. Local: count=1, Received: count=1
+12:54:24.260820 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:54:24.260827 [S1AP] [I] UL NAS: Received ESM Information Response
+12:54:24.260847 [NAS ] [I] ESM Info: EPS bearer id 0
+12:54:24.260855 [NAS ] [I] ESM Info: APN phone
+12:54:24.260891 [NAS ] [I] ESM Info: 6 Protocol Configuration Options
+12:54:24.260908 [HSS ] [I] Found User 001010000044889
+12:54:24.260927 [MME GTPC] [I] Sending Create Session Request.
+12:54:24.260942 [MME GTPC] [I] Next MME control TEID: 3
+12:54:24.260947 [MME GTPC] [I] Allocated MME control TEID: 2
+12:54:24.261040 [SPGW GTPC] [I] SPGW Received Create Session Request
+12:54:24.261073 [SPGW GTPC] [I] Creating new GTP-C context
+12:54:24.261083 [SPGW GTPC] [I] SPGW: get_new_ue_ipv4 pool ip addr 172.16.0.3
+12:54:24.261107 [SPGW GTPC] [I] Sending Create Session Response
+12:54:24.261139 [MME GTPC] [I] Received Create Session Response
+12:54:24.261157 [MME GTPC] [I] MME GTPC Ctrl TEID 2, IMSI 1010000044889
+12:54:24.261207 [MME GTPC] [I] Create Session Response -- SPGW control TEID 2
+12:54:24.261231 [MME GTPC] [I] Create Session Response -- SPGW S1-U Address: 127.0.1.100
+12:54:24.261316 [S1AP] [I] Preparing to send Initial Context Setup request
+12:54:24.261329 [S1AP] [I] Initial Context Setup Request -- Key eNB (k_enb)
+             0000: 83 b0 18 ca c8 21 86 83 aa c9 57 f9 b7 ad 3f 42 
+             0010: 43 05 99 16 f1 e4 32 c1 df 02 d4 27 25 c2 82 41 
+12:54:24.261369 [S1AP] [I] Adding attach accept to Initial Context Setup Request
+12:54:24.261377 [NAS ] [I] Packing Attach Accept
+12:54:24.261488 [NAS ] [I] Attach Accept -- MCC 0xf001, MNC 0xff01
+12:54:24.261676 [NAS ] [I] Packed Attach Accept
+12:54:24.261809 [S1AP] [I] Sent Initial Context Setup Request. E-RAB id 5 
+12:54:24.261822 [S1AP] [I] Initial Context -- S1-U TEID 0x2. IP 127.0.1.100 
+12:54:24.309668 [S1AP] [I] Received S1AP msg. Size: 687
+12:54:24.309757 [S1AP] [I] Received initiating PDU
+12:54:24.309768 [S1AP] [E] Unhandled S1AP intiating message: UECapabilityInfoIndication
+12:54:24.514803 [S1AP] [I] Received S1AP msg. Size: 38
+12:54:24.514873 [S1AP] [I] Received Succeseful Outcome PDU
+12:54:24.514882 [S1AP] [I] Received Initial Context Setup Response.
+12:54:24.514898 [S1AP] [I] E-RAB Context Setup. E-RAB id 5
+12:54:24.514906 [S1AP] [I] E-RAB Context -- eNB TEID 0x2, eNB Address 127.0.1.1
+12:54:24.514953 [S1AP] [I] Received S1AP msg. Size: 59
+12:54:24.514978 [S1AP] [I] Received initiating PDU
+12:54:24.514990 [S1AP] [I] Received Uplink NAS Transport Message.
+12:54:24.515151 [NAS ] [I] Integrity check ok. Local: count=2, Received: count=2
+12:54:24.515165 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:54:24.515172 [S1AP] [I] UL NAS: Received Attach Complete
+12:54:24.515200 [MME GTPC] [I] Sending GTP-C Modify bearer request
+12:54:24.515210 [MME GTPC] [I] GTP-C Modify bearer request -- S-GW Control TEID 2
+12:54:24.515223 [MME GTPC] [I] GTP-C Modify bearer request -- S1-U TEID 0x2, IP 127.0.1.1
+12:54:24.515246 [NAS ] [I] Packing EMM Information
+12:54:24.515317 [SPGW GTPC] [I] Received Modified Bearer Request
+12:54:24.515337 [SPGW GTPC] [I] Setting Up GTP-U tunnel. Tunnel info: 
+12:54:24.515403 [NAS ] [I] Packed UE EMM information
+12:54:24.515593 [SPGW GTPC] [I] IMSI: 001010000044889, UE IP: 172.16.0.3 
+12:54:24.515617 [SPGW GTPC] [I] S-GW Rx Ctrl TEID 0x2, MME Rx Ctrl TEID 0x2
+12:54:24.515622 [SPGW GTPC] [I] S-GW Rx Ctrl IP (NA), MME Rx Ctrl IP (NA)
+12:54:24.515633 [SPGW GTPC] [I] S-GW Rx User TEID 0x2, S-GW Rx User IP 127.0.1.100
+12:54:24.515640 [SPGW GTPC] [I] eNB Rx User TEID 0x2, eNB Rx User IP 127.0.1.1
+12:54:24.515667 [GTPU] [I] Modifying GTP-U Tunnel.
+12:54:24.515675 [GTPU] [I] UE IP 172.16.0.3
+12:54:24.515701 [GTPU] [I] Downlink eNB addr 127.0.1.1, U-TEID 0x2
+12:54:24.515712 [GTPU] [I] Uplink C-TEID: 0x2
+12:54:24.515776 [NAS ] [I] Sending EMM Information
+12:54:24.515801 [S1AP] [I] Activated EPS Bearer: Bearer id 5
+12:54:29.540625 [S1AP] [I] Received S1AP msg. Size: 67
+12:54:29.540760 [S1AP] [I] Received initiating PDU
+12:54:29.540771 [S1AP] [I] Received Uplink NAS Transport Message.
+12:54:29.540873 [NAS ] [I] Integrity check ok. Local: count=3, Received: count=3
+12:54:29.540882 [S1AP] [I] UL NAS: sec_hdr_type: LIBLTE_MME_SECURITY_HDR_TYPE_INTEGRITY_AND_CIPHERED, mac_vaild: yes, msg_encrypted: yes
+12:54:29.540888 [S1AP] [I] UL NAS: Detach Request
+12:54:29.540932 [NAS ] [I] Detach request -- IMSI 001010000044889
+12:54:29.540948 [MME GTPC] [I] Sending GTP-C Delete Session Request request. IMSI 1010000044889
+12:54:29.540959 [MME GTPC] [I] GTP-C Delete Session Request -- S-GW Control TEID 2
+12:54:29.541218 [S1AP] [I] Received S1AP msg. Size: 19
+12:54:29.541238 [S1AP] [I] Received Succeseful Outcome PDU
+12:54:29.541248 [S1AP] [I] Received UE Context Release Complete
+12:54:29.541252 [S1AP] [I] Received UE Context Release Complete. MME-UE S1AP Id: 3
+12:54:29.541294 [S1AP] [I] There are active E-RABs, send release access bearers request
+12:54:29.541309 [MME GTPC] [I] Sending GTP-C Release Access Bearers Request
+12:54:29.541316 [MME GTPC] [E] Could not find GTP-C context to remove
+12:54:29.541325 [S1AP] [I] Released UE ECM Context.
+12:54:29.541330 [S1AP] [I] UE Context Release Completed.
+12:54:36.657914 [S1AP] [I] Deleting eNB context. eNB Id: 0x19b
+12:54:36.657963 [S1AP] [I] Deleting UE EMM context. IMSI: 001010000044889
+12:54:36.667900 [HSS ] [I] Opened DB file: /home/eval/srsRAN_4G_SMS/srsepc/user_db.csv
+12:54:36.668075 [HSS ] [I] Deleting UE context in HSS. IMSI: 001010000044889
+12:54:36.668104 [HSS ] [I] Deleting UE context in HSS. IMSI: 001010123456780
+12:54:36.668124 [HSS ] [I] Deleting UE context in HSS. IMSI: 001010123456789
+Closing log
