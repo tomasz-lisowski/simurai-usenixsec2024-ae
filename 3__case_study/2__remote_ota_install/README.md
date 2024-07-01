@@ -43,6 +43,8 @@ The SIM is quite active before and during connection establishment. Triggering S
 
 ## PCAP Walk-Through
 
+Ensure the Wireshark profile is installed and selected, as described in `util/wireshark_profile/`.
+
 Open `merged.pcapng`, which contains both the SIM communication and NAS-layer communication (originating from EPC). This nicely shows the connection between SMS communication and forwarding of that SMS to the SIM.
 
 ### Connection Establishment
