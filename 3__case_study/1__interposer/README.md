@@ -43,12 +43,14 @@ The last step is only to ensure that SIMtrace2 flushes its buffers and writes al
 
 ## PCAP Walk-Through
 
-Ensure the Wireshark profile is installed and selected, as described in `util/wireshark_profile/`.
+Ensure the Wireshark profile is installed and selected, as described in [`util/wireshark_profile/`](../../util/wireshark_profile/README.md).
 
 The interposer passes most APDUs through without change. Hence, you see most APDUs two times, as both SIMtrace2 record them. You'll see differences whenever the interposer blocks, manipulates, or injects APDUs.
 
 - **Packets 10/11**: the UE selects the `ICCID` file.
 - **Packets 12/13**: the interposer exchanges the original ICCID `988812010000408498f7` with `ffffffffffffffffffff`.
+
+![](./img/interposer_iccid_screenshot.png)
 
 This behavior is part of the stock firmware of the interposer, and in our understanding, a component of bypassing carrier-locks.
 
