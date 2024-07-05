@@ -12,7 +12,7 @@ $ ./1__install.sh
 ```
 
 This will extract the seed corpus and create a snapshot ready for fuzzing.
-The snapshot is set directly inside the USAT fuzzing task, just before the AFL forkserver is started.
+The snapshot is set directly inside the USAT fuzzing task, just before the AFL forkserver is started. This process will take a few minutes to execute.
 
 # Running the fuzzing campaign
 
