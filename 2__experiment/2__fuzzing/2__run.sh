@@ -34,10 +34,10 @@ docker run -v "${MODEM}":/firmwire/modem_files \
     -v "${FIRMWIRE}":/opt/setup/firmwire \
     -v ${HERE}/scripts:/opt/setup/scripts \
     -v ${HERE}/AFLplusplus:/opt/setup/AFLplusplus \
-    -v ${HERE}/seed:/firmwire/seeds \
+    -v ${HERE}/seeds:/firmwire/seeds \
     --tty --interactive --rm \
     --entrypoint /opt/setup/scripts/2__run_fuzzing.sh \
-    simurai/setup_3:1.0.0 \
+    simurai/s3:1.0.0 \
 ;
 # AFL++ creates the out directory not world writeable and as root user, hence we fix it here.
 chmod -R +rX ${HERE}/result/

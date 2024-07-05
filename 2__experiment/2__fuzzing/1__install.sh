@@ -42,7 +42,7 @@ docker run -v ${MODEM}:/firmwire/modem_files \
     -v ${HERE}/AFLplusplus:/opt/setup/AFLplusplus \
     --tty --interactive --rm \
     --entrypoint /opt/setup/scripts/1__setup_fuzzing.sh \
-    simurai/setup_3:1.0.0 \
+    simurai/s3:1.0.0 \
 ;
 if ! checkResult "$?" "Fuzzing environment setup was successful." "Failed to setup the fuzzing environment."; then
     exit 1;
