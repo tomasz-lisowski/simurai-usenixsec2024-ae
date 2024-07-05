@@ -39,6 +39,8 @@ This will pull the unchanged FirmWire project, automatically patch the USIM Peri
 
 The run script will create a SIMurai and FirmWire instance, and connect the two via the USIM Peripheral. The experiment will run for 180 seconds.
 
+![](terminals.png)
+
 FirmWire will start booting the baseband firmware. The boot process will *appear* to hang (i.e., no new log messages). This is expected; in our experience, the process will continue after ~100 seconds.
 
 ### Successful execution
