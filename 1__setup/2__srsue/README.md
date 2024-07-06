@@ -1,6 +1,8 @@
 # Virtual srsRAN network with SIMurai
 
-This setup launches a virtual, end-to-end 4G cellular network using the srsRAN project, and integrates SIMurai into the UE component srsUE. In our paper, this corresponds to `Setup 2: Emulated, SRS-based Network.` in Section `6.1 Integration into Cellular Test Beds`.
+This setup launches a virtual, end-to-end 4G cellular network using the srsRAN project and integrates SIMurai into the UE component srsUE. In our paper, this corresponds to `Setup 2: Emulated, SRS-based Network.` in Section `6.1 Integration into Cellular Test Beds`.
+
+This setup will showcase the integration of SIMurai into a popular 4G testbed, and demonstrate that it successfully authenticates using the Milenage algorithm, which is used by 3G, 4G and 5G networks.
 
 ## Setup
 
@@ -21,7 +23,7 @@ The setup is fully virtualized and requires no special hardware. Please refer to
 
 ## Building and Running the Experiment
 
-First, build the Docker containers. This takes a couple of minutes for compiling the whole srsRAN codebase.
+First, build the Docker containers. This takes a couple of minutes to compile the whole srsRAN codebase.
 
 ```
 ./1__install.sh
@@ -33,13 +35,13 @@ Then, run the setup:
 ./2__run.sh
 ```
 
-This will spawn a tmux instance that shows terminals for each of the four network components, SIMurai, srsUE, srsENB, and srsEPC. The radio layer takes a few seconds to initialize, and eventually, srsUE will find the virtual radio cell and connect.
+This will spawn a tmux instance that shows terminals for each of the four network components: SIMurai, srsUE, srsENB, and srsEPC. The radio layer takes a few seconds to initialize, and eventually, srsUE will find the virtual radio cell and connect.
 
 ![](./terminals.png)
 
 ### Interpretation of Results
 
-Our experiment shows that srsUE can successfully authenticate using SIMurai. Log files for all components are saved in the `log/` directory. The general connection and authentication procedure runs as follows.
+Our experiment shows that srsUE can successfully authenticate using SIMurai. Log files for all components are saved in the `log/` directory. The general connection and authentication procedure runs as follows:
 
 1. srsUE: initializes the connection to the network.
 2. srsEPC: sends an Authentication Request to srsUE. The message contents (visible in `log/srsepc.pcap`):
@@ -83,4 +85,4 @@ Non-Access-Stratum (NAS)PDU
         RES: 5cabe981300c4a3c
 ```
 
-5. The network accepts the authentication and proceeds with Security Mode Command; otherwise, an "Authentication Reject" message would occur.
+5. The network accepts the authentication and proceeds with the Security Mode Command; otherwise, an "Authentication Reject" message would occur.

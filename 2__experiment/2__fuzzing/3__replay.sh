@@ -52,7 +52,7 @@ if checkFile $INPUT; then
         -v ${TESTCASE_PATH}:/firmwire/replay \
         --tty --interactive --rm \
         --entrypoint /opt/setup/scripts/3a__replay_single.sh \
-        simurai/setup_3:1.0.0 \
+        simurai/s3:1.0.0 \
         ${TESTCASE_FILE} \
     ;
 fi
@@ -70,7 +70,7 @@ if checkDir $INPUT; then
         -v ${TESTCASE_DIR}/${TESTCASE_DIR_NAME}:/firmwire/replay/${TESTCASE_DIR_NAME} \
         --tty --interactive --rm \
         --entrypoint /opt/setup/scripts/3b__replay_multi.sh \
-        simurai/setup_3:1.0.0 \
+        simurai/s3:1.0.0 \
         ${TESTCASE_DIR_NAME} \
     ;
 fi

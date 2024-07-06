@@ -1,6 +1,8 @@
 # FirmWire-Emulated UE with SIMurai
 
-This setup uses the FirmWire rehosting platform to boot a baseband firmware. We use SIMurai to provide the baseband firmware with a working SIM, and thereby take the baseband initialization further. In our paper, this corresponds to `Setup 3: Emulation platform` in Section `6.1 Integration into Cellular Test Beds`.
+This setup uses the FirmWire rehosting platform to boot baseband firmware. We use SIMurai to provide the baseband firmware with a working SIM and thereby take the baseband initialization further. In our paper, this corresponds to `Setup 3: Emulation platform` in Section `6.1 Integration into Cellular Test Beds`.
+
+The setup provides the basis for experiment 2 (see [`2__experiment/2__fuzzing`](../../2__experiment/2__fuzzing/README.md)), which uses the here-described setup to start a 24 hour fuzzing run.
 
 ## Setup
 
@@ -12,7 +14,7 @@ subgraph FirmWire
 SIM("<b>SIM</b>\nSIMurai") --- periph
 ```
 
-The USIM Peripheral effectively provides the functionality of a card reader (which of course is not present within the baseband firmware image). 
+The USIM Peripheral effectively provides the functionality of a card reader (which, of course, is not present within the baseband firmware image). 
 
 ## Requirements
 
@@ -45,7 +47,7 @@ FirmWire will start booting the baseband firmware. The boot process will *appear
 
 ### Successful execution
 
-Our run script will automatically evaluate if SIMurai and the baseband firmware successfully communicated. In case of success, the following message will be printed:
+Our run script will automatically evaluate if SIMurai and the baseband firmware successfully communicate. If successful, the following message will be printed:
 
 ```
 Found 121 C-APDUs and 121 R-APDUs!

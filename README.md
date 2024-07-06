@@ -8,27 +8,27 @@ The paper, the artifact appendix and the artifacts are under embargo until 2024-
 
 ## About
 
-SIMurai is a software implementation of a *SIM "card"*, which is useful in a variety of research contexts. We show how SIMurai replaces the SIM card of a physical smartphone (User Equipment (UE) or terminal), and successfully performs the authentication that is required to access mobile networks. Further, we show its application in security-related contexts.
+SIMurai is a software implementation of a *SIM "card"*, which is useful in various research contexts. We show how SIMurai replaces the SIM card of a physical smartphone (called User Equipment (UE) or terminal) and successfully performs the authentication that is required to access mobile networks. Further, we show its application in security-related contexts.
 
 ## Structure
 
 We supply three setups that allow replication of the major claims of our paper. Particularly, the functionality of the setups shows that SIMurai is a practical SIM replacement in multiple scenarios.
 
-- `1__setup/1__physical_ue` (S1): Use SIMurai as SIM of a physial smartphone, in a 2G testbed.
-- `1__setup/2__srsue` (S2): Use SIMurai as SIM for a fully virtualized, srsRAN-based 4G testbed.
-- `1__setup/3__emulated_ue` (S3): Use SIMurai as SIM in a FirmWire-emulated baseband firmware.
+- [`1__setup/1__physical_ue`](1__setup/1__physical_ue/README.md) (S1): Use SIMurai as the SIM of a physical smartphone, in a 2G testbed.
+- [`1__setup/2__srsue`](1__setup/2__srsue/README.md) (S2): Use SIMurai as SIM for a fully virtualized, srsRAN-based 4G testbed.
+- [`1__setup/3__emulated_ue`](1__setup/3__emulated_ue/README.md) (S3): Use SIMurai as SIM in a FirmWire-emulated baseband firmware.
 
 S1 requires a cellular test bed with hardware requirements such as BladeRF and SIMtrace2.
 
 Further, we utilize the setups for additional experiments:
-- `2__experiment/1__spyware`: Building on setup S1, we extend SIMurai to implement a SIM-based spyware.
-- `2__experiment/2__fuzzing`: Building on setup S3, we launch a fuzzing campaign.
+- [`2__experiment/1__spyware`](2__experiment/1__spyware/README.md): Building on setup S1, we extend SIMurai to implement a SIM-based spyware.
+- [`2__experiment/2__fuzzing`](2__experiment/2__fuzzing/README.md): Building on setup S3, we launch a fuzzing campaign.
 
 Additionally, we provide PCAPs for two case studies that show the potential of SIM-originating attacks:
-- `3__case_study/1__interposer`: SIM-originating attack using a custom firmware on an interposer.
-- `3__case_study/2__remote_ota_install`: SIM-originating attack by remotely updating a SIM card.
+- [`3__case_study/1__interposer`](3__case_study/1__interposer/README.md): SIM-originating attack using a custom firmware on an interposer.
+- [`3__case_study/2__remote_ota_install`](3__case_study/2__remote_ota_install/README.md): SIM-originating attack by remotely updating a SIM card.
 
-All folders contain READMEs with further explaination and interpretation of results.
+All folders contain READMEs with further explanations and interpretations of the results.
 
 ## Requirements
 
@@ -46,7 +46,7 @@ Additionally, the following software is required:
 - `adb` and `scrcpy` for monitoring smartphones
 - Wireshark
 
-We suggest using an Ubuntu 22.04 virtual machine with desktop environment (for Wireshark and `scrcpy`). To install the required software, run:
+We suggest using an Ubuntu 22.04 virtual machine with a desktop environment (for Wireshark and `scrcpy`). To install the required software, run:
 
 ```
 sudo apt install wireshark adb scrcpy
@@ -90,6 +90,6 @@ We provide scripts that orchestrate building and running of the experiments:
 ./3__run.sh
 ```
 
-For each script, you have to select the setup / experiment to prepare or run, and guides you through the process.
+For each script, you have to select the setup / experiment to prepare or run, and it guides you through the process.
 
 We do not automatically build all experiments, as we compile key dependencies within the Docker containers, and this might take a while. Hence, first run the `1__install.sh` script and select the item to prepare, then run `3__run.sh` and select the same item.
