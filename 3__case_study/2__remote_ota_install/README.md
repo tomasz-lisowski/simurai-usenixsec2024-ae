@@ -43,9 +43,9 @@ The SIM is quite active before and during connection establishment. Triggering S
 
 ## PCAP Walk-Through
 
-Ensure the Wireshark profile is installed and selected, as described in `util/wireshark_profile/`.
+Ensure the Wireshark profile is installed and selected, as described in [`util/wireshark_profile/`](../../util/wireshark_profile/README.md).
 
-Open `merged.pcapng`, which contains both the SIM communication and NAS-layer communication (originating from EPC). This nicely shows the connection between SMS communication and forwarding of that SMS to the SIM.
+Open `merged_simtrace_epc.pcapng`, which contains both the SIM communication and NAS-layer communication (originating from EPC). This nicely shows the connection between SMS communication and forwarding of that SMS to the SIM.
 
 ### Connection Establishment
 
@@ -77,14 +77,14 @@ This process continues for all chunks of the applet, in a total of ~20 SMS.
 
 ![alt text](img/proactive_command_crash.png)
 
+After a couple of seconds, due to the modem crash, the SIM is read again (starting with the 'MF' file in packet 671), and in Packet 1180 a new connection request begins.
+
 ## Video Notes
 
 - UE starts in flight mode, SIM is still being initialized
-- 00:00.25: turning off flight mode, immediately attaches, network shown as "Software Radio Systems" (srsEPC/srsENB)
-- 00:00.31: quick look in menu - currently no applet is installed (will later appear in this menu)
-- 00:01.07: waiting for the applet to appear
-- 00:02.13: applet finally appears in menu (bottom right); open the applet
-- 00:02.22: modem crashes ("RIL re-start"), network connection is gone (status bar)
-- 00:02.38: network connection comes back
-
-- After a couple of seconds, due to the modem crash, the SIM is read again, and in Packet 1180 a new connection request begins.
+- 0 min 25s: turning off flight mode, immediately attaches, network shown as "Software Radio Systems" (srsEPC/srsENB)
+- 0 min 31s: quick look in menu - currently no applet is installed (will later appear in this menu)
+- 1 min 07s: waiting for the applet to appear
+- 2 min 13s: applet finally appears in menu (bottom right); open the applet
+- 2 min 22s: modem crashes ("RIL re-start"), network connection is gone (status bar)
+- 2 min 38s: network connection comes back

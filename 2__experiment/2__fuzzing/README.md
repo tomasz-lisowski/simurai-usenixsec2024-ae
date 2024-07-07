@@ -6,13 +6,13 @@ It requires that the docker for setup 3 (emulated UE) was built.
 
 # Setup
 
-To setup the environment for fuzzing run:
+To set up the environment for the fuzzing run:
 ```bash
 $ ./1__install.sh
 ```
 
 This will extract the seed corpus and create a snapshot ready for fuzzing.
-The snapshot is set directly inside the USAT fuzzing task, just before the AFL forkserver is started.
+The snapshot is set directly inside the USAT fuzzing task, just before the AFL forkserver is started. This process will take a few minutes to execute.
 
 # Running the fuzzing campaign
 
@@ -22,11 +22,11 @@ $ sudo ./2__run.sh
 ```
 
 This will run afl-system-config to optimize your system for fuzzing *on your host*.
-The changes of afl-system-config will be discarded after a reboot of your system, however, keep in mind that they lower the security of your host.
+The changes of afl-system-config will be discarded after a reboot of your system; however, keep in mind that they lower the security of your host.
 
-Afterwards, the fuzzing campaign is started inside a docker container and run for 24hours. To change this time limit, please modify `FUZZING_TIME` inside `scripts/2__run_fuzzing.sh`.
+Afterwards, the fuzzing campaign is started inside a Docker container and runs for 24 hours. To change this time limit, please modify `FUZZING_TIME` inside `scripts/2__run_fuzzing.sh`.
 
-The results will be stored to `result/out/main`, and follows the normal AFL++ directory structure.
+The results will be stored in `result/out/main`, and follow the normal AFL++ directory structure.
 Note that the directory will be owned by the root user, as fuzzing is done under root permissions inside the Docker container.
 
 # Replaying test cases
@@ -36,13 +36,13 @@ To replay a single testcase, or a directory containing multiple testcases, run:
 $ ./3__replay.sh path_to_replay_target`
 ```
 
-If the replay target is a single file, it will be replayed alone. If the replay target is a directory, all containing files in this directory are replayed.
+If the replay target is a single file, it will be replayed alone. If the replay target is a directory, all files in this directory are replayed.
 In both cases, an according log file is created.
 
 ## Interpreting the results
 
-To verify whether the fuzzer found the expected vulnerabilities, it is advised to replay the `result/out/main/crashes/` and `result/out/main/hangs` directory.
-Afterwards, the logs can be inspected and we advise to look out for the following three behaviors:
+To verify whether the fuzzer found the expected vulnerabilities, it is advised to replay the `result/out/main/crashes/` and `result/out/main/hangs` directories.
+Afterwards, the logs can be inspected, and we advise looking out for the following three behaviors:
 
 ### 1) False Positive Crashes
 
@@ -81,7 +81,7 @@ These crashes are false positives, and we could not reproduce them on real devic
 ## CVE-2023-50806
 
 This CVE is based on a vulnerability in the `SEND_SS` proactive command.
-Typically, this vulnerability shows as a hang, rather than a crash, due to FirmWire not recognizing the fault state (stack overflow) as crashing condition.
+Typically, this vulnerability shows as a hang rather than a crash due to FirmWire not recognizing the fault state (stack overflow) as a crashing condition.
 An example log indicating this vulnerability looks as follows:
 
 ```
@@ -194,5 +194,5 @@ To deinstall, run:
 $ ./4__uninstall.sh
 ```
 
-Note that this will not remove the result directory, and also keeps the docker image for setup3.
+Note that this will not remove the result directory and will also keep the docker image for setup3.
 Furthermore, to unroll the changes of afl-system-config, the host system needs to be rebooted.
