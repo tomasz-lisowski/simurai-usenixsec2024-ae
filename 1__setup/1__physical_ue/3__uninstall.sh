@@ -38,7 +38,7 @@ if checkResult "$?" "Result exists. Can proceed with uninstallation." "Precompil
         * ) printf "Invalid\\n" >&2; exit 1;;
     esac
 
-    if ${NETWORK__LOCAL}; then
+    if [ ${NETWORK__LOCAL} -eq 0 ]; then
         fileUninstall ""${HERE}"/result/bladerf";
         fileUninstall ""${HERE}"/result/yate";
         fileUninstall ""${HERE}"/result/libosmocore";
@@ -49,7 +49,7 @@ if checkResult "$?" "Result exists. Can proceed with uninstallation." "Precompil
     rm -r ""${HERE}"/result";
 fi
 
-if ${NETWORK__LOCAL}; then
+if [ ${NETWORK__LOCAL} -eq 0 ]; then
     pushd .;
     check "If swICC PC/SC reader can be uninstalled."
     cd ${HERE}/simurai/swicc-pcsc;
