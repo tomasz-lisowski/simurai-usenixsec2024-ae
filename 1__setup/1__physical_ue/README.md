@@ -91,7 +91,7 @@ This will provide instruction on using `scrcpy` to connect to phones connected t
 
 Once the phones connect to the network, they will receive messages notifying them about phone numbers they have been assigned. To check that the phones are indeed connected and working, you could send an SMS, or call from one phone to the other.
 
-UE1 (ZY3266BBFL) on the bottom left screen and in `log/simtrace2.log` you will be able to see the output of the SIMtrace2 device, i.e., the trace of all messages exchanged between SIMurai and the phone.
+UE1 on the bottom left screen and in `log/simtrace2.log` you will be able to see the output of the SIMtrace2 device, i.e., the trace of all messages exchanged between SIMurai and the phone.
 The phone will exchange many messages with SIMurai before connecting to the network, and once it does, it demonstrates that SIMurai can act as a regular SIM card in a commercial phone.
 
 SIMurai also comes with a proactive application which means that UE1 will show a "SIM toolkit" application that allows interaction with the proactive app on the SIM. Some features are to open a web browser, or display text. The SIM card inside UE2 does not have a proactive application, therefore the "SIM toolkit" app will not show up.

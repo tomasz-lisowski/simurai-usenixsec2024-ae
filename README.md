@@ -80,6 +80,8 @@ A logout (or reboot) might be required for the group change to take effect.
 
 ## Building and Running the Experiments
 
+Before running any scripts. Please edit `./util/adb_serial.sh` so that they reflect the serial numbers of your phones.
+
 We provide scripts that orchestrate building and running of the experiments:
 
 ```

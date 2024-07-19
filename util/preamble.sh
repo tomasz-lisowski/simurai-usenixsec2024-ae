@@ -4,6 +4,7 @@ set -o pipefail; # Don't hide errors within pipes.
 #set -o errexit;  # Abort on non-zero exit status.
 #set -x;          # Print commands after applying all substitutions.
 
+source ${UTIL}/adb_serial.sh;
 source ${UTIL}/color.sh;
 source ${UTIL}/dir.sh;
 source ${UTIL}/checker.sh;

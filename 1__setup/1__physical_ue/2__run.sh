@@ -15,15 +15,12 @@ cd ${HERE};
 
 mkdir ${HERE}/log;
 
-readonly UE1_ID=ZY3266BBFL; # UE + SIMurai
-readonly UE2_ID=ZY32659ZX5; # UE + sysmoUSIM
-
 if [ ${NETWORK__CHOICE} -eq 1 ] || [ ${NETWORK__CHOICE} -eq 2 ]; then
-    printf "\\nTo inspect the phones remotely, please ensure that the 'scrcpy' ports are forwarded:\\n${CBLU}ssh -i <key_file> -p 20242 -CN -L5038:localhost:5037 -R27183:localhost:27183 <username>@<host>${CDEF}\\n\\nOnce this is running, you can view the screens of the phones with the following:\\n${CBLU}export ADB_SERVER_SOCKET=tcp:localhost:5038${CDEF}\\n${CBLU}scrcpy -s ${UE1_ID}${CDEF}\\n${CBLU}scrcpy -s ${UE2_ID}${CDEF}\\n";
+    printf "\\nTo inspect the phones remotely, please ensure that the 'scrcpy' ports are forwarded:\\n${CBLU}ssh -i <key_file> -p 20242 -CN -L5038:localhost:5037 -R27183:localhost:27183 <username>@<host>${CDEF}\\n\\nOnce this is running, you can view the screens of the phones with the following:\\n${CBLU}export ADB_SERVER_SOCKET=tcp:localhost:5038${CDEF}\\n${CBLU}scrcpy -s ${UE1_SERIAL}${CDEF}\\n${CBLU}scrcpy -s ${UE2_SERIAL}${CDEF}\\n";
     read -p "Press any key to continue... You will only be able to inspect the phones once the setup is running.";
 fi
 if [ ${NETWORK__CHOICE} -eq 0 ]; then
-    printf "\\nTo inspect the phones locally, you can view the screens of the phones with the following:\\n${CBLU}scrcpy -s ${UE1_ID}${CDEF}\\n${CBLU}scrcpy -s ${UE2_ID}${CDEF}\\nTo exit tmux, please press \"ctrl-b\" then \":\" then  type in \"kill-session\" and press enter. Alternatively you can use the 'exit' command in each terminal.\\n";
+    printf "\\nTo inspect the phones locally, you can view the screens of the phones with the following:\\n${CBLU}scrcpy -s ${UE1_SERIAL}${CDEF}\\n${CBLU}scrcpy -s ${UE2_SERIAL}${CDEF}\\nTo exit tmux, please press \"ctrl-b\" then \":\" then  type in \"kill-session\" and press enter. Alternatively you can use the 'exit' command in each terminal.\\n";
     read -p "Press any key to continue... You will only be able to inspect the phones once the setup is running.";
 fi
 if [ ${NETWORK__CHOICE} -eq 2 ] || [ ${NETWORK__CHOICE} -eq 0 ]; then
