@@ -104,7 +104,11 @@ if [ ${NETWORK__CHOICE} -eq 2 ] || [ ${NETWORK__CHOICE} -eq 0 ]; then
         tmux send-keys "sleep 1 && cd ""${HERE}"/simurai/swsim" && ./build/swsim.elf --ip 127.0.0.1 --port 37324 --fs ""${HERE}"/fs.simfs" --fs-gen ./data/usim.json 2>&1 | tee ""${HERE}"/log/simurai.log"" 'C-m';
     fi
     tmux split-window -v -t 0
-    tmux send-keys "sleep 4 && simtrace2-cardem-pcsc --pcsc-reader-num=0 --usb-vendor=1d50 --usb-product=60e3 --usb-config=1 --usb-altsetting=0 2>&1 | tee ""${HERE}"/log/simtrace2.log"" 'C-m';
+    if [ ${EXPERIMENT_2} -eq 0 ]; then
+        tmux send-keys "sleep 4 && simtrace2-cardem-pcsc --pcsc-reader-num=0 --usb-vendor=1d50 --usb-product=60e3 --usb-config=1 --usb-altsetting=0 2>&1 | tee ""${ROOT}"/2__experiment/1__spyware/log/simtrace2.log"" 'C-m';
+    else
+        tmux send-keys "sleep 4 && simtrace2-cardem-pcsc --pcsc-reader-num=0 --usb-vendor=1d50 --usb-product=60e3 --usb-config=1 --usb-altsetting=0 2>&1 | tee ""${HERE}"/log/simtrace2.log"" 'C-m';
+    fi
     tmux split-window -v -t 2;
     tmux send-keys "adb -a nodaemon server start" 'C-m';
     tmux -2 attach-session -t main;
