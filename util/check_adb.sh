@@ -1,6 +1,9 @@
 #!/bin/bash
 adb start-server;
+
+# Make sure that server is up and devices had a chance to register 
 sleep 1;
+adb devices > /dev/null;
 
 check "If UE1 is connected and visible to ADB."
 adb -s "${UE1_SERIAL}" get-state;
