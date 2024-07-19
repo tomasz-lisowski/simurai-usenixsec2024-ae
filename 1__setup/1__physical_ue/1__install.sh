@@ -4,7 +4,7 @@ readonly UTIL="${ROOT}/util";
 source ${UTIL}/preamble.sh;
 readonly HERE="${ROOT}/1__setup/1__physical_ue";
 
-readonly NETWORK__LOCAL="${1:?Arg1 is missing: network remote (1) local (0).}";
+readonly NETWORK__CHOICE="${1:?Argument 1 is missing: Expected a selection for the type of setup to run: remote (1), local (0), hybrid (2).}";
 
 pushd .;
 cd ${HERE};
@@ -47,7 +47,7 @@ pushd .;
 check "Run docker container.";
 rm -rf ""${HERE}"/result";
 mkdir ""${HERE}"/result";
-docker run -v ""${HERE}"/result":/opt/result --tty --interactive --rm simurai/s1:1.0.0;
+docker run --user $(id -u):$(id -g) -v ""${HERE}"/result":/opt/result --tty --interactive --rm simurai/s1:1.0.0;
 if ! checkResult "$?" "Container ran successfully." "Failed to run container."; then
     exit 1;
 fi
@@ -55,7 +55,7 @@ popd;
 
 #==3. Overwrite the default Yate config with a pre-configured set of configs.===
 
-if [ ${NETWORK__LOCAL} -eq 0 ]; then
+if [ ${NETWORK__CHOICE} -eq 0 ]; then
     # Remove default yate config and replace it with our own.
     rm -r ""${HERE}"/result/yate/usr/local/etc/yate";
     cp -r ""${HERE}"/config/yate" ""${HERE}"/result/yate/usr/local/etc/yate";
@@ -105,28 +105,30 @@ fileInstall() {
     return 0;
 }
 
-if [ ${NETWORK__LOCAL} -eq 0 ]; then
-    check "If BladeRF is already installed.";
-    checkFileInstallNot "./result/bladerf" "BladeRF";
-    if ! checkResult "$?" "BladeRF-related files don't already exist." "BladeRF-related files exist."; then
-        printf "%sDo you want to continue anyways, it will overwrite existing files?...%s (yes/no)" ${CRED} ${CDEF};
-        read -p " " choice;
-        case "$choice" in
-            yes ) ;;
-            no ) exit 1;;
-            * ) exit 1;;
-        esac
-    fi
-    check "If Yate is already installed.";
-    checkFileInstallNot "./result/yate" "Yate/YateBTS";
-    if ! checkResult "$?" "Yate/YateBTS-related files don't already exist." "Yate/YateBTS-related files exist."; then
-        printf "%sDo you want to continue anyways, it will overwrite existing files?...%s (yes/no)" ${CRED} ${CDEF};
-        read -p " " choice;
-        case "$choice" in
-            yes ) ;;
-            no ) exit 1;;
-            * ) exit 1;;
-        esac
+if [ ${NETWORK__CHOICE} -eq 2 ] || [ ${NETWORK__CHOICE} -eq 0 ]; then
+    if [ ${NETWORK__CHOICE} -eq 0 ]; then
+        check "If Yate is already installed.";
+        checkFileInstallNot "./result/yate" "Yate/YateBTS";
+        if ! checkResult "$?" "Yate/YateBTS-related files don't already exist." "Yate/YateBTS-related files exist."; then
+            printf "%sDo you want to continue anyways, it will overwrite existing files?...%s (yes/no)" ${CRED} ${CDEF};
+            read -p " " choice;
+            case "$choice" in
+                yes ) ;;
+                no ) exit 1;;
+                * ) exit 1;;
+            esac
+        fi
+        check "If BladeRF is already installed.";
+        checkFileInstallNot "./result/bladerf" "BladeRF";
+        if ! checkResult "$?" "BladeRF-related files don't already exist." "BladeRF-related files exist."; then
+            printf "%sDo you want to continue anyways, it will overwrite existing files?...%s (yes/no)" ${CRED} ${CDEF};
+            read -p " " choice;
+            case "$choice" in
+                yes ) ;;
+                no ) exit 1;;
+                * ) exit 1;;
+            esac
+        fi
     fi
     check "If libosmocore is already installed.";
     checkFileInstallNot "./result/libosmocore" "libosmocore";
@@ -164,24 +166,26 @@ if ! checkResult "$?" "scrcpy-related files don't already exist." "scrcpy-relate
 fi
 
 # If we install the files now, they will not overwrite any existing files on this system unless explicitly allowed.
-if [ ${NETWORK__LOCAL} -eq 0 ]; then
-    fileInstall "./result/bladerf";
-    fileInstall "./result/yate";
+if [ ${NETWORK__CHOICE} -eq 2 ] || [ ${NETWORK__CHOICE} -eq 0 ]; then
+    if [ ${NETWORK__CHOICE} -eq 0 ]; then
+        fileInstall "./result/yate";
+        fileInstall "./result/bladerf";
+    fi
     fileInstall "./result/libosmocore";
     fileInstall "./result/simtrace2";
-    # TODO: Install UDEV rules for BladeRF.
 fi
+
 fileInstall "./result/scrcpy";
 ldconfig;
 
 #==5. Install runtime dependencies.=============================================
 
-if [ ${NETWORK__LOCAL} -eq 0 ]; then
+if [ ${NETWORK__CHOICE} -eq 2 ] || [ ${NETWORK__CHOICE} -eq 0 ]; then
     check "If dependencies need to be installed.";
     dpkg -s make &&  dpkg -s pkgconf &&  dpkg -s pcscd && dpkg -s libpcsclite1 && dpkg -s libpcsclite-dev && dpkg -s adb &&  dpkg -s tmux &&  dpkg -s procps &&  dpkg -s libtalloc2 && dpkg -s libsctp1 && dpkg -s liburing2 && dpkg -s dfu-util;
     if ! checkResult "$?" "Dependencies are present." "Dependencies are not present."; then
-        read -p "'make pkgconf pcscd libpcsclite1 libpcsclite-dev adb tmux procps libtalloc2 libsctp1 liburing2 dfu-util' packages will be installed now, but it will not be uninstalled by the uninstall script... ";
-        apt-get -qq --yes --no-install-recommends install make pkgconf pcscd libpcsclite1 libpcsclite-dev adb tmux procps libtalloc2 libsctp1 liburing2 dfu-util;
+        read -p "'make pkgconf pcscd pcsc-tools libpcsclite1 libpcsclite-dev adb tmux procps libtalloc2 libsctp1 liburing2 dfu-util' packages will be installed now, but it will not be uninstalled by the uninstall script... ";
+        apt-get -qq --yes --no-install-recommends install make pkgconf pcscd pcsc-tools libpcsclite1 libpcsclite-dev adb tmux procps libtalloc2 libsctp1 liburing2 dfu-util;
         ldconfig;
     fi
 

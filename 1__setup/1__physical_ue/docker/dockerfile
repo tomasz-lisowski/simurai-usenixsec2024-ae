@@ -237,5 +237,8 @@ COPY --from=base__simtrace2 /usr/local/bin/simtrace2-sniff /opt/out/simtrace2/us
 COPY --from=base__simtrace2 /usr/local/bin/simtrace2-tool /opt/out/simtrace2/usr/local/bin/simtrace2-tool
 COPY --from=base__simtrace2 /opt/out/simtrace2/simtrace-cardem-dfu-latest.bin /opt/out/home/simtrace-cardem-dfu-latest.bin
 
-COPY --chmod=700 ./entrypoint.sh ./opt
+RUN set -eux; \
+    chmod -R 777 /opt/out;
+
+COPY --chmod=777 ./entrypoint.sh ./opt
 ENTRYPOINT ["/opt/entrypoint.sh"]

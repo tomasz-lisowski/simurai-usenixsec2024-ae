@@ -18,7 +18,7 @@ read -p "> " selection;
 case "$selection" in
     S1 )
         check "Install setup 1.";
-        (./1__setup/1__physical_ue/1__install.sh "${NETWORK__LOCAL}");
+        (./1__setup/1__physical_ue/1__install.sh "${NETWORK__CHOICE}");
         if ! checkResult "$?" "Setup 1 was installed." "Setup 1 failed to install."; then
             exit 1;
         fi

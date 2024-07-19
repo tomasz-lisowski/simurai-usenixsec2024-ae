@@ -8,6 +8,8 @@ Please refer to the [Setup 1 README](../../1__setup/1__physical_ue/README.md) fo
 
 ## Building and Running
 
-The installation script applies the patch `spyware.patch` that extends SIMurai. 
+The installation script applies the patch `spyware.patch` that extends SIMurai.
 
-TODO
+### Running
+
+Please refer to the [Setup 1 README](../../1__setup/1__physical_ue/README.md) for a detailed description of commandline arguments. This script accepts the exact same set of parameters except when running setup 1 using this script, it will use the SIMurai that implements a spyware, instead of the unmodified SIMurai.

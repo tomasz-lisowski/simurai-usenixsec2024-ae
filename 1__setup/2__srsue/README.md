@@ -21,21 +21,19 @@ srsUE <--"Virtual Radio\nTransmission via ZMQ"--> srsENB
 
 The setup is fully virtualized and requires no special hardware. Please refer to the general requirements in the [top-level README](../../README.md).
 
-## Building and Running the Experiment
+## Building and Running the Setup
 
 First, build the Docker containers. This takes a couple of minutes to compile the whole srsRAN codebase.
-
-```
+```bash
 ./1__install.sh
 ```
 
 Then, run the setup:
-
-```
+```bash
 ./2__run.sh
 ```
 
-This will spawn a tmux instance that shows terminals for each of the four network components: SIMurai, srsUE, srsENB, and srsEPC. The radio layer takes a few seconds to initialize, and eventually, srsUE will find the virtual radio cell and connect.
+This will spawn a `tmux` instance that shows terminals for each of the four network components: SIMurai, srsUE, srsENB, and srsEPC. The radio layer takes a few seconds to initialize, and eventually, srsUE will find the virtual radio cell and connect.
 
 ![](./terminals.png)
 
@@ -43,9 +41,8 @@ This will spawn a tmux instance that shows terminals for each of the four networ
 
 Our experiment shows that srsUE can successfully authenticate using SIMurai. Log files for all components are saved in the `log/` directory. The general connection and authentication procedure runs as follows:
 
-1. srsUE: initializes the connection to the network.
-2. srsEPC: sends an Authentication Request to srsUE. The message contents (visible in `log/srsepc.pcap`):
-
+1. srsUE: Initializes the connection to the network.
+2. srsEPC: Sends an Authentication Request to srsUE. The message contents (visible in `log/srsepc.pcap`):
 ```
 Non-Access-Stratum (NAS)PDU
     0000 .... = Security header type: Plain NAS message, not security protected (0)
@@ -65,7 +62,6 @@ Non-Access-Stratum (NAS)PDU
 ```
 
 3. The Authentication Request is handed to the SIM card, in our case, SIMurai. In `log/simurai.log` you can see the exact Authentication Request being processed by SIMurai:
-
 ```
 Milenage: RAND=A6FAE21C6015B84205E9D9FA374143C6.
 Milenage: AUTN=A7CC1CEEB2B7 8000 6F626D620A4363FE.

@@ -15,7 +15,7 @@ Main asset:
 Additional assets:
 - Console output of the `simtrace2-sniff` tool, which contains the same information as the PCAP:
   - `./auxiliary/simtrace_interposer.log`
-  -  `./auxiliary/simtrace_sysmoUSIM.log`: 
+  -  `./auxiliary/simtrace_sysmoUSIM.log`:
 
 
 # Setup

@@ -1,14 +1,14 @@
 # USENIX Security '24 Artifacts: SIMurai
 
-This repository contains supporting materials for the USENIX Security '24 Artifact Evaluation for the following paper:
+This repository contains supporting materials for the USENIX Security 2024 Artifact Evaluation for the following paper:
 
 > Tomasz Lisowski, Merlin Chlosta, Jinjin Wang, and Marius Muench. “SIMurai: Slicing Through the Complexity of SIM Card Security Research”. In: USENIX Security Symposium. 2024.
 
-The paper, the artifact appendix and the artifacts are under embargo until 2024-08-14; please keep the contents confidential. Once published, we will include links to the paper here.
+The paper, the artifact appendix, and the artifacts are under embargo until 2024-08-14; please keep the contents confidential. Once published, we will include links to the paper here.
 
 ## About
 
-SIMurai is a software implementation of a *SIM "card"*, which is useful in various research contexts. We show how SIMurai replaces the SIM card of a physical smartphone (called User Equipment (UE) or terminal) and successfully performs the authentication that is required to access mobile networks. Further, we show its application in security-related contexts.
+SIMurai is a software implementation of a *SIM "card"*, which is useful in various research contexts. We show how SIMurai replaces the SIM card of a physical smartphone (called User Equipment (UE) or terminal) and successfully performs the authentication that is required to access mobile networks. Furthermore, we show its application in security-related contexts.
 
 ## Structure
 
@@ -20,7 +20,7 @@ We supply three setups that allow replication of the major claims of our paper. 
 
 S1 requires a cellular test bed with hardware requirements such as BladeRF and SIMtrace2.
 
-Further, we utilize the setups for additional experiments:
+Furthermore, we utilize the setups for additional experiments:
 - [`2__experiment/1__spyware`](2__experiment/1__spyware/README.md): Building on setup S1, we extend SIMurai to implement a SIM-based spyware.
 - [`2__experiment/2__fuzzing`](2__experiment/2__fuzzing/README.md): Building on setup S3, we launch a fuzzing campaign.
 
@@ -37,45 +37,43 @@ Setup S1 and experiment E1 involve a cellular network setup with hardware such a
 All other experiments can run in a virtual machine without hardware requirements. Hence, if the required hardware is not available, the general functionality of SIMurai can still be assessed using only the virtual setups.
 
 Our general requirements:
-
 - Ubuntu 22.04
 - x86 machine
 
 Additionally, the following software is required:
 - Docker
-- `adb` and `scrcpy` for monitoring smartphones
 - Wireshark
 
 We suggest using an Ubuntu 22.04 virtual machine with a desktop environment (for Wireshark and `scrcpy`). To install the required software, run:
 
-```
-sudo apt install wireshark adb scrcpy
+```bash
+sudo apt install wireshark;
 ```
 
-Docker installation as per [the Docker manual](https://docs.docker.com/engine/install/ubuntu/):
-```
+Docker installation as per the [Docker manual](https://docs.docker.com/engine/install/ubuntu/):
+```bash
 # Add Docker's official GPG key:
-sudo apt-get update
-sudo apt-get install ca-certificates curl
-sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
+sudo apt-get update;
+sudo apt-get install ca-certificates curl;
+sudo install -m 0755 -d /etc/apt/keyrings;
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc;
+sudo chmod a+r /etc/apt/keyrings/docker.asc;
 
 # Add the repository to Apt sources:
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null;
+sudo apt-get update;
 ```
 
-```
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```bash
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin;
 ```
 
-```
-sudo groupadd docker
-sudo usermod -aG docker $USER
+```bash
+sudo groupadd docker;
+sudo usermod -aG docker $USER;
 ```
 
 A logout (or reboot) might be required for the group change to take effect.
@@ -90,6 +88,6 @@ We provide scripts that orchestrate building and running of the experiments:
 ./3__run.sh
 ```
 
-For each script, you have to select the setup / experiment to prepare or run, and it guides you through the process.
+For each script, you have to select the setup/experiment to prepare or run, and it guides you through the process.
 
 We do not automatically build all experiments, as we compile key dependencies within the Docker containers, and this might take a while. Hence, first run the `1__install.sh` script and select the item to prepare, then run `3__run.sh` and select the same item.
