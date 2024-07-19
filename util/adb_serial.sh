@@ -1,4 +1,4 @@
 #!/bin/bash
 # !!! CHANGE THIS TO REFLECT YOUR PHONES !!!
-readonly UE1_SERIAL=ZY3266BBFL; # UE + SIMurai
-readonly UE2_SERIAL=ZY32659ZX5; # UE + sysmoUSIM
+readonly UE1_SERIAL=ZY3266BBFL; # UE1 + SIMurai
+readonly UE2_SERIAL=ZY32659ZX5; # UE2 + sysmoUSIM

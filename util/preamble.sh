@@ -10,6 +10,7 @@ source ${UTIL}/dir.sh;
 source ${UTIL}/checker.sh;
 # source ${UTIL}/check_root.sh;
 source ${UTIL}/simurai.sh;
+source ${UTIL}/check_adb.sh;
 source ${UTIL}/check_git.sh;
 source ${UTIL}/check_platform.sh;
 source ${UTIL}/check_docker_functional.sh;
