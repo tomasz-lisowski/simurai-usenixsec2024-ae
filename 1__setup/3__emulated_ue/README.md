@@ -14,7 +14,7 @@ subgraph FirmWire
 SIM("<b>SIM</b>\nSIMurai") --- periph
 ```
 
-The USIM Peripheral effectively provides the functionality of a card reader (which, of course, is not present within the baseband firmware image). 
+The USIM Peripheral effectively provides the functionality of a card reader (which, of course, is not present within the baseband firmware image).
 
 ## Requirements
 
@@ -29,13 +29,13 @@ FirmWire currently requires the x86 architecture, and in our experience, Docker-
 ## Building and Running the Setup
 
 First, run the installation to build all components:
-```
+```bash
 ./1__install.sh
 ```
 
 This will pull the unchanged FirmWire project, automatically patch the USIM Peripheral (see `patches/simurai__firmwire_usim_peripheral_patches.diff`), and build FirmWire.
 
-```
+```bash
 ./2__run.sh
 ```
 

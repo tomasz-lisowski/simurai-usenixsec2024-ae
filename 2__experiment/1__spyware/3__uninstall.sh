@@ -7,6 +7,8 @@ readonly HERE=${ROOT}/2__experiment/1__spyware;
 pushd .;
 cd ${HERE};
 
-rm -r ${HERE}/simurai;
+rm -rf ""${HERE}"/simurai";
+rm -f ""${HERE}"/fs.simfs";
+rm -rf ""${HERE}"/log";
 
 popd;

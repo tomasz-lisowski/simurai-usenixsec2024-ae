@@ -9,7 +9,7 @@ read -p "> " selection;
 case "$selection" in
     S1 )
         check "If we can uninstall setup 1.";
-        (./1__setup/1__physical_ue/3__uninstall.sh "${NETWORK__LOCAL}");
+        (./1__setup/1__physical_ue/3__uninstall.sh "${NETWORK__CHOICE}");
         if ! checkResult "$?" "Setup 1 was uninstalled." "Setup 1 failed to uninstall."; then
             exit 1;
         fi
@@ -30,7 +30,7 @@ case "$selection" in
         ;;
     E1 )
         check "If we can uninstall experiment 1.";
-        (./2__experiment/1__spyware/3__uninstall.sh "${NETWORK__LOCAL}");
+        (./2__experiment/1__spyware/3__uninstall.sh "${NETWORK__CHOICE}");
         if ! checkResult "$?" "Experiment 1 was uninstalled." "Experiment 1 failed to uninstall."; then
             exit 1;
         fi

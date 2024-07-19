@@ -7,6 +7,7 @@ ARG bladerf__commit=3a411c87c2416dc68030d5823d73ebf3f797a145
 ARG bladerf__sha256=3d2bc867eae594a5c8b9c31776076e05b9752d7efd876704aa7bfb642e47927d
 ARG bladerf__no_os__commit=0bba46e6f6f75785a65d425ece37d0a04daf6157
 ARG bladerf__no_os__sha256=b77a86780e82ff592dd3cbcbf916d6f421f5cb7b523b800255483b1992aea88d
+ARG bladerf__fx3__sha256=10c9936f59123e5c02e8ef04f05a9a99e86a6ff21b3e3fc5d1c34f8d1d93e84c
 
 ARG libosmocore__commit=e0c63ec8c7233971636c43f00149104b35b3abae
 ARG libosmocore__sha256=ce46bb3308230e49f327ef7766e9f99723478a3ed38bcee6dbc661ae12965dbc
@@ -54,6 +55,7 @@ ENV BLADERF__COMMIT=${bladerf__commit}
 ENV BLADERF__SHA256=${bladerf__sha256}
 ENV BLADERF__NO_OS__COMMIT=${bladerf__no_os__commit}
 ENV BLADERF__NO_OS__SHA256=${bladerf__no_os__sha256}
+ENV BLADERF__FX3__SHA256=${bladerf__fx3__sha256}
 ENV BLADERF__DEP="ca-certificates wget make cmake g++ patch libusb-1.0-0 libusb-1.0-0-dev"
 COPY lib_bladerf_test__array_bounds.patch /opt/out
 # Compile bladeRF tools/libs
@@ -81,16 +83,20 @@ RUN set -eux; \
     # Build.
     mkdir /opt/out/bladerf/host/build; \
     cd /opt/out/bladerf/host/build; \
-    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DINSTALL_UDEV_RULES=OFF -DENABLE_BACKEND_LIBUSB=TRUE ../; \
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DINSTALL_UDEV_RULES=ON -DENABLE_BACKEND_LIBUSB=TRUE ../; \
     make -j$(nproc); \
     make install; \
     ldconfig; \
+    cd /opt/out/bladerf; \
+    wget https://www.nuand.com/fx3/bladeRF_fw_v2.2.0.img; \
+    sha256sum bladeRF_fw_v2.2.0.img; \
+    echo "${BLADERF__FX3__SHA256} bladeRF_fw_v2.2.0.img" | sha256sum --check --status; \
     apt-get -qq --yes purge ${BLADERF__DEP};
 
 
 FROM base__bladerf AS base__yate
 ARG YATE__SHA256=31fc9314a9b1a533202aadab5b5e01980b17b39167e2226637f9cea06b5c80a5
-ENV YATE__DEP="ca-certificates wget php5.6 apache2 g++ autoconf make cmake"
+ENV YATE__DEP="ca-certificates wget php5.6 apache2 g++ autoconf make cmake libusb-1.0-0 libusb-1.0-0-dev"
 # Pull yate and yateBTS
 RUN set -eux; \
     apt-get -qq --yes --no-install-recommends install ${YATE__DEP}; \
@@ -102,6 +108,7 @@ RUN set -eux; \
     tar -xzf yate.tar.gz -C /opt/out/yate; \
     rm /opt/out/yate.tar.gz; \
     cd /opt/out/yate/yate; \
+    ls -alh /opt/out/yate; \
     ./autogen.sh; \
     ./configure --prefix=/usr/local; \
     make -j$(nproc); \
@@ -158,6 +165,8 @@ RUN set -eux; \
     ./configure; \
     make -j$(nproc); \
     make install; \
+    cd /opt/out/simtrace2; \
+    wget https://downloads.osmocom.org/binaries/simtrace2/firmware/all/simtrace-cardem-dfu-latest.bin; \
     apt-get -qq --yes purge ${SIMTRACE2__DEP};
 
 
@@ -167,6 +176,10 @@ COPY --from=base__bladerf /usr/local/lib/libbladeRF.so.2 /opt/out/bladerf/usr/lo
 COPY --from=base__bladerf /usr/local/lib/libbladeRF.so /opt/out/bladerf/usr/local/lib/libbladeRF.so
 COPY --from=base__bladerf /usr/local/bin/bladeRF-cli /opt/out/bladerf/usr/local/bin/bladeRF-cli
 COPY --from=base__bladerf /usr/local/bin/bladeRF-fsk /opt/out/bladerf/usr/local/bin/bladeRF-fsk
+COPY --from=base__bladerf /etc/udev/rules.d/88-nuand-bladerf1.rules /opt/out/etc/udev/rules.d/88-nuand-bladerf1.rules
+COPY --from=base__bladerf /etc/udev/rules.d/88-nuand-bladerf2.rules /opt/out/etc/udev/rules.d88-nuand-bladerf2.rules
+COPY --from=base__bladerf /etc/udev/rules.d/88-nuand-bootloader.rules /opt/out/etc/udev/rules.d/88-nuand-bootloader.rules
+COPY --from=base__bladerf /opt/out/bladerf/bladeRF_fw_v2.2.0.img /opt/out/home/bladeRF_fw_v2.2.0.img
 
 COPY --from=base__scrcpy /usr/local/bin/scrcpy /opt/out/scrcpy/usr/local/bin/scrcpy
 COPY --from=base__scrcpy /usr/local/share/scrcpy/scrcpy-server /opt/out/scrcpy/usr/local/bin/scrcpy-server
@@ -190,6 +203,10 @@ COPY --from=base__yate /usr/local/bin/yate /opt/out/yate/usr/local/bin/yate
 COPY --from=base__yate /usr/local/bin/yate-config /opt/out/yate/usr/local/bin/yate-config
 COPY --from=base__yate /usr/local/etc/yate /opt/out/yate/usr/local/etc/yate
 COPY --from=base__yate /usr/local/share/yate /opt/out/yate/usr/local/share/yate
+COPY --from=base__yate /opt/out/yate/hostedx115.rbf /opt/out/home/yate/hostedx115.rbf
+COPY --from=base__yate /opt/out/yate/hostedx40.rbf /opt/out/home/hostedx40.rbf
+COPY --from=base__yate /opt/out/yate/hostedxA4.rbf /opt/out/home/hostedxA4.rbf
+COPY --from=base__yate /opt/out/yate/hostedxA9.rbf /opt/out/home/hostedxA9.rbf
 
 COPY --from=base__simtrace2 /usr/local/lib/libosmocodec.so /opt/out/libosmocore/usr/local/lib/libosmocodec.so
 COPY --from=base__simtrace2 /usr/local/lib/libosmocodec.so.4.0.0 /opt/out/libosmocore/usr/local/lib/libosmocodec.so.4.0.0
@@ -218,6 +235,10 @@ COPY --from=base__simtrace2 /usr/local/bin/simtrace2-cardem-pcsc /opt/out/simtra
 COPY --from=base__simtrace2 /usr/local/bin/simtrace2-list /opt/out/simtrace2/usr/local/bin/simtrace2-list
 COPY --from=base__simtrace2 /usr/local/bin/simtrace2-sniff /opt/out/simtrace2/usr/local/bin/simtrace2-sniff
 COPY --from=base__simtrace2 /usr/local/bin/simtrace2-tool /opt/out/simtrace2/usr/local/bin/simtrace2-tool
+COPY --from=base__simtrace2 /opt/out/simtrace2/simtrace-cardem-dfu-latest.bin /opt/out/home/simtrace-cardem-dfu-latest.bin
 
-COPY --chmod=700 ./entrypoint.sh ./opt
+RUN set -eux; \
+    chmod -R 777 /opt/out;
+
+COPY --chmod=777 ./entrypoint.sh ./opt
 ENTRYPOINT ["/opt/entrypoint.sh"]

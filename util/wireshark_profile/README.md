@@ -5,7 +5,7 @@ In its default configuration, Wireshark will not correctly display all packets a
 First, install Wireshark from the repositories or visit [wireshark.org](https://www.wireshark.org) for instructions:
 
 ```
-$ sudo apt install wireshark
+$ apt-get install wireshark
 ```
 
 Then, identify the configuration directory:

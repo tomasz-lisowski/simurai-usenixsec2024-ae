@@ -1,5 +1,5 @@
 diff --git a/src/proactive.c b/src/proactive.c
-index a9c4fe1..30e28a8 100644
+index a9c4fe1..da643d4 100644
 --- a/src/proactive.c
 +++ b/src/proactive.c
 @@ -1273,6 +1273,7 @@ typedef enum app_default__screen_e
@@ -52,7 +52,7 @@ index a9c4fe1..30e28a8 100644
  
          if (command_created)
          {
-@@ -1521,6 +1544,58 @@ sim__proactive__terminal_response_ft proactive_app_default__terminal_response;
+@@ -1521,6 +1544,106 @@ sim__proactive__terminal_response_ft proactive_app_default__terminal_response;
  swicc_ret_et proactive_app_default__terminal_response(
      swsim__proactive_st *const proactive)
  {
@@ -70,22 +70,71 @@ index a9c4fe1..30e28a8 100644
 +        if (proactive->response[response_idx] == 0x13)
 +        {
 +            fprintf(stderr, "Card response: sending SMS with location.\n");
-+            uint8_t const payload[] = {0xD0, 0x19, 0x81, 0x03, 0x00, 0x13,
++            uint8_t const payload[] = {0xD0, 0x00, 0x81, 0x03, 0x00, 0x13,
 +                                       0x00, 0x82, 0x02, 0x81, 0x83, 0x8B,
-+                                       0x0E, 0x01, 0x00, 0x07, 0x91, 0x00,
-+                                       0x07, 0x32, 0xF5, 0x00, 0x00};
++                                       0x00, 0x01, 0x00, 0x07, 0x91, 0x00,
++                                       0x00, 0x00, 0xF1, 0x00, 0x08};
++            /* Copy payload as base of our command. */
 +            memcpy(&proactive->command, payload, sizeof(payload));
-+            uint8_t const location_information_length =
-+                (uint8_t)(proactive->response_length - response_idx);
-+            proactive->response[response_idx + 1] = location_information_length;
-+            memcpy(&proactive->command[sizeof(payload) + 1],
-+                   &proactive->response[response_idx],
-+                   location_information_length);
-+            proactive->command_length =
-+                sizeof(payload) + 1 + location_information_length;
-+            proactive->app_default_response_wait = true;
-+            proactive->command_count += 1;
++            proactive->command_length = sizeof(payload);
 +
++            /* Get length of the location information using the TLV length. */
++            uint8_t const location_information_length =
++                (uint8_t)((proactive->response_length - response_idx) - 2U);
++            fprintf(stderr, "Location information: ");
++            for (uint8_t location_idx = 0U;
++                 location_idx < location_information_length; ++location_idx)
++            {
++                fprintf(stderr, "%02X",
++                        proactive->response[response_idx + 2U + location_idx]);
++            }
++            fprintf(stderr, "\n");
++
++            /**
++             * Append the location info length to the command. *4 because we
++             * will convert the binary to a UCS2 hex string.
++             */
++            proactive->command[proactive->command_length] =
++                location_information_length * 4U;
++            proactive->command_length += 1U;
++
++            /* Copy the location info as a UCS2 hex string into the SMS. */
++            for (uint8_t location_idx = 0U;
++                 location_idx < location_information_length; ++location_idx)
++            {
++                const uint8_t byte =
++                    proactive->response[response_idx + 2U + location_idx];
++                const uint8_t nibble0 = byte & 0x0F;
++                const uint8_t nibble1 = (byte & 0xF0) >> 4;
++
++                const uint8_t nibble0_text =
++                    (nibble0 <= 0x09) ? nibble0 + 0x30
++                    : (nibble0 >= 0x0A && nibble0 <= 0x0F)
++                        ? (nibble0 - 0x0A) + 0x41
++                        : 0x3F;
++                const uint8_t nibble1_text =
++                    (nibble1 <= 0x09) ? nibble1 + 0x30
++                    : (nibble1 >= 0x0A && nibble1 <= 0x0F)
++                        ? (nibble1 - 0x0A) + 0x41
++                        : 0x3F;
++
++                proactive->command[proactive->command_length] = 0x00;
++                proactive->command_length += 1;
++                proactive->command[proactive->command_length] = nibble1_text;
++                proactive->command_length += 1;
++                proactive->command[proactive->command_length] = 0x00;
++                proactive->command_length += 1;
++                proactive->command[proactive->command_length] = nibble0_text;
++                proactive->command_length += 1;
++            }
++
++            /* Update the proactive command TLV to reflect total length. */
++            proactive->command[1] = (uint8_t)(proactive->command_length - 2);
++            proactive->command[12] =
++                (uint8_t)(10 + 1 + (location_information_length * 4U));
++
++            proactive->app_default_response_wait = true;
++            proactive->command_count += 1U;
 +            fprintf(stderr, "Card response: ");
 +            for (uint8_t command_idx = 0U;
 +                 command_idx < proactive->command_length; ++command_idx)
@@ -93,12 +142,11 @@ index a9c4fe1..30e28a8 100644
 +                fprintf(stderr, "%02X", proactive->command[command_idx]);
 +            }
 +            fprintf(stderr, "\n");
-+
 +            return SWICC_RET_SUCCESS;
 +        }
 +        else
 +        {
-+            // Skip over the TLV.
++            /* Skip over the TLV. */
 +            response_idx +=
 +                (uint8_t)(1U + proactive->response[response_idx + 1]);
 +            if (response_idx >= proactive->response_length)
@@ -111,7 +159,7 @@ index a9c4fe1..30e28a8 100644
      proactive->app_default_response_wait = false;
      return SWICC_RET_SUCCESS;
  }
-@@ -1707,6 +1782,11 @@ swicc_ret_et proactive_app_default__envelope(
+@@ -1707,6 +1830,11 @@ swicc_ret_et proactive_app_default__envelope(
                                              .select_screen_new =
                                              APP_DEFAULT__SCREEN__SET_UP_CALL;
                                          break;
@@ -123,7 +171,7 @@ index a9c4fe1..30e28a8 100644
                                      default:
                                          break;
                                      }
-@@ -2466,6 +2546,27 @@ swicc_ret_et proactive_app_default__envelope(
+@@ -2466,6 +2594,27 @@ swicc_ret_et proactive_app_default__envelope(
                                          break;
                                      }
                                      break;
