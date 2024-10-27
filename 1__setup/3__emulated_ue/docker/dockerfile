@@ -25,5 +25,8 @@ RUN set -eux; \
     ldconfig; \
     pip3 install pyscard;
 
+# Manually install pinned unicorn version for compability with avatar2 (dependency of FirmWire)
+RUN pip3 install unicorn==2.0.1.post1
+
 COPY --chmod=700 ./entrypoint.sh /opt/setup
 ENTRYPOINT ["/opt/setup/entrypoint.sh"]

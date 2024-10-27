@@ -1,4 +1,6 @@
 #!/bin/bash
+export SIMURAI_SKIP_ADB_CHECK="1";
+
 readonly ROOT="$(realpath $(dirname "$0")/../..)";
 readonly UTIL="${ROOT}/util";
 source ${UTIL}/preamble.sh;
