@@ -21,9 +21,8 @@ RUN set -eux; \
     apt-get -qq --yes dist-upgrade;
 
 RUN set -eux; \
-    apt-get -qq --yes --no-install-recommends install libasan6 libpcsclite-dev pcsc-tools procps pcscd tmux gcc-9-plugin-dev; \
-    ldconfig; \
-    pip3 install pyscard;
+    apt-get -qq --yes --no-install-recommends install libasan6 libpcsclite-dev pcsc-tools procps pcscd tmux gcc-9-plugin-dev python3-pyscard; \
+    ldconfig;
 
 # Manually install pinned unicorn version for compability with avatar2 (dependency of FirmWire)
 RUN pip3 install unicorn==2.0.1.post1
